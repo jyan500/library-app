@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../hooks/redux-hooks"
 import { setCredentials } from "../slices/authSlice" 
 import { useLoginMutation } from "../services/public/auth" 
 import {v4 as uuidv4} from "uuid"
-import { useLocation, useNavigate } from "react-router-dom" 
+import { Link, useLocation, useNavigate } from "react-router-dom" 
 import { useForm } from "react-hook-form"
 import { parseErrorResponse } from "../helpers/functions"
 
@@ -44,14 +44,12 @@ export const Login = () => {
 		}
 	}
 	return (
-		<div className = "container --row --page-height">
-			<div className = "sidebar-design">
-			</div>
+		<div>
 			{/* checking if "status" in error narrows down the type to the CustomError defined in services/auth.ts,
 			 rather than SerializedError Type */}
-			<form className = "form-container --fixed-width" onSubmit={handleSubmit(onSubmit)}>
+			<form className = "form-container" onSubmit={handleSubmit(onSubmit)}>
 				<div><h1>Login</h1></div>
-				{error && "status" in error ? (error.data.errors?.map((errorMessage) => <p className = "--text-alert" key = {uuidv4()}>{errorMessage}</p>)) : null}
+				{error && "status" in error ? (error?.data?.errors?.map((errorMessage) => <p className = "--text-alert" key = {uuidv4()}>{errorMessage}</p>)) : null}
 				{location.state?.alert ? <p>{location.state.alert}</p> : null}
 				<div className = "form-row">
 					<div className = "form-cell">
@@ -63,7 +61,7 @@ export const Login = () => {
 						type="text"
 						{...register("email", registerOptions.email)}
 						/>
-				        {errors?.email && <small className = "--text-alert">{errors.email.message}</small>}
+				        {errors?.email && <small className = "--text-alert">{errors?.email.message}</small>}
 				    </div>
 				</div>
 				<div className = "form-row">
@@ -76,7 +74,7 @@ export const Login = () => {
 						type="password"
 						{...register("password", registerOptions.password)}
 						/>
-				        {errors?.password && <small className = "--text-alert">{errors.password.message}</small>}
+				        {errors?.password && <small className = "--text-alert">{errors?.password.message}</small>}
 				    </div>
 				</div>
 				<div className = "form-row">
@@ -86,7 +84,7 @@ export const Login = () => {
 				</div>
 				<div className = "form-row">
 					<div className = "form-cell">
-						<small>Don't have an account? Click <a onClick={() => navigate("/register")}>Here</a> to Register</small>
+						<small>Don't have an account? Click <Link className = "tw-text-sky-500" to={"/register"}>Here</Link> to Register</small>
 					</div>
 				</div>
 			</form>

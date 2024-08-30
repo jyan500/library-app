@@ -6,7 +6,7 @@ const router = express.Router()
 const config = require("../config")
 const db = require("../db/db")
 const userValidator = require("../validation/user")
-const { handleValidationResult }  = require("../middleware/validationMiddleware")
+const { handleValidationResult }  = require("../middleware/validation-middleware")
 const { body, validationResult } = require("express-validator")
 
 router.post("/login", userValidator.loginValidator, handleValidationResult, async (req, res, next) => {

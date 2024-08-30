@@ -19,6 +19,12 @@ export interface Book {
 	genreId: number
 }
 
+export interface NewsPost {
+	id: number
+	title: string
+	imageURL: string
+}
+
 export interface CustomError {
 	data: Record<string, Array<string>>
 	status: number

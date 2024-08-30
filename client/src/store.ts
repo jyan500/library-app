@@ -7,6 +7,7 @@ import { userProfileReducer }  from "./slices/userProfileSlice"
 import { modalReducer } from "./slices/modalSlice" 
 import { userRoleReducer } from "./slices/userRoleSlice" 
 import { bookReducer } from "./slices/bookSlice"
+import { newsPostReducer } from "./slices/newsPostSlice" 
 import { publicApi } from "./services/public"
 import { privateApi } from "./services/private"
 import {
@@ -38,7 +39,8 @@ export const store = configureStore({
 		"toast": toastReducer,
 		"modal": modalReducer,
 		"userRole": userRoleReducer,
-		"book": bookReducer
+		"book": bookReducer,
+		"newsPost": newsPostReducer
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: {
 			ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]

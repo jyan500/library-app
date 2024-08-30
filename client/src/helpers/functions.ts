@@ -22,6 +22,28 @@ export const parseURLParams = (params: Record<string, any>) => {
 }
 
 /**
+ * Takes a flat array and converts it to a nested array with a certain amount of elements per page
+ * @param total num of elements within nested array
+ * @param total num of elements
+ * @param flat array of objects
+ */
+export const convertFlatToNestedArray = (numPerArray: number, total: number, data: Array<Record<string, any>>) => {
+	let res = []
+	let cur = []
+	for (let i = 0; i < total; ++i){
+		cur.push(data[i])
+		if ((i+1) % numPerArray === 0){
+			res.push(cur)
+			cur = []
+		}
+	}
+	if (cur.length > 0){
+		res.push(cur)
+	}
+	return res
+}
+
+/**
  * @param user
  * @return string containing the users' first and last name if the user exists, otherwise returns an empty string
  */

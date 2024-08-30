@@ -4,10 +4,11 @@ const cors = require("cors")
 const app = express()
 const port = 8000
 const bookRouter = require("./routes/book")
-const userProfileRouter = require("./routes/userProfile")
+const userProfileRouter = require("./routes/user-profile")
 const userRouter = require("./routes/user")
-const userRoleRouter = require("./routes/userRole")
-const auth = require("./middleware/authMiddleware")
+const userRoleRouter = require("./routes/user-role")
+const newsPostRouter = require("./routes/news-post")
+const auth = require("./middleware/auth-middleware")
 
 
 const api = (route, apiVersion = "") => {
@@ -28,6 +29,7 @@ app.use(
 app.use(api("book"), auth.authenticateToken, bookRouter)
 app.use(api("user-profile"), auth.authenticateToken, userProfileRouter)
 app.use(api("user-role"), auth.authenticateToken, userRoleRouter)
+app.use(api("news-post"), auth.authenticateToken, newsPostRouter)
 
 /* Public Endpoints */
 app.use(api("user"), userRouter)

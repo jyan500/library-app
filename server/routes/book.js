@@ -6,17 +6,17 @@ const {
 	validateUpdate, 
 	validateDelete,
 }  = require("../validation/book")
-const { handleValidationResult }  = require("../middleware/validationMiddleware")
+const { handleValidationResult }  = require("../middleware/validation-middleware")
 const db = require("../db/db")
 const { mapIdToRowAggregateArray, mapIdToRowObject } = require("../helpers/functions") 
 
 router.get("/", async (req, res, next) => {
 	try {
-		const books = await db("boards").where("id", req.params.bookId).select(
+		const books = await db("books").select(
 			"books.id as id",
 			"books.title as tltle",
-			"books.image_url as imageUrl",
-			"books.genre_id as genreUrl",
+			"books.image_url as imageURL",
+			"books.genre_id as genreId",
 			"books.author as author",
 		)
 		res.json(books)
@@ -32,8 +32,8 @@ router.get("/:bookId", validateGet, handleValidationResult, async (req, res, nex
 		const books = await db("boards").where("id", req.params.bookId).select(
 			"books.id as id",
 			"books.title as tltle",
-			"books.image_url as imageUrl",
-			"books.genre_id as genreUrl",
+			"books.image_url as imageURL",
+			"books.genre_id as genreId",
 			"books.author as author",
 		)
 		res.json(books)

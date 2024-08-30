@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../hooks/redux-hooks" 
-import { useNavigate } from "react-router-dom" 
+import { Link, useNavigate } from "react-router-dom" 
 import { useForm, Resolver } from "react-hook-form"
 import { useUserRegisterMutation } from "../services/public/register" 
 import { FaEye, FaEyeSlash } from "react-icons/fa"
@@ -40,9 +40,8 @@ export const Register = () => {
 	}
 
 	return (
-		<div className = "container --page-height">
-			<div className = "sidebar-design"></div>
-			<form className = "form-container --fixed-width" onSubmit={handleSubmit(onSubmit)}>
+		<div>
+			<form className = "form-container" onSubmit={handleSubmit(onSubmit)}>
 				<div><h1>Register</h1></div>
 				{error && "status" in error ? (error.data.errors?.map((errorMessage) => <p className = "--text-alert" key = {uuidv4()}>{errorMessage}</p>)) : null}
 				<div className = "form-row">
@@ -124,7 +123,7 @@ export const Register = () => {
 				</div>
 				<div className = "form-row">
 					<div className = "form-cell">
-						<small>Already have an account? Click <a onClick = {() => navigate("/login")}>here</a> to login</small>
+						<small>Already have an account? Click <Link className = "hover:tw-opacity-1 tw-text-sky-500" to={"/login"}>Here</Link> to login</small>
 					</div>
 				</div>
 			</form>

@@ -19,10 +19,10 @@ export const SideBar = ({isFetching}: Props) => {
 	const { pathname } = useLocation()
 	const links = [
 	{
-		pathname: "/", text: "Dashboard",
+		pathname: "/", text: "Home",
 	},
 	{
-		pathname: "/users", text: "Users",
+		pathname: "/books", text: "Catalog",
 	},
 	{
 		pathname: "/account", text: "Account",
@@ -41,7 +41,7 @@ export const SideBar = ({isFetching}: Props) => {
 			<IoMdClose className = "icon"/></button>	
 			<div className = "sidebar__container">
 				<div>
-					<h2>San Mateo County Library</h2>
+					<img src = "county-library.png"/>
 				</div>
 				<div className = "sidebar__links">
 					{ 

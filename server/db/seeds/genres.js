@@ -35,6 +35,6 @@ exports.seed = async function(knex) {
         {id: 27, name: "Teen & Young Adult"},
         {id: 28, name: "Romance"},
         {id: 29, name: "Science Fiction & Fantasy"},
-        {id: 30, "Mystery, Thriller & Suspense"}
+        {id: 30, name: "Mystery, Thriller & Suspense"}
     ]);
 };
