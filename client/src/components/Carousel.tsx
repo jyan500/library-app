@@ -38,7 +38,7 @@ export const Carousel = ({data, numPerPage, total}: Props) => {
 				{
 					data[currentPage]?.map((element: React.ReactNode) => {
 						return (
-							<div key = {uuidv4()}>
+							<div className = "tw-overflow-hidden" key = {uuidv4()}>
 								{element}
 							</div>
 						)

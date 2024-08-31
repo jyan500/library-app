@@ -16,12 +16,10 @@ type CarouselContentProps = {
 
 export const CarouselContent = ({data}: CarouselContentProps) => {
 	return (
-		<div key = {data.id} className = "tw-flex tw-flex-col">
-			<div className = "tw-h-[455px] tw-relative">
-				<img className = "tw-w-full tw-h-full" alt="" src = {data.imageURL}/>
-				<div className="tw-absolute tw-inset-0 tw-bg-gradient-to-b tw-from-transparent tw-to-black tw-from-60%">
-					<p className = "tw-absolute tw-bottom-3 tw-left-3 tw-text-white tw-text-3xl tw-font-bold">{data.title}</p>
-				</div>
+		<div key = {data.id} className = "tw-h-[455px] tw-relative">
+			<img className = "tw-w-full tw-h-full" alt="" src = {data.imageURL}/>
+			<div className="tw-absolute tw-inset-0 tw-bg-gradient-to-b tw-from-transparent tw-to-black tw-from-60%">
+				<p className = "tw-absolute tw-bottom-3 tw-left-3 tw-text-white tw-text-3xl tw-font-bold">{data.title}</p>
 			</div>
 		</div>
 	)
