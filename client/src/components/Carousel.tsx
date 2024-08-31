@@ -2,9 +2,10 @@ import React, {useState} from "react"
 import { IconContext } from "react-icons"
 import { GrPrevious as Previous } from "react-icons/gr";
 import { GrNext as Next } from "react-icons/gr";
+import { v4 as uuidv4 } from "uuid"
 
 type Props = {
-	data: Array<Array<any>>
+	data: Array<Array<React.ReactNode>>
 	numPerPage: number
 	total: number
 }
@@ -35,10 +36,10 @@ export const Carousel = ({data, numPerPage, total}: Props) => {
 			</div>
 			<div className = "tw-flex tw-flex-1 tw-flex-row tw-justify-center tw-items-center">
 				{
-					data[currentPage].map((carouselElement) => {
+					data[currentPage]?.map((element: React.ReactNode) => {
 						return (
-							<div key = {carouselElement.id}>
-								{carouselElement}
+							<div key = {uuidv4()}>
+								{element}
 							</div>
 						)
 					})
