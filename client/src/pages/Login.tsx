@@ -79,7 +79,7 @@ export const Login = () => {
 				</div>
 				<div className = "form-row">
 				    <div className = "form-cell">
-						<button type = "submit">Submit</button>
+						<button className = "button" type = "submit">Submit</button>
 					</div>
 				</div>
 				<div className = "form-row">

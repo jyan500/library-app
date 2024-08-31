@@ -42,7 +42,7 @@ export const TopNav = ({isFetching}: Props) => {
 						<LoadingSpinner/>
 					)}
 					<div>
-						<button onClick={onLogout}>Logout</button>
+						<button className = "button" onClick={onLogout}>Logout</button>
 					</div>
 				</div>
 			</div>

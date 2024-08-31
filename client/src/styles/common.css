@@ -157,11 +157,7 @@ input[type="text"] {
 	}
 }
 
-button, 
-input[type="button"], 
-input[type="submit"], 
-input[type="reset"], 
-input[type="file"]::file-selector-button {
+.button {
 	padding: var(--padding-btn);
 	border: none;
 	background-color: var(--bs-primary);
