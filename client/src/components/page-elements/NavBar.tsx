@@ -18,8 +18,7 @@ export const NavBar = () => {
 	},
 	]
 	return (
-		<div className = "tw-flex tw-flex-row tw-py-6 tw-bg-primary">
-			<div className = "tw-w-36"></div>
+		<div className = "tw-px-36 tw-flex tw-flex-row tw-py-6 tw-bg-primary">
 			<div className = "tw-w-full tw-flex tw-flex-row">
 				{ 
 					links.map((link) => 
@@ -29,7 +28,6 @@ export const NavBar = () => {
 					)
 				}	
 			</div>
-			<div className = "tw-w-36"></div>
 		</div>
 	)	
 }
