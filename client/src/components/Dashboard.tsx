@@ -1,8 +1,6 @@
 import React from "react"
-import { Carousel } from "./Carousel"
 import "../styles/dashboard.css"
 import { useAppSelector } from "../hooks/redux-hooks"
-import { TestCarousel } from "./TestCarousel"
 import MultiCardCarousel from "./carousel/MultiCardCarousel"
 
 type CarouselElement = {
