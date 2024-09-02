@@ -73,8 +73,14 @@ const MultiCardCarousel = ({ itemsPerPage }: Props) => {
             </div>
             <div className = "tw-p-4 tw-flex tw-items-center tw-justify-center tw-gap-2">
                 {
+                    /* total amount of indicators is based on items.length / itemsPerPage */
                     Array.from(Array(Math.ceil(items.length/itemsPerPage)), (_, i) => {
                         return (
+                            /* 
+                            the current page, which is when currentIndex === (i * itemsPerPage), is highlighted
+                            i.e currentIndex = 6, and itemsPerPage = 3
+                            if i === 2, 2 * 3 = 6, this would be the 3rd page since the 1st page is index 0
+                            */
                             <div className = {`tw-transition tw-w-3 tw-h-3 tw-bg-gray-800 tw-rounded-full ${currentIndex === (i * itemsPerPage) ? "tw-p-2" : "tw-bg-opacity-50"}`}></div>
                         )
                     })
