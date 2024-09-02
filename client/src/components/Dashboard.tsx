@@ -5,6 +5,7 @@ import { useAppSelector } from "../hooks/redux-hooks"
 import { convertFlatToNestedArray } from "../helpers/functions"
 import { TestCarousel } from "./TestCarousel"
 import MultiCardCarousel from "./MultiCardCarousel"
+import SingleCardCarousel from "./carousel/SingleCardCarousel"
 
 type CarouselElement = {
 	id: number
@@ -66,7 +67,8 @@ export const Dashboard = () => {
 				}
 			</div>*/}
 			{/*<MultiCardCarousel items={newsPosts.map((post)=>{ return {id: post.id, imageURL: post.imageURL, title: post.title}})}/>*/}
-			<MultiCardCarousel itemsPerPage={3}/>
+			<MultiCardCarousel itemsPerPage={2}/>
+			{/*<SingleCardCarousel/>*/}
 		</div>
 	)	
 }
