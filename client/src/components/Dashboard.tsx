@@ -4,6 +4,8 @@ import { useAppSelector } from "../hooks/redux-hooks"
 import MultiCardCarousel from "./carousel/MultiCardCarousel"
 import { useGetNewsPostsQuery } from "../services/private/newsPost"
 import { LoadingSpinner } from "./LoadingSpinner"
+import { useScreenSize } from "../hooks/useScreenSize"
+import { MOBILE_WIDTH_BREAKPOINT } from "../helpers/constants"
 
 type CarouselElement = {
 	id: number
@@ -31,7 +33,7 @@ const ImageCarouselContent = ({data}: CarouselContentProps) => {
 const CardCarouselContent = ({data}: CarouselContentProps) => {
 	return (
 		<div className = "tw-h-full tw-border tw-border-gray-300 tw-shadow-md tw-rounded-lg">
-			<img src = {data.imageURL} alt={data.title} className = "tw-object-cover tw-h-64 tw-w-full tw-h-full tw-rounded-lg"/>
+			<img src = {data.imageURL} alt={data.title} className = "tw-object-cover tw-h-[600px] md:tw-h-64 tw-w-full tw-h-full tw-rounded-lg"/>
 			<div className = "tw-p-4 tw-space-y-2">
 				<p className = "tw-text-2xl tw-font-bold">
 					{data.title}	
@@ -46,6 +48,7 @@ const CardCarouselContent = ({data}: CarouselContentProps) => {
 
 export const Dashboard = () => {
 	const { newsPostGenres } = useAppSelector((state) => state.newsPostGenre)
+	const screenSize = useScreenSize()
 
 	const exploreGenre = newsPostGenres.find((genre) => genre.name === "Explore")
 	const youthGenre = newsPostGenres.find((genre) => genre.name === "Youth & Families")
@@ -89,32 +92,39 @@ export const Dashboard = () => {
 				}
 			</div>
 			<div className = "sm:tw-px-14 md:tw-px-36 tw-space-y-4">
-				<div className = "tw-pt-4 tw-border-t-2 tw-border-gray-300 tw-flex tw-flex-row tw-justify-center">
+				<div className = "tw-pt-4 tw-border-t-2 tw-border-gray-300 tw-flex md:tw-flex-row tw-flex-col tw-justify-center">
 					<div className = "md:tw-w-1/3">
 						<p className = "tw-font-bold tw-text-3xl">{youthGenre?.name}</p>	
 						<p>
 						Explore resources, activities, author events and more for kids, teens, and families from the comfort of your home.
 						</p>
 					</div>
-					<div className = "md:tw-w-2/3">
+					<div className = "tw-pt-2 md:tw-w-2/3">
 					{
 						youthGenreData?.length ? (
-							<MultiCardCarousel items={createCardCarouselElements(youthGenreData)} itemsPerPage={3} itemContainerClassName={"tw-h-[600px]"}/>
+							<MultiCardCarousel 
+								items={createCardCarouselElements(youthGenreData)} 
+								itemsPerPage={screenSize.width <= MOBILE_WIDTH_BREAKPOINT ? 1 : 3} 
+								itemContainerClassName={"md:tw-h-[600px]"}
+							/>
 						) : <LoadingSpinner/> 
 					}
 					</div>
 				</div>
-				<div className = "tw-pt-4 tw-border-t-2 tw-border-gray-300 tw-flex tw-flex-row tw-justify-center">
+				<div className = "tw-pt-4 tw-border-t-2 tw-border-gray-300 tw-flex md:tw-flex-row tw-flex-col tw-justify-center">
 					<div className = "md:tw-w-1/3">
 						<p className = "tw-font-bold tw-text-3xl">{seniorGenre?.name}</p>	
 						<p>
 						Discover new ways to stay connected with your favorite authors and musicians, or learn a new language or fun hobby.
 						</p>
 					</div>
-					<div className = "md:tw-w-2/3">
+					<div className = "tw-pt-2 md:tw-w-2/3">
 					{
 						seniorGenreData?.length ? (
-							<MultiCardCarousel items={createCardCarouselElements(seniorGenreData)} itemsPerPage={3} itemContainerClassName={"tw-h-[600px]"}/>
+							<MultiCardCarousel 
+								items={createCardCarouselElements(seniorGenreData)} 
+								itemsPerPage={screenSize.width <= MOBILE_WIDTH_BREAKPOINT ? 1 : 3} 
+								itemContainerClassName={"md:tw-h-[600px]"}/>
 						) : <LoadingSpinner/> 
 					}	
 					</div>
