@@ -68,12 +68,12 @@ exports.seed = async function(knex) {
       image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/b0cdc23124de5cdf85053a5a53651ce1/NewAthertonLibrary.png"},
     {
       id: 8, 
-      name: 'Palo Alto', 
-      address: "", 
+      name: 'Mitchell Park', 
+      address: "3700 Middlefield Rd", 
       city: "Palo Alto", 
       state: "CA", 
-      zipcode: "", 
-      image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/94490aa0a2cb1491a018d3e81a84d1c1/Brisbane.jpg"
+      zipcode: "94303", 
+      image_url: "https://paloalto.bibliocommons.com/events/uploads/images/full/0dd1062e616e30c321d9dc7a561c5f50/20141018-MitchellPark-Twilight.jpg"
     },
     {
       id: 9, 

@@ -14,7 +14,7 @@ router.get("/", async (req, res, next) => {
 	try {
 		const books = await db("books").select(
 			"books.id as id",
-			"books.title as tltle",
+			"books.title as title",
 			"books.image_url as imageURL",
 			"books.genre_id as genreId",
 			"books.author as author",
@@ -22,16 +22,16 @@ router.get("/", async (req, res, next) => {
 		res.json(books)
 	}	
 	catch (err) {
-		console.log(`Error while getting Boards: ${err.message}`)	
+		console.log(`Error while getting books: ${err.message}`)	
 		next(err)
 	}	
 })
 
 router.get("/:bookId", validateGet, handleValidationResult, async (req, res, next) => {
 	try {
-		const books = await db("boards").where("id", req.params.bookId).select(
+		const books = await db("books").where("id", req.params.bookId).select(
 			"books.id as id",
-			"books.title as tltle",
+			"books.title as title",
 			"books.image_url as imageURL",
 			"books.genre_id as genreId",
 			"books.author as author",
@@ -39,7 +39,7 @@ router.get("/:bookId", validateGet, handleValidationResult, async (req, res, nex
 		res.json(books)
 	}	
 	catch (err) {
-		console.log(`Error while getting Boards: ${err.message}`)	
+		console.log(`Error while getting books: ${err.message}`)	
 		next(err)
 	}
 })

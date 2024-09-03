@@ -8,6 +8,8 @@ const userProfileRouter = require("./routes/user-profile")
 const userRouter = require("./routes/user")
 const userRoleRouter = require("./routes/user-role")
 const newsPostRouter = require("./routes/news-post")
+const genreRouter = require("./routes/genre")
+const newsPostGenreRouter = require("./routes/news-post-genre")
 const auth = require("./middleware/auth-middleware")
 
 
@@ -29,7 +31,9 @@ app.use(
 app.use(api("book"), auth.authenticateToken, bookRouter)
 app.use(api("user-profile"), auth.authenticateToken, userProfileRouter)
 app.use(api("user-role"), auth.authenticateToken, userRoleRouter)
+app.use(api("genre"), auth.authenticateToken, genreRouter)
 app.use(api("news-post"), auth.authenticateToken, newsPostRouter)
+app.use(api("news-post-genre"), auth.authenticateToken, newsPostGenreRouter)
 
 /* Public Endpoints */
 app.use(api("user"), userRouter)

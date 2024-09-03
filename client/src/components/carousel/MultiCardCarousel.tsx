@@ -14,7 +14,7 @@ const MultiCardCarousel = ({ items, itemsPerPage }: Props) => {
     const [currentIndex, setCurrentIndex] = useState(0)
 
     if (itemsPerPage < 1 || itemsPerPage > items.length) {
-        return <div className = "tw-font-bold tw-text-red-500">Carousel could not render. <code>itemsPerPage</code> {"must be >= 1 and <= items.length"}</div>
+        return <div></div>
     }
 
     const style = {

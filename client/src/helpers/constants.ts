@@ -1,3 +1,6 @@
 export const TAG_TYPES = [
-	"Books"
+	"Books",
+	"Genres",
+	"NewsPosts",
+	"NewsPostGenres"
 ]

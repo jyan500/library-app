@@ -7,6 +7,6 @@ interface Props {
 
 export const LoadingSpinner = ({className}: Props) => {
 	return (
-		<div className = {`spinner ${className ?? ""}`}></div>
+		<div className = {`spinner ${className ?? "tw-m-16 tw-w-20 tw-h-20"}`}></div>
 	)	
 }

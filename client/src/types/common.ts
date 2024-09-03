@@ -19,10 +19,22 @@ export interface Book {
 	genreId: number
 }
 
+export interface Genre {
+	id: number
+	name: string
+}
+
+export interface NewsPostGenre {
+	id: number
+	name: string
+}
+
 export interface NewsPost {
 	id: number
 	title: string
 	imageURL: string
+	description: string,
+	newsPostGenreId: number
 }
 
 export interface CustomError {
@@ -35,5 +47,14 @@ export interface Toast {
 	message: string
 	type: "success" | "failure" | "warning"
 	animationType: string
+}
+
+export interface IPagination {
+	total?: number;
+	lastPage?: number;
+	currentPage: number;
+	perPage: number;
+	from: number;
+	to: number;
 }
 

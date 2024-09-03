@@ -12,11 +12,17 @@ const { mapIdToRowAggregateArray, mapIdToRowObject } = require("../helpers/funct
 
 router.get("/", async (req, res, next) => {
 	try {
-		const posts = await db("news_posts").select(
+		const posts = await db("news_posts").modify(async (queryBuilder) => {
+			if ("newsPostGenreId" in req.query && req.query.newsPostGenreId !== "") {
+				queryBuilder.where("news_post_genre_id", req.query.newsPostGenreId)
+			}	
+		}).select(
 			"news_posts.id as id",
 			"news_posts.title as title",
 			"news_posts.image_url as imageURL",
-		)
+			"news_posts.description as description",
+			"news_posts.news_post_genre_id as newsPostGenreId"
+		).limit(10)
 		res.json(posts)
 	}	
 	catch (err) {
@@ -31,6 +37,8 @@ router.get("/:bookId", validateGet, handleValidationResult, async (req, res, nex
 			"news_posts.id as id",
 			"news_posts.title as title",
 			"news_posts.image_url as imageURL",
+			"news_posts.description as description",
+			"news_posts.news_post_genre_id as newsPostGenreId"
 		)
 		res.json(posts)
 	}	

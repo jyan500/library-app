@@ -6,3 +6,5 @@ export const USER_PROFILE_URL = `/${API_VERSION}/user-profile/`
 export const USER_ROLE_URL = `/${API_VERSION}/user-role/`
 export const BOOK_URL = `/${API_VERSION}/book`
 export const NEWS_POST_URL = `/${API_VERSION}/news-post`
+export const GENRE_URL = `/${API_VERSION}/genre`
+export const NEWS_POST_GENRE_URL = `/${API_VERSION}/news-post-genre`
