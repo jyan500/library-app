@@ -22,7 +22,7 @@ export const TopNav = ({isFetching}: Props) => {
 
 	}
 	return (
-		<div className = "tw-px-32 tw-flex tw-flex-row">
+		<div className = "sm:tw-px-10 md:tw-px-32 tw-flex tw-flex-row">
 			<div className = "tw-w-full topnav">
 				<div className = "tw-flex tw-shrink-0">
 					<img className = "tw-w-4/6 tw-h-4/6" src = {"county-library-cropped.png"}/>

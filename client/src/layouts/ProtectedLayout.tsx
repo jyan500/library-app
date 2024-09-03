@@ -49,7 +49,7 @@ const ProtectedLayout = () => {
 		<div>
 			<TopNav isFetching={isUserProfileFetching}/>
 			<NavBar/>
-			<div className = "tw-my-2 tw-h-[100vh]">
+			<div className = "tw-my-2 tw-min-h-screen">
 				<Outlet/>
 			</div>
 			<Footer/>

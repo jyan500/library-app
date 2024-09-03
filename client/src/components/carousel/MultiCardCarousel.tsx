@@ -7,9 +7,10 @@ import { v4 as uuidv4 } from "uuid"
 type Props = {
     items: Array<React.ReactNode>
     itemsPerPage: number
+    itemContainerClassName?: string
 }
 
-const MultiCardCarousel = ({ items, itemsPerPage }: Props) => {
+const MultiCardCarousel = ({ items, itemsPerPage, itemContainerClassName }: Props) => {
 
     const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -37,7 +38,7 @@ const MultiCardCarousel = ({ items, itemsPerPage }: Props) => {
 
     return (
         <div>
-            <div className = "tw-px-36 tw-flex tw-justify-center">
+            <div className = "tw-flex tw-justify-center">
                 <div className={`${itemsPerPage === 1 ? "tw-max-h-[600px] tw-max-w-[800px]" : ""} tw-relative tw-h-full tw-w-full tw-overflow-hidden tw-rounded-lg`}>
                     {/* 
                         transition translate X based on the -(currentIndex) * 100. 
@@ -49,7 +50,7 @@ const MultiCardCarousel = ({ items, itemsPerPage }: Props) => {
                                 Renders all items, the combination of flex-shrink-0 on each flex item, as well as the width being set to the percent each item takes per page
                                 gives the illusion that only a certain amount of items display on each page based on the itemsPerPage.
                             */
-                            <div key={uuidv4()} style = {style} className = "tw-relative tw-w-full tw-h-full tw-flex-shrink-0 tw-px-2">
+                            <div key={uuidv4()} style = {style} className = {`${itemContainerClassName ?? ""} tw-relative tw-w-full tw-h-full tw-flex-shrink-0 tw-px-2`}>
                                 {item}
                             </div>
                         ))}

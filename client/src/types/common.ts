@@ -58,3 +58,8 @@ export interface IPagination {
 	to: number;
 }
 
+export interface ListResponse<T> {
+	pagination: IPagination
+	data: Array<T>
+}
+

@@ -18,7 +18,7 @@ export const NavBar = () => {
 	},
 	]
 	return (
-		<div className = "tw-px-36 tw-flex tw-flex-row tw-py-6 tw-bg-primary">
+		<div className = "sm:tw-px-14 md:tw-px-36 tw-flex tw-flex-row tw-py-6 tw-bg-primary">
 			<div className = "tw-w-full tw-flex tw-flex-row">
 				{ 
 					links.map((link) => 

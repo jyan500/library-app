@@ -9,13 +9,14 @@ type CarouselElement = {
 	id: number
 	title: string
 	imageURL: string
+	description?: string
 }
 
 type CarouselContentProps = {
 	data: CarouselElement
 }
 
-export const CarouselContent = ({data}: CarouselContentProps) => {
+const ImageCarouselContent = ({data}: CarouselContentProps) => {
 	return (
 		<>
 	        <img src={data.imageURL} alt={data.title} className="tw-relative tw-object-cover tw-w-full tw-h-full tw-rounded-lg" />
@@ -24,6 +25,22 @@ export const CarouselContent = ({data}: CarouselContentProps) => {
 		        <p className = "tw-absolute tw-bottom-4 tw-left-4 tw-text-2xl tw-font-bold tw-text-white">{data.title}</p>
         	</div>
         </>
+	)
+}
+
+const CardCarouselContent = ({data}: CarouselContentProps) => {
+	return (
+		<div className = "tw-h-full tw-border tw-border-gray-300 tw-shadow-md tw-rounded-lg">
+			<img src = {data.imageURL} alt={data.title} className = "tw-object-cover tw-h-64 tw-w-full tw-h-full tw-rounded-lg"/>
+			<div className = "tw-p-4 tw-space-y-2">
+				<p className = "tw-text-2xl tw-font-bold">
+					{data.title}	
+				</p>
+				<p>
+					{data.description}
+				</p>
+			</div>
+		</div>
 	)
 }
 
@@ -38,29 +55,72 @@ export const Dashboard = () => {
 	const {data: youthGenreData, isFetching: isYouthPostFetching} = useGetNewsPostsQuery({newsPostGenreId: youthGenre?.id})
 	const {data: seniorGenreData, isFetching: isSeniorPostFetching} = useGetNewsPostsQuery({newsPostGenreId: seniorGenre?.id})
 
-	const createCarouselElements = (data: Array<CarouselElement>) => {
+	const createImageCarouselElements = (data: Array<CarouselElement>) => {
 		if (data.length){
 			const carouselElements = data.map((element: CarouselElement) => {
-				return <CarouselContent data={element}/>
+				return <ImageCarouselContent data={element}/>
 			})
 			return carouselElements
 		}
 		return []	
 	}
 
+	const createCardCarouselElements = (data: Array<CarouselElement>) => {
+		if (data.length){
+			const carouselElements = data.map((element: CarouselElement) => {
+				return <CardCarouselContent data={element}/>
+			})
+			return carouselElements
+		}
+		return []
+	}
+
 	return (
 		<div className = "tw-w-full tw-flex tw-flex-col tw-mt-4 tw-gap-y-4">
-			<div className = "tw-px-36 tw-py-14 tw-bg-primary">
+			<div className = "sm:tw-px-14 md:tw-px-36 tw-py-14 tw-bg-primary">
 				<p className = "tw-my-1 tw-text-4xl tw-font-bold tw-text-white">Stay Connected</p>	
 				<p className = "tw-text-white">Get the latest updates by subscribing to our eNewsletter!</p>	
 			</div>
 			<div className = "tw-flex tw-flex-row tw-justify-center tw-items-center">
 				{
 					exploreGenreData?.length ? (
-						<MultiCardCarousel items={createCarouselElements(exploreGenreData)} itemsPerPage={1}/>
+						<MultiCardCarousel items={createImageCarouselElements(exploreGenreData)} itemsPerPage={1}/>
 					) : <LoadingSpinner/> 
 				}
 			</div>
+			<div className = "sm:tw-px-14 md:tw-px-36 tw-space-y-4">
+				<div className = "tw-pt-4 tw-border-t-2 tw-border-gray-300 tw-flex tw-flex-row tw-justify-center">
+					<div className = "md:tw-w-1/3">
+						<p className = "tw-font-bold tw-text-3xl">{youthGenre?.name}</p>	
+						<p>
+						Explore resources, activities, author events and more for kids, teens, and families from the comfort of your home.
+						</p>
+					</div>
+					<div className = "md:tw-w-2/3">
+					{
+						youthGenreData?.length ? (
+							<MultiCardCarousel items={createCardCarouselElements(youthGenreData)} itemsPerPage={3} itemContainerClassName={"tw-h-[600px]"}/>
+						) : <LoadingSpinner/> 
+					}
+					</div>
+				</div>
+				<div className = "tw-pt-4 tw-border-t-2 tw-border-gray-300 tw-flex tw-flex-row tw-justify-center">
+					<div className = "md:tw-w-1/3">
+						<p className = "tw-font-bold tw-text-3xl">{seniorGenre?.name}</p>	
+						<p>
+						Discover new ways to stay connected with your favorite authors and musicians, or learn a new language or fun hobby.
+						</p>
+					</div>
+					<div className = "md:tw-w-2/3">
+					{
+						seniorGenreData?.length ? (
+							<MultiCardCarousel items={createCardCarouselElements(seniorGenreData)} itemsPerPage={3} itemContainerClassName={"tw-h-[600px]"}/>
+						) : <LoadingSpinner/> 
+					}	
+					</div>
+				</div>
+			</div>
+
 		</div>
 	)	
 }
