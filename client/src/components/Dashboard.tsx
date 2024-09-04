@@ -80,7 +80,7 @@ export const Dashboard = () => {
 
 	return (
 		<div className = "tw-w-full tw-flex tw-flex-col tw-mt-4 tw-gap-y-4">
-			<div className = "sm:tw-px-14 md:tw-px-36 tw-py-14 tw-bg-primary">
+			<div className = "tw-px-14 md:tw-px-36 tw-py-14 tw-bg-primary">
 				<p className = "tw-my-1 tw-text-4xl tw-font-bold tw-text-white">Stay Connected</p>	
 				<p className = "tw-text-white">Get the latest updates by subscribing to our eNewsletter!</p>	
 			</div>
@@ -91,43 +91,49 @@ export const Dashboard = () => {
 					) : <LoadingSpinner/> 
 				}
 			</div>
-			<div className = "sm:tw-px-14 md:tw-px-36 tw-space-y-4">
+			<div className = "tw-px-14 md:tw-px-36 tw-space-y-4">
 				<div className = "tw-pt-4 tw-border-t-2 tw-border-gray-300 tw-flex md:tw-flex-row tw-flex-col tw-justify-center">
-					<div className = "md:tw-w-1/3">
-						<p className = "tw-font-bold tw-text-3xl">{youthGenre?.name}</p>	
-						<p>
-						Explore resources, activities, author events and more for kids, teens, and families from the comfort of your home.
-						</p>
-					</div>
-					<div className = "tw-pt-2 md:tw-w-2/3">
 					{
 						youthGenreData?.length ? (
-							<MultiCardCarousel 
-								items={createCardCarouselElements(youthGenreData)} 
-								itemsPerPage={screenSize.width <= MOBILE_WIDTH_BREAKPOINT ? 1 : 3} 
-								itemContainerClassName={"md:tw-h-[600px]"}
-							/>
-						) : <LoadingSpinner/> 
+							<>
+								<div className = "md:tw-w-1/3">
+									<p className = "tw-font-bold tw-text-3xl">{youthGenre?.name}</p>	
+									<p>
+									Explore resources, activities, author events and more for kids, teens, and families from the comfort of your home.
+									</p>
+								</div>
+								<div className = "tw-pt-2 md:tw-w-2/3">
+									<MultiCardCarousel 
+										items={createCardCarouselElements(youthGenreData)} 
+										itemsPerPage={screenSize.width <= MOBILE_WIDTH_BREAKPOINT ? 1 : 3} 
+										itemContainerClassName={"md:tw-h-[600px]"}
+									/>
+								</div>
+							</>
+						) : <LoadingSpinner/>
 					}
-					</div>
 				</div>
 				<div className = "tw-pt-4 tw-border-t-2 tw-border-gray-300 tw-flex md:tw-flex-row tw-flex-col tw-justify-center">
-					<div className = "md:tw-w-1/3">
-						<p className = "tw-font-bold tw-text-3xl">{seniorGenre?.name}</p>	
-						<p>
-						Discover new ways to stay connected with your favorite authors and musicians, or learn a new language or fun hobby.
-						</p>
-					</div>
-					<div className = "tw-pt-2 md:tw-w-2/3">
 					{
 						seniorGenreData?.length ? (
-							<MultiCardCarousel 
-								items={createCardCarouselElements(seniorGenreData)} 
-								itemsPerPage={screenSize.width <= MOBILE_WIDTH_BREAKPOINT ? 1 : 3} 
-								itemContainerClassName={"md:tw-h-[600px]"}/>
-						) : <LoadingSpinner/> 
-					}	
-					</div>
+							<>
+							<div className = "md:tw-w-1/3">
+								<p className = "tw-font-bold tw-text-3xl">{seniorGenre?.name}</p>	
+								<p>
+								Discover new ways to stay connected with your favorite authors and musicians, or learn a new language or fun hobby.
+								</p>
+							</div>
+							<div className = "tw-pt-2 md:tw-w-2/3">
+							{
+								<MultiCardCarousel 
+									items={createCardCarouselElements(seniorGenreData)} 
+									itemsPerPage={screenSize.width <= MOBILE_WIDTH_BREAKPOINT ? 1 : 3} 
+									itemContainerClassName={"md:tw-h-[600px]"}/>
+							}	
+							</div>
+							</>
+						) : <LoadingSpinner/>
+					}
 				</div>
 			</div>
 

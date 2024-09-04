@@ -22,10 +22,10 @@ export const TopNav = ({isFetching}: Props) => {
 
 	}
 	return (
-		<div className = "sm:tw-px-10 md:tw-px-32 tw-flex tw-flex-row">
+		<div className = "tw-px-10 md:tw-px-32 tw-flex tw-flex-row">
 			<div className = "tw-w-full topnav">
 				<div className = "tw-flex tw-shrink-0">
-					<img className = "tw-w-4/6 tw-h-4/6" src = {"county-library-cropped.png"}/>
+					<img className = "tw-w-1/2 tw-h-1/2 md:tw-w-4/6 md:tw-h-4/6" src = {"county-library-cropped.png"}/>
 				</div>
 				<div className = "topnav-profile">
 					{!isFetching ? (
@@ -38,7 +38,7 @@ export const TopNav = ({isFetching}: Props) => {
 							</div>
 						</>
 					) : (
-						<LoadingSpinner/>
+						<LoadingSpinner className = "tw-w-10 tw-h-10"/>
 					)}
 					<div>
 						<button className = "button" onClick={onLogout}>Logout</button>

@@ -21,7 +21,7 @@ export const BookDisplay = () => {
 		<div>
 			{
 				bookId != null ? (
-					<Link className = "link-container" to = {`/boards`}>
+					<Link className = "link-container" to = {`/books`}>
 						<ArrowBackward className = "icon"/>
 						<span>Return to Books</span>
 					</Link>

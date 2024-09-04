@@ -7,6 +7,8 @@ import { HamburgerButton } from "./components/HamburgerButton"
 import { Register } from "./pages/Register" 
 import { Book } from "./pages/Book"
 import { BookDisplay } from "./pages/BookDisplay" 
+import { BookCatalog } from "./pages/BookCatalog"
+import { BookBrowse } from "./pages/BookBrowse"
 import DefaultLayout from "./layouts/DefaultLayout"
 import ProtectedLayout from "./layouts/ProtectedLayout"
 import { useAppSelector, useAppDispatch } from "./hooks/redux-hooks" 
@@ -27,6 +29,16 @@ function App() {
 						path = "/books" 
 						element={<BookDisplay/>}
 					>
+						<Route
+							path=""
+							element={<BookCatalog/>}
+						>
+						</Route>
+						<Route
+							path=""
+							element={<BookBrowse/>}
+						>
+						</Route>
 						<Route 
 							path = ":bookId"
 							element={<Book/>}>
