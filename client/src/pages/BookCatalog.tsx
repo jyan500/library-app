@@ -1,29 +1,41 @@
 import React, { useState, useEffect } from "react"
 import { SearchBar } from "../components/SearchBar" 
 import { useForm, FormProvider } from "react-hook-form"
+import { Link, useSearchParams } from "react-router-dom"
 import { useLazyGetBooksQuery } from "../services/private/book"
 import { Book } from "../types/common"
+import { LoadingSpinner } from "../components/LoadingSpinner"
+import { BOOKS } from "../helpers/routes"
 
 type FormValues = {
 	query: string
 	searchBy: string
+	page: number
 }
 
 export const BookCatalog = () => {
+	const [page, setPage] = useState(1)
+	// TODO: figure out how to get the URL path without its params
+	// TODO: also how to add URL params to a path without refreshing the page
+	let [searchParams, setSearchParams] = useSearchParams();
 	const defaultForm: FormValues = {
 		query: "",
-		searchBy: "title" 
+		searchBy: "title" ,
+		page: page
 	}
 	const [preloadedValues, setPreloadedValues] = useState<FormValues>(defaultForm)
 	const methods = useForm<FormValues>({defaultValues: preloadedValues})
-	const { register, handleSubmit, formState: {errors} } = methods
+	const { register, handleSubmit, watch, formState: {errors} } = methods
 	const registerOptions = {
 		query: { required: "Please enter a search query"},
 		searchBy: { required: "Please choose a value to search by"}
 	}
 
 	const [trigger, {data, error, isLoading}] = useLazyGetBooksQuery()
-	console.log(data)
+
+	useEffect(() => {
+
+	}, [searchParams])
 
 	const onSubmit = (values: FormValues) => {
 	    // Call the query with the current genreId when the form is submitted
@@ -68,18 +80,31 @@ export const BookCatalog = () => {
 				</FormProvider>
 			</div>
 			<div className = "tw-flex tw-flex-col">
-			{/*	{bookData?.map((row: Book) => {
-					return (
-						<div className = "tw-flex tw-flex-row tw-items-center">
-							<div className = "tw-w-1/4">
-								<img src = {row.imageURL}/>	
-							</div>
-							<div className = "tw-w-3/4">
-								<p>{row.title}</p>	
-							</div>
-						</div>
-					)	
-				})}*/}
+				{isLoading ? (<LoadingSpinner/>) : (
+					<>
+					{
+						data?.data?.map((row: Book) => {
+							return (
+								<div key = {row.id} className = "tw-flex tw-flex-row tw-items-center">
+									<div className = "tw-w-1/4">
+										<img src = {row.imageURL}/>	
+									</div>
+									<div className = "tw-w-3/4">
+										<p>{row.title}</p>	
+									</div>
+								</div>
+							)	
+						})
+					}
+					</>
+				)}
+			</div>
+			<div className = "tw-flex tw-flex-row tw-gap-x-1">
+				{!isLoading && data?.pagination ? (
+					Array.from(Array(data?.pagination?.lastPage), (_, i) => {
+						return (<Link to={`${BOOKS}?searchBy=${watch("searchBy")}&query=${watch("query")}&page=${i+1}`}>{i+1}</Link>	)
+					})
+				) : null}
 			</div>
 		</div>
 	)	

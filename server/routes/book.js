@@ -14,7 +14,15 @@ router.get("/", async (req, res, next) => {
 	try {
 		let books = await db("books").modify((queryBuilder) => {
 			if (req.query.query && req.query.searchBy){
-				queryBuilder.modify()
+				if (req.query.searchBy === "genre"){
+					queryBuilder.join("genres", "genres.id", "=", "books.genre_id").whereLike("genres.name", `%${req.query.query}%`)
+				}
+				else if (req.query.searchBy === "title"){
+					queryBuilder.whereLike("title", `%${req.query.query}%`)
+				}
+				else if (req.query.searchBy === "author"){
+					queryBuilder.whereLike("author", `%${req.query.query}%`)
+				}
 			}
 		}).select(
 			"books.id as id",
@@ -22,7 +30,7 @@ router.get("/", async (req, res, next) => {
 			"books.image_url as imageURL",
 			"books.genre_id as genreId",
 			"books.author as author",
-		).paginate({ perPage: 10, currentPage: 1});
+		).paginate({ perPage: 10, currentPage: req.query.page ? parseInt(req.query.page) : 1, isLengthAware: true});
 		res.json(books)
 	}	
 	catch (err) {

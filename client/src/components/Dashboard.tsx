@@ -6,7 +6,7 @@ import { PageHeader } from "./page-elements/PageHeader"
 import { useGetNewsPostsQuery } from "../services/private/newsPost"
 import { LoadingSpinner } from "./LoadingSpinner"
 import { useScreenSize } from "../hooks/useScreenSize"
-import { MOBILE_WIDTH_BREAKPOINT } from "../helpers/constants"
+import { XL_BREAKPOINT } from "../helpers/constants"
 
 type CarouselElement = {
 	id: number
@@ -95,18 +95,18 @@ export const Dashboard = () => {
 			<div className = "tw-px-14 sm:tw-px-36 tw-space-y-4">
 				{
 					youthGenreData?.length ? (
-					<div className = "tw-pt-4 tw-border-t-2 tw-border-gray-300 tw-flex sm:tw-flex-row tw-flex-col tw-justify-center">
-						<div className = "sm:tw-w-1/3">
+					<div className = "tw-pt-4 tw-border-t-2 tw-border-gray-300 tw-flex xl:tw-flex-row tw-flex-col tw-justify-center">
+						<div className = "xl:tw-w-1/3">
 							<p className = "tw-font-bold tw-text-3xl">{youthGenre?.name}</p>	
 							<p>
 							Explore resources, activities, author events and more for kids, teens, and families from the comfort of your home.
 							</p>
 						</div>
-						<div className = "tw-pt-2 sm:tw-w-2/3">
+						<div className = "tw-pt-2 xl:tw-w-2/3">
 							<MultiCardCarousel 
 								items={createCardCarouselElements(youthGenreData)} 
-								itemsPerPage={screenSize.width <= MOBILE_WIDTH_BREAKPOINT ? 1 : 3} 
-								itemContainerClassName={"sm:tw-h-[600px]"}
+								itemsPerPage={screenSize.width <= XL_BREAKPOINT ? 1 : 3} 
+								itemContainerClassName={"xl:tw-h-[600px]"}
 							/>
 						</div>
 					</div>
@@ -114,18 +114,18 @@ export const Dashboard = () => {
 				}
 				{
 					seniorGenreData?.length ? (
-					<div className = "tw-pt-4 tw-border-t-2 tw-border-gray-300 tw-flex sm:tw-flex-row tw-flex-col tw-justify-center">
-						<div className = "sm:tw-w-1/3">
+					<div className = "tw-pt-4 tw-border-t-2 tw-border-gray-300 tw-flex xl:tw-flex-row tw-flex-col tw-justify-center">
+						<div className = "xl:tw-w-1/3">
 							<p className = "tw-font-bold tw-text-3xl">{seniorGenre?.name}</p>	
 							<p>
 							Discover new ways to stay connected with your favorite authors and musicians, or learn a new language or fun hobby.
 							</p>
 						</div>
-						<div className = "tw-pt-2 sm:tw-w-2/3">
+						<div className = "tw-pt-2 xl:tw-w-2/3">
 							<MultiCardCarousel 
 								items={createCardCarouselElements(seniorGenreData)} 
-								itemsPerPage={screenSize.width <= MOBILE_WIDTH_BREAKPOINT ? 1 : 3} 
-								itemContainerClassName={"sm:tw-h-[600px]"}/>
+								itemsPerPage={screenSize.width <= XL_BREAKPOINT ? 1 : 3} 
+								itemContainerClassName={"xl:tw-h-[600px]"}/>
 						</div>
 					</div>
 				) : null
