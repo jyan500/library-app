@@ -39,7 +39,7 @@ export const BookCatalog = () => {
 			const page = searchParams.get("page")
 			if (query && searchBy && page){
 				const form = {
-					query, searchBy, page: parseInt(page)
+					query: decodeURIComponent(query), searchBy: searchBy, page: parseInt(page)
 				}
 				reset(form)	
 				trigger(form)
@@ -49,14 +49,8 @@ export const BookCatalog = () => {
 
 	const [trigger, {data, error, isFetching, isLoading}] = useLazyGetBooksQuery()
 
-	const handlePrev = async (prev: number) => {
-		setValue("page", prev)
-		await handleSubmit(onSubmit)()
-	}
-
-	const handleNext = async (next: number) => {
-		setValue("page", next)
-		await handleSubmit(onSubmit)()
+	const setPage = async (pageNum: number) => {
+	    navigate(`${BOOKS_SEARCH}?query=${encodeURIComponent(watch("query"))}&searchBy=${watch("searchBy")}&page=${pageNum}`, { replace: true });
 	}
 
 	const onSubmit = (values: FormValues) => {
@@ -81,7 +75,7 @@ export const BookCatalog = () => {
 			                                onClick={(e) => {
 			                                	e.preventDefault()
 			                                	if (data.pagination.prevPage){
-				                                	handlePrev(data.pagination.prevPage)
+				                                	setPage(data.pagination.prevPage)
 			                                	}
 			                                	if (shouldScrollToTop){
 													window.scrollTo({
@@ -114,7 +108,7 @@ export const BookCatalog = () => {
 														}
 													}}
 													key={uuidv4()} 
-													to={`${BOOKS_SEARCH}?searchBy=${watch("searchBy")}&query=${encodeURIComponent(watch("query"))}&page=${i+1}`}>
+													to={`${BOOKS_SEARCH}?query=${encodeURIComponent(watch("query"))}&searchBy=${watch("searchBy")}&page=${i+1}`}>
 													{i+1}
 												</Link>	)
 											})
@@ -129,7 +123,7 @@ export const BookCatalog = () => {
 			                                onClick={(e) => {
 			                                	e.preventDefault()
 			                                	if (data.pagination.nextPage){
-				                                	handleNext(data.pagination.nextPage)
+				                                	setPage(data.pagination.nextPage)
 			                                	}
 			                                	if (shouldScrollToTop){
 													window.scrollTo({
@@ -190,26 +184,33 @@ export const BookCatalog = () => {
 					</form>
 				</FormProvider>
 			</div>
-			<div className = "tw-flex tw-flex-col">
+			<table className = "tw-table-auto">
 				{isFetching ? (<LoadingSpinner/>) : (
-					<>
+					<tbody>
 					{
 						data?.data?.map((row: Book) => {
 							return (
-								<div key = {row.id} className = "tw-flex tw-flex-row tw-items-center">
-									<div className = "tw-w-1/4">
-										<img src = {row.imageURL}/>	
-									</div>
-									<div className = "tw-w-3/4">
-										<p>{row.title}</p>	
-									</div>
-								</div>
+								<tr key = {row.id}>
+									<td className = "tw-w-1/4">
+										<img className = "tw-w-3/4" src = {row.imageURL}/>	
+									</td>
+									<td className = "tw-w-3/4 tw-flex tw-flex-col">
+										<div className = "tw-w-full tw-flex tw-flex-col tw-items-center">
+											<p>{row.title}</p>	
+											<p>{row.author ? `By: ${row.author}` : ""}</p>	
+										</div>
+										<div className = "tw-w-full tw-flex tw-flex-row tw-items-center">
+											<p>Check Availability</p>
+											<button>Check Out</button>
+										</div>
+									</td>
+								</tr>
 							)	
 						})
 					}
-					</>
+					</tbody>
 				)}
-			</div>
+			</table>
 			<div className = "tw-py-4 tw-border tw-border-gray-300">
 				{!isFetching && data?.pagination ? (
 					paginationRow({showPageNums: true, shouldScrollToTop: true})	
