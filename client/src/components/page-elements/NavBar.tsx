@@ -17,7 +17,7 @@ const NavBarDropdown = ({links}: DropdownProps) => {
 		 <ul className="tw-top-16 tw-absolute tw-invisible group-hover:tw-visible tw-opacity-0 group-hover:tw-opacity-100 tw-transition-opacity tw-duration-300 tw-bg-white tw-text-white tw-py-2 tw-rounded-b-lg tw-shadow-lg tw-w-48">
 			{links.map((link) => {
 				return (
-				<li>
+				<li key = {link.pathname}>
 	            	<Link to={link.pathname} className="tw-block tw-px-4 tw-py-2 tw-text-sm tw-text-black">
 	            	{link.text}
 	            	</Link>
@@ -57,7 +57,7 @@ export const NavBar = () => {
 	        		links.map((link) => {
 	        			if (link.secondary?.length){
 	        				return (
-						        <li className="tw-h-full tw-flex tw-items-center tw-relative tw-group">
+						        <li key = {link.pathname} className="tw-h-full tw-flex tw-items-center tw-relative tw-group">
 						        	<Link to={link.pathname} className = "tw-text-white">{link.text}</Link>
 						        	<NavBarDropdown links={link.secondary ?? []}/>
 						        </li>
@@ -65,7 +65,7 @@ export const NavBar = () => {
 	        			}
 	        			else {
 		        			return (
-		        				<li className = "tw-h-full tw-flex tw-items-center">
+		        				<li key = {link.pathname} className = "tw-h-full tw-flex tw-items-center">
 							        <Link to={link.pathname} className="tw-text-white">
 								        {link.text}
 							        </Link>

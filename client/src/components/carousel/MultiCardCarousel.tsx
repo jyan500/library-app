@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { IconContext } from "react-icons"
-import { GrPrevious as Previous } from "react-icons/gr";
-import { GrNext as Next } from "react-icons/gr";
+import { GrNext as Next, GrPrevious as Previous } from "react-icons/gr";
 import { v4 as uuidv4 } from "uuid"
 
 type Props = {

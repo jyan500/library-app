@@ -52,6 +52,8 @@ export interface Toast {
 export interface IPagination {
 	total?: number;
 	lastPage?: number;
+	prevPage?: number
+	nextPage?: number
 	currentPage: number;
 	perPage: number;
 	from: number;

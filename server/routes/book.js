@@ -14,14 +14,15 @@ router.get("/", async (req, res, next) => {
 	try {
 		let books = await db("books").modify((queryBuilder) => {
 			if (req.query.query && req.query.searchBy){
+				const q = decodeURIComponent(req.query.query)
 				if (req.query.searchBy === "genre"){
-					queryBuilder.join("genres", "genres.id", "=", "books.genre_id").whereLike("genres.name", `%${req.query.query}%`)
+					queryBuilder.join("genres", "genres.id", "=", "books.genre_id").whereLike("genres.name", `%${q}%`)
 				}
 				else if (req.query.searchBy === "title"){
-					queryBuilder.whereLike("title", `%${req.query.query}%`)
+					queryBuilder.whereLike("title", `%${q}%`)
 				}
 				else if (req.query.searchBy === "author"){
-					queryBuilder.whereLike("author", `%${req.query.query}%`)
+					queryBuilder.whereLike("author", `%${q}%`)
 				}
 			}
 		}).select(

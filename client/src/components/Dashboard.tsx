@@ -34,7 +34,7 @@ const ImageCarouselContent = ({data}: CarouselContentProps) => {
 const CardCarouselContent = ({data}: CarouselContentProps) => {
 	return (
 		<div className = "tw-h-full tw-border tw-border-gray-300 tw-shadow-md tw-rounded-lg">
-			<img src = {data.imageURL} alt={data.title} className = "tw-object-cover tw-h-[600px] sm:tw-h-64 tw-w-full tw-h-full tw-rounded-lg"/>
+			<img src = {data.imageURL} alt={data.title} className = "tw-object-cover tw-h-[600px] xl:tw-h-64 tw-w-full tw-h-full tw-rounded-lg"/>
 			<div className = "tw-p-4 tw-space-y-2">
 				<p className = "tw-text-2xl tw-font-bold">
 					{data.title}	
