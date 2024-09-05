@@ -12,13 +12,17 @@ const { mapIdToRowAggregateArray, mapIdToRowObject } = require("../helpers/funct
 
 router.get("/", async (req, res, next) => {
 	try {
-		const books = await db("books").select(
+		let books = await db("books").modify((queryBuilder) => {
+			if (req.query.query && req.query.searchBy){
+				queryBuilder.modify()
+			}
+		}).select(
 			"books.id as id",
 			"books.title as title",
 			"books.image_url as imageURL",
 			"books.genre_id as genreId",
 			"books.author as author",
-		)
+		).paginate({ perPage: 10, currentPage: 1});
 		res.json(books)
 	}	
 	catch (err) {

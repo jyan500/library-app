@@ -10,7 +10,7 @@ type Props = {
     itemContainerClassName?: string
 }
 
-const MultiCardCarousel = ({ items, itemsPerPage, itemContainerClassName }: Props) => {
+export const MultiCardCarousel = ({ items, itemsPerPage, itemContainerClassName }: Props) => {
 
     const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -98,4 +98,3 @@ const MultiCardCarousel = ({ items, itemsPerPage, itemContainerClassName }: Prop
     )
 }
 
-export default MultiCardCarousel

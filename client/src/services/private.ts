@@ -1,6 +1,6 @@
 import { BaseQueryFn, FetchArgs, createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { RootState } from "../store" 
-import { BACKEND_BASE_URL } from "../helpers/urls" 
+import { BACKEND_BASE_URL } from "../helpers/api-endpoints" 
 import { CustomError } from "../types/common" 
 import { TAG_TYPES } from "../helpers/constants" 
 import { baseQueryWithReauth } from "./customQuery"

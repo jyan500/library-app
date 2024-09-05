@@ -3,7 +3,7 @@ import { RootState } from "../../store"
 import { 
 	BACKEND_BASE_URL, 
 	NEWS_POST_GENRE_URL, 
-} from "../../helpers/urls" 
+} from "../../helpers/api-endpoints" 
 import { CustomError, NewsPostGenre } from "../../types/common" 
 import { privateApi } from "../private"
 import { parseURLParams } from "../../helpers/functions" 

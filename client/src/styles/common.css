@@ -63,7 +63,7 @@
 		border-color var(--transition-duration-inputs) var(--transition-function-inputs);
 	--btn-transition-inputs:
 		opacity var(--transition-duration-inputs) var(--transition-function-inputs);
-	--width-inputs: 300px;
+	--width-inputs: 100%;
 	--width-input-border: 2px;
 	--width-textarea: 450px;
 	--width-menu: 600px;
@@ -108,12 +108,11 @@ input[type="text"] {
 	padding: var(--padding-inputs);
 	border: var(--width-input-border) solid var(--co-textfld-border);
 	border-radius: var(--radius-inputs);
-	width: var(--width-inputs);
+	/*width: var(--width-inputs);*/
 	max-width: 100%;
-	/* normalize the widths between input text and select menus */
-	-webkit-box-sizing: content-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: content-box;    /* Firefox, other Gecko */
-    box-sizing: content-box;         /* Opera/IE 8+ */
+  box-sizing: border-box;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing: border-box;
 	&:focus {
 		outline: 0;
 	}
@@ -180,7 +179,7 @@ input::file-selector-button {
 	margin-right: var(--margin-form-gap);
 }
 
-label {
+.label {
 	cursor: pointer;
 	display: block;
 

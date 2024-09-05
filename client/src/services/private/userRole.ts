@@ -1,6 +1,6 @@
 import { BaseQueryFn, FetchArgs, createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { RootState } from "../../store" 
-import { BACKEND_BASE_URL, USER_ROLE_URL } from "../../helpers/urls" 
+import { BACKEND_BASE_URL, USER_ROLE_URL } from "../../helpers/api-endpoints" 
 import { CustomError, UserRole } from "../../types/common" 
 import { privateApi } from "../private"
 

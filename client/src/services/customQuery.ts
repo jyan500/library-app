@@ -6,7 +6,7 @@ import type {
 } from "@reduxjs/toolkit/query"
 import { logout } from "../slices/authSlice" 
 import { CustomError } from "../types/common"
-import { BACKEND_BASE_URL } from "../helpers/urls" 
+import { BACKEND_BASE_URL } from "../helpers/api-endpoints" 
 import { RootState } from "../store" 
 import { v4 as uuidv4 } from "uuid" 
 

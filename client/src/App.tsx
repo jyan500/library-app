@@ -14,34 +14,44 @@ import ProtectedLayout from "./layouts/ProtectedLayout"
 import { useAppSelector, useAppDispatch } from "./hooks/redux-hooks" 
 import "./styles/common.css" 
 import { ToastList } from "./components/ToastList" 
+import {
+	HOME,
+	LOGIN,
+	REGISTER,
+	BOOKS,
+	BOOK_ID,
+	SEARCH,
+	BROWSE,
+} from "./helpers/routes"
 
 function App() {
 	return (
 		<div>
 			<Routes>
 				<Route element = {<DefaultLayout/>}>
-				    <Route path="/login" element={<Login/>} />
-				    <Route path="/register" element={<Register/>}/>
+				    <Route path={LOGIN} element={<Login/>} />
+				    <Route path={REGISTER} element={<Register/>}/>
 				</Route>
 				<Route element = {<ProtectedLayout/>}>
-					<Route path = "/" element={<Home/>}></Route>
+					<Route path = {HOME} element={<Home/>}></Route>
 					<Route 
-						path = "/books" 
+						path = {BOOKS} 
 						element={<BookDisplay/>}
 					>
+						<Route 
+							path = {BROWSE}
+							element={<BookBrowse/>}
+						>
+						</Route>
 						<Route
-							path=""
+							path = {SEARCH}
 							element={<BookCatalog/>}
 						>
 						</Route>
 						<Route
-							path=""
-							element={<BookBrowse/>}
+							path = {BOOK_ID}
+							element={<Book/>}
 						>
-						</Route>
-						<Route 
-							path = ":bookId"
-							element={<Book/>}>
 						</Route>
 					</Route>
 				</Route>

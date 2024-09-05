@@ -3,15 +3,15 @@ import { RootState } from "../../store"
 import { 
 	BACKEND_BASE_URL, 
 	BOOK_URL, 
-} from "../../helpers/urls" 
-import { CustomError, Book } from "../../types/common" 
+} from "../../helpers/api-endpoints" 
+import { CustomError, ListResponse, Book } from "../../types/common" 
 import { privateApi } from "../private"
 import { parseURLParams } from "../../helpers/functions" 
 
 export const bookApi = privateApi.injectEndpoints({
 	overrideExisting: false,
 	endpoints: (builder) => ({
-		getBooks: builder.query<Array<Book>, Record<string, any>>({
+		getBooks: builder.query<ListResponse<Book>, Record<string, any>>({
 			query: (urlParams) => ({
 				url: `${BOOK_URL}`,
 				method: "GET",
@@ -64,8 +64,9 @@ export const bookApi = privateApi.injectEndpoints({
 })
 
 export const { 
+	useGetBookQuery,
 	useGetBooksQuery, 
-	useGetBookQuery, 
+	useLazyGetBooksQuery, 
 	useAddBookMutation,
 	useUpdateBookMutation,
 	useDeleteBookMutation,

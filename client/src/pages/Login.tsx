@@ -6,6 +6,7 @@ import {v4 as uuidv4} from "uuid"
 import { Link, useLocation, useNavigate } from "react-router-dom" 
 import { useForm } from "react-hook-form"
 import { parseErrorResponse } from "../helpers/functions"
+import { REGISTER } from "../helpers/routes"
 
 type FormValues = {
 	email: string
@@ -40,51 +41,52 @@ export const Login = () => {
 			dispatch(setCredentials(data))
 		}
 		catch (err) {
-			console.log(err)
 		}
 	}
 	return (
-		<div>
+		<div className = "tw-w-full">
 			{/* checking if "status" in error narrows down the type to the CustomError defined in services/auth.ts,
 			 rather than SerializedError Type */}
-			<form className = "form-container" onSubmit={handleSubmit(onSubmit)}>
-				<div><h1>Login</h1></div>
+			<div><h1>Login</h1></div>
+			<form className = "tw-flex tw-flex-col tw-gap-y-4" onSubmit={handleSubmit(onSubmit)}>
 				{error && "status" in error ? (error?.data?.errors?.map((errorMessage) => <p className = "--text-alert" key = {uuidv4()}>{errorMessage}</p>)) : null}
 				{location.state?.alert ? <p>{location.state.alert}</p> : null}
-				<div className = "form-row">
-					<div className = "form-cell">
-					    <label htmlFor = "login-email">
+				<div>
+					<div>
+					    <label className = "label" htmlFor = "login-email">
 					    	Email: 
 					    </label>
 						<input 
 						id="login-email"
 						type="text"
+						className="tw-w-full"
 						{...register("email", registerOptions.email)}
 						/>
 				        {errors?.email && <small className = "--text-alert">{errors?.email.message}</small>}
 				    </div>
 				</div>
-				<div className = "form-row">
-				    <div className = "form-cell">
-					    <label htmlFor = "login-password">
+				<div>
+				    <div>
+					    <label className = "label" htmlFor = "login-password">
 					    	Password:
 					    </label>
 						<input 
 						id="login-password"
 						type="password"
+						className="tw-w-full"
 						{...register("password", registerOptions.password)}
 						/>
 				        {errors?.password && <small className = "--text-alert">{errors?.password.message}</small>}
 				    </div>
 				</div>
-				<div className = "form-row">
-				    <div className = "form-cell">
+				<div>
+				    <div>
 						<button className = "button" type = "submit">Submit</button>
 					</div>
 				</div>
-				<div className = "form-row">
-					<div className = "form-cell">
-						<small>Don't have an account? Click <Link className = "tw-text-sky-500" to={"/register"}>Here</Link> to Register</small>
+				<div>
+					<div>
+						<small>Don't have an account? Click <Link className = "tw-text-sky-500" to={REGISTER}>Here</Link> to Register</small>
 					</div>
 				</div>
 			</form>
