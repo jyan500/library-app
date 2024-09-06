@@ -187,7 +187,7 @@ export const BookCatalog = () => {
 				</FormProvider>
 			</div>
 			{isFetching ? (<LoadingSpinner/>) : (
-				<div className = "tw-grid tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4 xl:tw-grid-cols-5 tw-gap-4">
+				<div className = "tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-5 tw-gap-4">
 					{
 						data?.data?.map((row: Book) => 
 							<BookCard book={row}/>
@@ -196,7 +196,7 @@ export const BookCatalog = () => {
 				</div>
 			)}
 			{!isFetching && data?.pagination ? (
-				<div className = "tw-flex tw-py-4">
+				<div className = "tw-mx-4 md:tw-mx-0 tw-flex tw-py-4">
 					{paginationRow({showPageNums: true, shouldScrollToTop: true})}
 				</div>
 			) : null}
