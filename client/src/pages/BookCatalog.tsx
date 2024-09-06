@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { SearchBar } from "../components/SearchBar" 
+import { BookCard } from "../components/BookCard" 
 import { useForm, FormProvider } from "react-hook-form"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
 import { useLazyGetBooksQuery } from "../services/private/book"
@@ -56,8 +57,9 @@ export const BookCatalog = () => {
 	const onSubmit = (values: FormValues) => {
 	    // Call the query with the current genreId when the form is submitted
 	    // Update the URL with query parameters without reloading the page
-	    trigger(values);
-	    navigate(`${BOOKS_SEARCH}?query=${encodeURIComponent(values.query)}&searchBy=${values.searchBy}&page=${values.page}`, { replace: true });
+
+	    trigger({...values, page: 1})
+	    navigate(`${BOOKS_SEARCH}?query=${encodeURIComponent(values.query)}&searchBy=${values.searchBy}&page=${1}`, { replace: true });
 	}
 
 	const paginationRow = ({showPageNums, shouldScrollToTop}: {showPageNums: boolean, shouldScrollToTop: boolean}) => {
@@ -185,34 +187,16 @@ export const BookCatalog = () => {
 				</FormProvider>
 			</div>
 			{isFetching ? (<LoadingSpinner/>) : (
-				<table className = "tw-table-auto tw-border-collapse">
-					<tbody>
+				<div className = "tw-grid tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4 xl:tw-grid-cols-5 tw-gap-4">
 					{
-						data?.data?.map((row: Book) => {
-							return (
-								<tr className = "tw-h-full tw-border tw-border-gray-300" key = {row.id}>
-									<td className = "tw-w-1/4">
-										<img className = "tw-w-1/2" src = {row.imageURL}/>	
-									</td>
-									<td className = "tw-h-full tw-w-3/4 tw-flex tw-flex-col">
-										<div className = "tw-w-full tw-flex tw-flex-col tw-items-center">
-											<p>{row.title}</p>	
-											<p>{row.author ? `By: ${row.author}` : ""}</p>	
-										</div>
-										<div className = "tw-w-full tw-flex tw-flex-row tw-items-center">
-											<p>Check Availability</p>
-											<button className = "button">Check Out</button>
-										</div>
-									</td>
-								</tr>
-							)	
-						})
+						data?.data?.map((row: Book) => 
+							<BookCard book={row}/>
+						)
 					}
-					</tbody>
-				</table>
+				</div>
 			)}
 			{!isFetching && data?.pagination ? (
-				<div className = "tw-flex tw-py-4 tw-border tw-border-gray-300">
+				<div className = "tw-flex tw-py-4">
 					{paginationRow({showPageNums: true, shouldScrollToTop: true})}
 				</div>
 			) : null}
