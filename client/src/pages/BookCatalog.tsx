@@ -154,9 +154,9 @@ export const BookCatalog = () => {
 					<form>
 						<div className = "tw-gap-y-4 xl:tw-flex-row xl:tw-items-center xl:tw-justify-between tw-w-full tw-p-4 tw-border tw-border-gray-300 tw-shadow-md tw-rounded-lg tw-flex tw-flex-col">
 							<div className = "tw-flex tw-flex-col xl:tw-flex-row tw-gap-y-4 sm:tw-gap-x-4">
-								<div className = "tw-flex tw-flex-col xl:tw-flex-row xl:tw-items-center tw-gap-x-2">
-									<label className = "tw-w-full tw-font-bold tw-mb-2" htmlFor={"search-by"}>Search By</label>
-									<select className = "tw-w-full" id = "search-by" {...register("searchBy", registerOptions.searchBy)}>
+								<div className = "xl:tw-w-64 tw-flex tw-w-full tw-flex-col xl:tw-flex-row xl:tw-items-center tw-gap-x-2">
+									<label className = "xl:tw-w-1/3 tw-w-full tw-font-bold tw-mb-2" htmlFor={"search-by"}>Search By</label>
+									<select className = "xl:tw-w-2/3 tw-w-full" id = "search-by" {...register("searchBy", registerOptions.searchBy)}>
 										<option key = {"title"} value = "title">Title</option>
 										<option key = {"author"} value = "author">Author</option>
 										<option key = {"genre"} value = "genre">Genre</option>
