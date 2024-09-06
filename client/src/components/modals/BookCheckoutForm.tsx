@@ -1,5 +1,9 @@
 import React from "react"
 
-export const BookCheckoutForm = () => {
+type Props = {
+	bookId: number
+}
+
+export const BookCheckoutForm = ({bookId}: Props) => {
 	<div></div>
 }

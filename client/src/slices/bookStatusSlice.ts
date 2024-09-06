@@ -3,7 +3,6 @@ import type { PayloadAction } from "@reduxjs/toolkit"
 import type { RootState } from "../store"
 import type { BookStatus } from "../types/common" 
 import { v4 as uuidv4 } from "uuid" 
-import { modalTypes } from "../components/Modal"
 import { logout } from "./authSlice"
 
 interface BookStatusState {

@@ -1,5 +1,9 @@
 import React from "react"
 
-export const BookAvailabilityModal = () => {
+type Props = {
+	bookId: number
+}
+
+export const BookAvailabilityModal = ({bookId}: Props) => {
 	<div></div>
 }

@@ -80,3 +80,4 @@ export interface ListResponse<T> {
 	data: Array<T>
 }
 
+export type GenericProps = {[key: string]: any}
