@@ -7,9 +7,11 @@ import { userProfileReducer }  from "./slices/userProfileSlice"
 import { modalReducer } from "./slices/modalSlice" 
 import { userRoleReducer } from "./slices/userRoleSlice" 
 import { bookReducer } from "./slices/bookSlice"
+import { libraryReducer } from "./slices/librarySlice"
 import { newsPostReducer } from "./slices/newsPostSlice" 
 import { genreReducer } from "./slices/genreSlice" 
 import { newsPostGenreReducer } from "./slices/newsPostGenreSlice"
+import { bookStatusReducer } from "./slices/bookStatusSlice"
 import { publicApi } from "./services/public"
 import { privateApi } from "./services/private"
 import {
@@ -45,6 +47,8 @@ export const store = configureStore({
 		"newsPost": newsPostReducer,
 		"genre": genreReducer,
 		"newsPostGenre": newsPostGenreReducer,
+		"library": libraryReducer,
+		"bookStatus": bookStatusReducer,
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: {
 			ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]

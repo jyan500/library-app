@@ -100,4 +100,18 @@ router.delete("/:bookId", validateDelete, handleValidationResult, async (req, re
 	}
 })
 
+router.get("/:bookId/library", validateGet, handleValidationResult, async (req, res, next) => {
+	try {
+		const libraries = await db("library_books").where("book_id", req.params.bookId).select(
+			"library_books.book_id as book_id",
+			"library_books.library_id as library_id",
+			"library_books.book_status_id as book_status_id",
+		)
+		res.json(libraries)
+	}	
+	catch (err) {
+		console.log(`Error while getting libraries: ${err.message}`)
+	}
+})
+
 module.exports = router

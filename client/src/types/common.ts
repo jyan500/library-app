@@ -19,9 +19,24 @@ export interface Book {
 	genreId: number
 }
 
+export interface Library {
+	id: number
+	name: string 
+	address: string
+	city: string
+	state: string
+	zipcode: number 
+	imageURL: string
+}
+
 export interface Genre {
 	id: number
 	name: string
+}
+
+export interface BookStatus {
+	id: number
+	name: string	
 }
 
 export interface NewsPostGenre {

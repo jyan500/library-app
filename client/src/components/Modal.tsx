@@ -3,10 +3,12 @@ import { IoMdClose } from "react-icons/io";
 import "../styles/modal.css"
 import { toggleShowModal } from "../slices/modalSlice" 
 import { BookCheckoutForm } from "./modals/BookCheckoutForm"
+import { BookAvailabilityModal } from "./modals/BookAvailabilityModal" 
 import { useAppDispatch, useAppSelector } from "../hooks/redux-hooks" 
 
 export const modalTypes = {
-	"BOOK_CHECKOUT_FORM": BookCheckoutForm
+	"BOOK_CHECKOUT_FORM": BookCheckoutForm,
+	"BOOK_AVAILABILITY": BookAvailabilityModal
 }
 
 export const modalClassNames = {

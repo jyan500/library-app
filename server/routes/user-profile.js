@@ -8,6 +8,7 @@ router.get("/me", async (req, res, next) => {
 		// pulled from token middleware 
 		const {id: userId, userRole} = req.user
 		const userProfile = await db("users")
+			.where("id", userId)
 			.select(
 				"users.id as id", 
 				"users.first_name as firstName", 

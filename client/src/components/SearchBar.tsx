@@ -16,7 +16,7 @@ export const SearchBar = ({placeholder, registerField, registerOptions}: Props) 
 			<IconContext.Provider value={{ className: "icon tw-absolute tw-top-3 tw-left-3"}}>
 				<FaSearch/>
 			</IconContext.Provider>
-			<input {...register(registerField, registerOptions)} placeholder = {placeholder} className = "tw-w-full !tw-pl-10" type = "text"/>
+			<input {...register(registerField, registerOptions)} placeholder = {placeholder} className = "tw-w-full xl:tw-w-96 !tw-pl-10" type = "text"/>
 		</div>
 	)	
 }

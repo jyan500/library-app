@@ -106,7 +106,7 @@ export const Dashboard = () => {
 							<MultiCardCarousel 
 								items={createCardCarouselElements(youthGenreData)} 
 								itemsPerPage={screenSize.width <= XL_BREAKPOINT ? 1 : 3} 
-								itemContainerClassName={"xl:tw-h-[600px]"}
+								itemContainerClassName={"sm:tw-h-[600px]"}
 							/>
 						</div>
 					</div>
@@ -125,7 +125,7 @@ export const Dashboard = () => {
 							<MultiCardCarousel 
 								items={createCardCarouselElements(seniorGenreData)} 
 								itemsPerPage={screenSize.width <= XL_BREAKPOINT ? 1 : 3} 
-								itemContainerClassName={"xl:tw-h-[600px]"}/>
+								itemContainerClassName={"sm:tw-h-[600px]"}/>
 						</div>
 					</div>
 				) : null

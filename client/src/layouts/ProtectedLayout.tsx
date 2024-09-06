@@ -11,11 +11,13 @@ import { useGetUserRolesQuery } from "../services/private/userRole"
 import { useGetNewsPostsQuery } from "../services/private/newsPost"
 import { useGetNewsPostGenresQuery } from "../services/private/newsPostGenre"
 import { useGetGenresQuery } from "../services/private/genre" 
+import { useGetLibrariesQuery } from "../services/private/library" 
 import { setUserProfile, setUserProfiles } from "../slices/userProfileSlice" 
 import { setUserRoles, setUserRoleLookup } from "../slices/userRoleSlice" 
 import { setGenres } from "../slices/genreSlice" 
 import { setNewsPostGenres } from "../slices/newsPostGenreSlice" 
 import { setNewsPosts } from "../slices/newsPostSlice"
+import { setLibraries } from "../slices/librarySlice"
 import { UserRole } from "../types/common" 
 import { LoadingSpinner } from "../components/LoadingSpinner"
 
@@ -25,6 +27,7 @@ const ProtectedLayout = () => {
 	const {data: userProfileData, isFetching: isUserProfileFetching} = useGetUserProfileQuery()
 	const {data: newsPostGenreData, isFetching: isNewsPostGenreFetching } = useGetNewsPostGenresQuery({})
 	const {data: genreData, isFetching: isGenreFetching } = useGetGenresQuery({})
+	const {data: libraryData, isFetching: isLibraryFetching } = useGetLibrariesQuery({})
 
     useEffect(() => {
         // Retrieve user on startup
@@ -38,8 +41,11 @@ const ProtectedLayout = () => {
 	        if (newsPostGenreData){
 	        	dispatch(setNewsPostGenres(newsPostGenreData))
 	        }
+	        if (libraryData){
+	        	dispatch(setLibraries(libraryData))
+	        }
         }
-    }, [userProfileData, genreData, newsPostGenreData]);
+    }, [userProfileData, genreData, newsPostGenreData, libraryData]);
 
 	if (!token){
 		return <Navigate replace to = {"/login"} state={{alert: "You have been logged out"}}/>

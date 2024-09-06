@@ -10,6 +10,7 @@ const userRoleRouter = require("./routes/user-role")
 const newsPostRouter = require("./routes/news-post")
 const genreRouter = require("./routes/genre")
 const newsPostGenreRouter = require("./routes/news-post-genre")
+const libraryRouter = require("./routes/library")
 const auth = require("./middleware/auth-middleware")
 
 
@@ -34,6 +35,7 @@ app.use(api("user-role"), auth.authenticateToken, userRoleRouter)
 app.use(api("genre"), auth.authenticateToken, genreRouter)
 app.use(api("news-post"), auth.authenticateToken, newsPostRouter)
 app.use(api("news-post-genre"), auth.authenticateToken, newsPostGenreRouter)
+app.use(api("library"), auth.authenticateToken, libraryRouter)
 
 /* Public Endpoints */
 app.use(api("user"), userRouter)

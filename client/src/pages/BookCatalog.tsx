@@ -93,7 +93,7 @@ export const BookCatalog = () => {
 								}
 								{
 									showPageNums ? (
-										<div className = "tw-flex tw-flex-row tw-gap-x-1">
+										<div className = "tw-flex tw-flex-wrap tw-gap-x-1">
 											{
 												Array.from(Array(data?.pagination?.lastPage), (_, i) => {
 												return (
@@ -148,11 +148,11 @@ export const BookCatalog = () => {
 	}
 
 	return (
-		<div className = "tw-w-full sm:tw-px-36 md:tw-w-full 2xl:tw-w-3/4 tw-flex tw-flex-col tw-gap-y-4">
-			<div>
+		<div className = "tw-w-full sm:tw-px-36 tw-flex tw-flex-col tw-gap-y-4">
+			<div className = "tw-w-full">
 				<FormProvider {...methods}>
 					<form>
-						<div className = "xl:tw-flex-row xl:tw-items-center xl:tw-justify-between tw-w-full tw-p-4 tw-border tw-border-gray-300 tw-shadow-md tw-rounded-lg tw-flex tw-flex-col">
+						<div className = "tw-gap-y-4 xl:tw-flex-row xl:tw-items-center xl:tw-justify-between tw-w-full tw-p-4 tw-border tw-border-gray-300 tw-shadow-md tw-rounded-lg tw-flex tw-flex-col">
 							<div className = "tw-flex tw-flex-col xl:tw-flex-row tw-gap-y-4 sm:tw-gap-x-4">
 								<div className = "tw-flex tw-flex-col xl:tw-flex-row xl:tw-items-center tw-gap-x-2">
 									<label className = "tw-w-full tw-font-bold tw-mb-2" htmlFor={"search-by"}>Search By</label>
@@ -184,24 +184,24 @@ export const BookCatalog = () => {
 					</form>
 				</FormProvider>
 			</div>
-			<table className = "tw-table-auto">
-				{isFetching ? (<LoadingSpinner/>) : (
+			{isFetching ? (<LoadingSpinner/>) : (
+				<table className = "tw-table-auto tw-border-collapse">
 					<tbody>
 					{
 						data?.data?.map((row: Book) => {
 							return (
-								<tr key = {row.id}>
+								<tr className = "tw-h-full tw-border tw-border-gray-300" key = {row.id}>
 									<td className = "tw-w-1/4">
-										<img className = "tw-w-3/4" src = {row.imageURL}/>	
+										<img className = "tw-w-1/2" src = {row.imageURL}/>	
 									</td>
-									<td className = "tw-w-3/4 tw-flex tw-flex-col">
+									<td className = "tw-h-full tw-w-3/4 tw-flex tw-flex-col">
 										<div className = "tw-w-full tw-flex tw-flex-col tw-items-center">
 											<p>{row.title}</p>	
 											<p>{row.author ? `By: ${row.author}` : ""}</p>	
 										</div>
 										<div className = "tw-w-full tw-flex tw-flex-row tw-items-center">
 											<p>Check Availability</p>
-											<button>Check Out</button>
+											<button className = "button">Check Out</button>
 										</div>
 									</td>
 								</tr>
@@ -209,13 +209,13 @@ export const BookCatalog = () => {
 						})
 					}
 					</tbody>
-				)}
-			</table>
-			<div className = "tw-py-4 tw-border tw-border-gray-300">
-				{!isFetching && data?.pagination ? (
-					paginationRow({showPageNums: true, shouldScrollToTop: true})	
-				) : null}
-			</div>
+				</table>
+			)}
+			{!isFetching && data?.pagination ? (
+				<div className = "tw-flex tw-py-4 tw-border tw-border-gray-300">
+					{paginationRow({showPageNums: true, shouldScrollToTop: true})}
+				</div>
+			) : null}
 		</div>
 	)	
 }
