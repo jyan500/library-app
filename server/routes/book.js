@@ -103,15 +103,31 @@ router.delete("/:bookId", validateDelete, handleValidationResult, async (req, re
 
 router.get("/:bookId/library", validateGet, handleValidationResult, async (req, res, next) => {
 	try {
-		const libraries = await db("library_books").where("book_id", req.params.bookId).select(
-			"library_books.book_id as book_id",
-			"library_books.library_id as library_id",
-			"library_books.book_status_id as book_status_id",
+		const librariesFromBook = await db('library_books')
+		/* 
+			left join with user_books to find the most recent instance of the book
+			being checked out in order to retrieve its due date
+		*/
+		.leftJoin(
+			db('user_books')
+			.select('user_books.library_book_id')
+			.max('user_books.date_due as date_due')
+			.groupBy('user_books.library_book_id')
+			.as('ub'),
+			'ub.library_book_id',
+			'library_books.id'
+		).where("library_books.book_id", req.params.bookId)
+		.select(
+			"library_books.id as id",
+			"library_books.book_id as bookId",
+			"library_books.library_id as libraryId",
+			"library_books.book_status_id as bookStatusId",
+			"date_due as dateDue"
 		)
-		res.json(libraries)
+		res.json(librariesFromBook)
 	}	
 	catch (err) {
-		console.log(`Error while getting libraries: ${err.message}`)
+		console.log(`Error while getting libraries from book: ${err.message}`)
 	}
 })
 

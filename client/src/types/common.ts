@@ -29,6 +29,14 @@ export interface Library {
 	imageURL: string
 }
 
+export interface LibraryBook {
+	id: number
+	bookId: number
+	libraryBookId: number
+	bookStatusId: number
+	dateDue: Date | null
+}
+
 export interface Genre {
 	id: number
 	name: string

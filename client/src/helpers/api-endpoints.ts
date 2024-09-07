@@ -10,3 +10,4 @@ export const NEWS_POST_URL = `/${API_VERSION}/news-post`
 export const GENRE_URL = `/${API_VERSION}/genre`
 export const NEWS_POST_GENRE_URL = `/${API_VERSION}/news-post-genre`
 export const LIBRARY_URL = `/${API_VERSION}/library`
+export const LIBRARY_BOOK_URL = (bookId: number) => `/${API_VERSION}/book/${bookId}/library`

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react"
 import { SearchBar } from "../components/SearchBar" 
-import { BookCard } from "../components/BookCard" 
+import { GridCard } from "../components/GridCard" 
 import { useForm, FormProvider } from "react-hook-form"
-import { Link, useNavigate, useSearchParams } from "react-router-dom"
+import { createSearchParams, Link, useNavigate, useSearchParams } from "react-router-dom"
 import { useLazyGetBooksQuery } from "../services/private/book"
 import { Book } from "../types/common"
 import { LoadingSpinner } from "../components/LoadingSpinner"
-import { BOOKS_SEARCH } from "../helpers/routes"
+import { BOOKS, BOOKS_SEARCH } from "../helpers/routes"
 import { IconContext } from "react-icons" 
 import { v4 as uuidv4 } from "uuid"
 import { GrNext as Next, GrPrevious as Previous } from "react-icons/gr";
@@ -62,7 +62,11 @@ export const BookCatalog = () => {
 	    navigate(`${BOOKS_SEARCH}?query=${encodeURIComponent(values.query)}&searchBy=${values.searchBy}&page=${1}`, { replace: true });
 	}
 
-	const paginationRow = ({showPageNums, shouldScrollToTop}: {showPageNums: boolean, shouldScrollToTop: boolean}) => {
+	const onClickDetails = (id: number) => {
+	    navigate(`${BOOKS}/${id}`);
+	}
+
+	const paginationRow = ({showPageNums}: {showPageNums: boolean}) => {
 		return (
 			<div className = "tw-flex tw-items-center lg:tw-gap-x-4">
 				{
@@ -79,12 +83,6 @@ export const BookCatalog = () => {
 			                                	if (data.pagination.prevPage){
 				                                	setPage(data.pagination.prevPage)
 			                                	}
-			                                	if (shouldScrollToTop){
-													window.scrollTo({
-													    top: 0, 
-													    behavior: 'smooth',
-												    })
-												}
 			                                }}
 			                            >
 			                                <IconContext.Provider value = {{className: "tw-w-4 tw-h-4"}}>
@@ -101,14 +99,6 @@ export const BookCatalog = () => {
 												return (
 												<Link 
 													className = {`tw-px-0.5 ${i+1 === watch("page") ? "tw-font-bold tw-border-b tw-border-gray-800" : ""}`}
-													onClick = {() => { 
-														if (shouldScrollToTop){
-															window.scrollTo({
-															    top: 0, 
-															    behavior: 'smooth',
-														    })
-														}
-													}}
 													key={uuidv4()} 
 													to={`${BOOKS_SEARCH}?query=${encodeURIComponent(watch("query"))}&searchBy=${watch("searchBy")}&page=${i+1}`}>
 													{i+1}
@@ -127,12 +117,6 @@ export const BookCatalog = () => {
 			                                	if (data.pagination.nextPage){
 				                                	setPage(data.pagination.nextPage)
 			                                	}
-			                                	if (shouldScrollToTop){
-													window.scrollTo({
-													    top: 0, 
-													    behavior: 'smooth',
-												    })
-												}
 			                                }}
 			                            >
 			                                <IconContext.Provider value = {{className: "tw-w-4 tw-h-4"}}>
@@ -150,7 +134,7 @@ export const BookCatalog = () => {
 	}
 
 	return (
-		<div className = "tw-w-full sm:tw-px-36 tw-flex tw-flex-col tw-gap-y-4">
+		<>
 			<div className = "tw-w-full">
 				<FormProvider {...methods}>
 					<form>
@@ -172,7 +156,7 @@ export const BookCatalog = () => {
 								<button onClick={handleSubmit(onSubmit)} className = "button tw-bg-primary">Search</button>
 							</div>
 							<div className = "tw-flex tw-items-center lg:tw-gap-x-4">
-								{paginationRow({showPageNums: false, shouldScrollToTop: false})} 
+								{paginationRow({showPageNums: false})} 
 							</div>
 						</div>
 						<div className = "tw-mt-2 tw-ml-6 sm:tw-ml-0">
@@ -190,16 +174,27 @@ export const BookCatalog = () => {
 				<div className = "tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-5 tw-gap-4">
 					{
 						data?.data?.map((row: Book) => 
-							<BookCard book={row}/>
+							<GridCard key={row.id}>
+								<>
+									<img className = "tw-h-auto lg:tw-h-[360px] tw-object-cover" src = {row.imageURL}/>	
+									<div className="tw-flex tw-flex-wrap tw-gap-y-2">
+										<span className = "tw-font-bold">{row.title}</span>
+										<span>{row.author ? `By: ${row.author}` : ""}</span>
+									</div>
+									<div className="tw-flex tw-flex-wrap tw-mt-auto tw-pt-3">
+										<button onClick={() => onClickDetails(row.id)} className = "button">Details</button>
+									</div>
+								</>
+							</GridCard>
 						)
 					}
 				</div>
 			)}
 			{!isFetching && data?.pagination ? (
 				<div className = "tw-mx-4 md:tw-mx-0 tw-flex tw-py-4">
-					{paginationRow({showPageNums: true, shouldScrollToTop: true})}
+					{paginationRow({showPageNums: true})}
 				</div>
 			) : null}
-		</div>
+		</>
 	)	
 }

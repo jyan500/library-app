@@ -3,8 +3,9 @@ import { RootState } from "../../store"
 import { 
 	BACKEND_BASE_URL, 
 	BOOK_URL, 
+	LIBRARY_BOOK_URL
 } from "../../helpers/api-endpoints" 
-import { CustomError, ListResponse, Book } from "../../types/common" 
+import { CustomError, ListResponse, Book, LibraryBook } from "../../types/common" 
 import { privateApi } from "../private"
 import { parseURLParams } from "../../helpers/functions" 
 
@@ -60,12 +61,20 @@ export const bookApi = privateApi.injectEndpoints({
 			}),
 			invalidatesTags: ["Books"]
 		}),
+		getLibrariesFromBook: builder.query<Array<LibraryBook>, number>({
+			query: (id) => ({
+				url: `${LIBRARY_BOOK_URL(id)}`,
+				method: "GET",
+			}),
+			providesTags: ["LibraryBooks"]
+		})
 	}),
 })
 
 export const { 
 	useGetBookQuery,
 	useGetBooksQuery, 
+	useGetLibrariesFromBookQuery,
 	useLazyGetBooksQuery, 
 	useAddBookMutation,
 	useUpdateBookMutation,

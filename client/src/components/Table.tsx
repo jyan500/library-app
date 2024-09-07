@@ -24,9 +24,15 @@ export const Table = ({config, data}: Props) => {
 						<tr key = {row.id}>
 						{
 							Object.keys(config.headers).map((headerKey) => {
-								if (headerKey === config.linkCol){
+								if (headerKey === config.linkCol && headerKey in config.modifiers){
+									const {modifier, object: objectArray} = config.modifiers[headerKey]
 									return (
-										<td key = {headerKey}><Link to = {config.link(row.id)}>{row[headerKey]}</Link></td>
+										<td key = {headerKey}><Link to = {config.link(row[config.linkCol])}>{objectArray.length ? modifier(row[headerKey], objectArray) : modifier(row[headerKey])}</Link></td>
+									)
+								}
+								else if (headerKey === config.linkCol){
+									return (
+										<td key = {headerKey}><Link to = {config.link(row[config.linkCol])}>{row[headerKey]}</Link></td>
 									)
 								}
 								else if (headerKey === config.editCol?.col){

@@ -2,6 +2,7 @@ import React, { useEffect } from "react"
 import { Link, Outlet, useLocation } from "react-router-dom" 
 import { PageHeader } from "../components/page-elements/PageHeader" 
 import { BOOKS, BOOKS_BROWSE, BOOKS_SEARCH } from "../helpers/routes"
+import { Container } from "../components/page-elements/Container"
 
 export const BookDisplay = () => {
 	const { pathname } = useLocation() 
@@ -31,7 +32,9 @@ export const BookDisplay = () => {
 				<p className = "tw-my-1 tw-text-4xl tw-font-bold tw-text-white">Books</p>	
 				{subText()}
 			</PageHeader>
-			<Outlet/>
+			<Container>
+				<Outlet/>
+			</Container>
 		</div>
 	)
 }

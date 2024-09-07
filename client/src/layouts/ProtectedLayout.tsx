@@ -11,9 +11,11 @@ import { useGetUserRolesQuery } from "../services/private/userRole"
 import { useGetNewsPostsQuery } from "../services/private/newsPost"
 import { useGetNewsPostGenresQuery } from "../services/private/newsPostGenre"
 import { useGetGenresQuery } from "../services/private/genre" 
+import { useGetBookStatusesQuery } from "../services/private/bookStatus" 
 import { useGetLibrariesQuery } from "../services/private/library" 
 import { setUserProfile, setUserProfiles } from "../slices/userProfileSlice" 
 import { setUserRoles, setUserRoleLookup } from "../slices/userRoleSlice" 
+import { setBookStatuses } from "../slices/bookStatusSlice" 
 import { setGenres } from "../slices/genreSlice" 
 import { setNewsPostGenres } from "../slices/newsPostGenreSlice" 
 import { setNewsPosts } from "../slices/newsPostSlice"
@@ -28,6 +30,7 @@ const ProtectedLayout = () => {
 	const {data: newsPostGenreData, isFetching: isNewsPostGenreFetching } = useGetNewsPostGenresQuery({})
 	const {data: genreData, isFetching: isGenreFetching } = useGetGenresQuery({})
 	const {data: libraryData, isFetching: isLibraryFetching } = useGetLibrariesQuery({})
+	const {data: bookStatusData, isFetching: isBookStatusFetching} = useGetBookStatusesQuery({})
 
     useEffect(() => {
         // Retrieve user on startup
@@ -43,6 +46,9 @@ const ProtectedLayout = () => {
 	        }
 	        if (libraryData){
 	        	dispatch(setLibraries(libraryData))
+	        }
+	        if (bookStatusData){
+	        	dispatch(setBookStatuses(bookStatusData))	
 	        }
         }
     }, [userProfileData, genreData, newsPostGenreData, libraryData]);

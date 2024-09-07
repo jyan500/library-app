@@ -85,7 +85,7 @@ export const MultiCardCarousel = ({ items, itemsPerPage, itemContainerClassName 
                             {
                                 Array.from(Array(Math.ceil(items.length/itemsPerPage)), (_, i) => {
                                     return (
-                                        <div className = {`tw-transition tw-w-3 tw-h-3 tw-bg-gray-800 tw-rounded-full ${currentIndex === i ? "tw-p-2" : "tw-bg-opacity-50"}`}></div>
+                                        <div key = {uuidv4()} className = {`tw-transition tw-w-3 tw-h-3 tw-bg-gray-800 tw-rounded-full ${currentIndex === i ? "tw-p-2" : "tw-bg-opacity-50"}`}></div>
                                     )
                                 })
                             }   

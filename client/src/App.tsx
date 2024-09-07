@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './App.css';
-import { Route, Routes } from "react-router-dom"
+import { createBrowserRouter, RouterProvider, ScrollRestoration } from "react-router-dom"
 import { Login } from "./pages/Login" 
 import { Home } from "./pages/Home" 
 import { HamburgerButton } from "./components/HamburgerButton" 
@@ -24,10 +24,65 @@ import {
 	BROWSE,
 } from "./helpers/routes"
 
+// Define routes using createBrowserRouter
+const router = createBrowserRouter([
+	{
+		element: 
+		<>	
+			<ScrollRestoration/>
+			<DefaultLayout />
+		</>
+		,
+		children: [
+			{
+				path: LOGIN,
+				element: <Login />,
+			},
+			{
+				path: REGISTER,
+				element: <Register />,
+			},
+		],
+	},
+	{
+		element: <>
+			<ScrollRestoration/>
+			<ProtectedLayout />
+		</>,
+		children: [
+			{
+				path: HOME,
+				element: <Home />,
+			},
+			{
+				path: BOOKS,
+				element: 
+					<BookDisplay />
+				,
+				children: [
+					{
+						path: BROWSE,
+						element: <BookBrowse />,
+					},
+					{
+						path: SEARCH,
+						element: <BookCatalog />,
+					},
+					{
+						path: BOOK_ID,
+						element: <Book />,
+					},
+				],
+			},
+		],
+	},
+])
+
 function App() {
 	return (
 		<div>
-			<Routes>
+			{/*<ScrollToTop/>*/}
+		{/*	<Routes>
 				<Route element = {<DefaultLayout/>}>
 				    <Route path={LOGIN} element={<Login/>} />
 				    <Route path={REGISTER} element={<Register/>}/>
@@ -56,7 +111,9 @@ function App() {
 					</Route>
 				</Route>
 			</Routes>
-			<ToastList/>
+*/}			
+		<RouterProvider router={router}/>
+		<ToastList/>
 		</div>
 	)
 }

@@ -7,7 +7,11 @@ export const userProfileModifier = (idList: Array<number>, userList: Array<UserP
 	}).filter((s) => s !== "").join(", ")	
 }
 
+export const getNameFromIDModifier = (id: number, objectList: Array<{id: number, name: string}> | null) => {
+	return objectList?.find((obj) => obj.id === id)?.name
+}
+
 // convert UTC timestamp from backend to date format for display
-export const dateModifier = (date: string) => {
-	return new Date(date).toLocaleDateString()	
+export const dateModifier = (date: string | null) => {
+	return date ? new Date(date).toLocaleDateString() : ""
 }

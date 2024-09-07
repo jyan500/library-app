@@ -1,8 +1,9 @@
 export const TAG_TYPES = [
 	"Books",
+	"LibraryBooks",
 	"Genres",
 	"NewsPosts",
-	"NewsPostGenres"
+	"NewsPostGenres",
 ]
 
 export const SM_BREAKPOINT = 640
