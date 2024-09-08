@@ -2,7 +2,6 @@ import { createSlice, current } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
 import type { RootState } from "../store"
 import { logout } from "./authSlice" 
-import { GenericProps } from "../types/common"
 import { modalTypes } from "../components/Modal"
 
 

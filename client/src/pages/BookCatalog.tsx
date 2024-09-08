@@ -176,7 +176,7 @@ export const BookCatalog = () => {
 						data?.data?.map((row: Book) => 
 							<GridCard key={row.id}>
 								<>
-									<img className = "tw-h-auto lg:tw-h-[360px] tw-object-cover" src = {row.imageURL}/>	
+									<img className = "tw-h-auto lg:tw-h-[360px] tw-object-cover" src = {row.imageURL} alt={row.title}/>	
 									<div className="tw-flex tw-flex-wrap tw-gap-y-2">
 										<span className = "tw-font-bold">{row.title}</span>
 										<span>{row.author ? `By: ${row.author}` : ""}</span>

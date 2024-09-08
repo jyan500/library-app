@@ -32,7 +32,7 @@ export interface Library {
 export interface LibraryBook {
 	id: number
 	bookId: number
-	libraryBookId: number
+	libraryId: number
 	bookStatusId: number
 	dateDue: Date | null
 }
@@ -63,6 +63,14 @@ export interface NewsPost {
 export interface CustomError {
 	data: Record<string, Array<string>>
 	status: number
+}
+
+export interface CartItem {
+	cartId: string
+	libraryBookId: number
+	bookStatusId: number
+	libraryId: number
+	book: Book
 }
 
 export interface Toast {

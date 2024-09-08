@@ -20,6 +20,7 @@ import { setGenres } from "../slices/genreSlice"
 import { setNewsPostGenres } from "../slices/newsPostGenreSlice" 
 import { setNewsPosts } from "../slices/newsPostSlice"
 import { setLibraries } from "../slices/librarySlice"
+import { setCartItems } from "../slices/bookCartSlice"
 import { UserRole } from "../types/common" 
 import { LoadingSpinner } from "../components/LoadingSpinner"
 
@@ -50,6 +51,8 @@ const ProtectedLayout = () => {
 	        if (bookStatusData){
 	        	dispatch(setBookStatuses(bookStatusData))	
 	        }
+	        const existingCartItems = JSON.parse(localStorage.getItem("cartItems") ?? "[]")
+	        dispatch(setCartItems(existingCartItems))
         }
     }, [userProfileData, genreData, newsPostGenreData, libraryData]);
 

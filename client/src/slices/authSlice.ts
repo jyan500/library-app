@@ -16,6 +16,7 @@ const authSlice = createSlice({
     reducers: {
         logout: (state) => {
             localStorage.removeItem("token")
+            localStorage.removeItem("cartItems")
             state.token = null
         },
         setCredentials: (state, {payload: { token }}: PayloadAction<{ token: string }>) => {

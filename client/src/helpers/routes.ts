@@ -10,3 +10,4 @@ export const BOOKS_SEARCH = `${BOOKS}/${SEARCH}`
 export const LOCATIONS = "/locations"
 export const ACCOUNT = "/account"
 export const LIBRARY = "/library"
+export const CHECKOUT = "/checkout"
