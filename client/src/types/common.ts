@@ -61,7 +61,7 @@ export interface NewsPost {
 }
 
 export interface CustomError {
-	data: Record<string, Array<string>>
+	data: Record<string, any>
 	status: number
 }
 
@@ -97,3 +97,10 @@ export interface ListResponse<T> {
 }
 
 export type GenericProps = {[key: string]: any}
+
+export type CheckoutCustomError = {
+	cartId: string
+	canCheckout: boolean
+	bookStatusId: number
+}
+

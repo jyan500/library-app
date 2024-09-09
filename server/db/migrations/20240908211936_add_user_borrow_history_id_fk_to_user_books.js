@@ -14,7 +14,7 @@ exports.up = function(knex) {
  * @returns { Promise<void> }
  */
 exports.down = function(knex) {
-	return knex.schema.alterTable("news_posts", (table) => {
+	return knex.schema.alterTable("user_books", (table) => {
 		table.dropForeign("user_borrow_history_id")
 		table.dropColumn("user_borrow_history_id")
 	}) 

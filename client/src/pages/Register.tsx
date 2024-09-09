@@ -43,7 +43,7 @@ export const Register = () => {
 		<div className = "tw-w-full">
 			<div><h1>Register</h1></div>
 			<form className = "tw-flex tw-flex-col tw-gap-y-4" onSubmit={handleSubmit(onSubmit)}>
-				{error && "status" in error ? (error.data.errors?.map((errorMessage) => <p className = "--text-alert" key = {uuidv4()}>{errorMessage}</p>)) : null}
+				{error && "status" in error ? (error.data.errors?.map((errorMessage: string) => <p className = "--text-alert" key = {uuidv4()}>{errorMessage}</p>)) : null}
 				<div>
 					<div>
 					    <label className = "label" htmlFor = "register-firstname">

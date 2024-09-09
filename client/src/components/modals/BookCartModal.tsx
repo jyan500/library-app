@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Book, LibraryBook } from "../../types/common"
+import { Book, LibraryBook, CustomError, CheckoutCustomError } from "../../types/common"
 import { useForm } from "react-hook-form"
 import { useAppDispatch, useAppSelector } from "../../hooks/redux-hooks"
 import { toggleShowModal, setModalProps, setModalType } from "../../slices/modalSlice"
@@ -9,6 +9,9 @@ import { BOOKS_SEARCH } from "../../helpers/routes"
 import { CartItem } from "../../types/common" 
 import { addToast } from "../../slices/toastSlice"
 import { RowBookCard } from "../RowBookCard"
+import { useCheckoutMutation } from "../../services/private/checkout"
+import { IoIosWarning as WarningIcon } from "react-icons/io"
+import { IconContext } from "react-icons"
 import { v4 as uuidv4 } from "uuid" 
 
 export const BookCartModal = () => {
@@ -17,7 +20,12 @@ export const BookCartModal = () => {
 	const { bookStatuses } = useAppSelector((state) => state.bookStatus)
 	const { libraries } = useAppSelector((state) => state.library)
 	const { cartItems } = useAppSelector((state) => state.bookCart)
-	// const checkoutmutation
+	const [ checkout, {isLoading, error}] = useCheckoutMutation() 
+
+	useEffect(() => {
+		if (error && "status" in error){
+		}
+	}, [error])
 
 	const removeFromList = (cartItemId: string) => {
 		dispatch(setCartItems(cartItems.filter((cItem: CartItem) => cItem.cartId !== cartItemId)))
@@ -30,17 +38,17 @@ export const BookCartModal = () => {
 	}
 
 	const onCheckout = async () => {
-		// if (){
-
-		// }
-		// else {
-		// 	dispatch(addToast({
-		// 		id: uuidv4(),
-		// 		message: "Something has gone wrong. One or more books are no longer available!",
-		// 		animationType: "animation-in",
-		// 		type: "failure"
-		// 	}))
-		// }
+		try {
+			await checkout(cartItems).unwrap()
+		}
+		catch (e){
+			dispatch(addToast({
+				id: uuidv4(),
+				message: "Something has gone wrong. One or more books are no longer available!",
+				animationType: "animation-in",
+				type: "failure"
+			}))
+		}
 	}
 
 	return (
@@ -51,23 +59,35 @@ export const BookCartModal = () => {
 			{cartItems?.length ? (
 				<div className = "tw-flex tw-flex-col tw-gap-y-2">
 					<p className = "tw-font-bold tw-text-2xl">Total: {cartItems?.length}</p>
-					<p>Books will be due two weeks from the current date</p>
 					{cartItems?.map((item: CartItem) => {
+						const cannotCheckout = error && "status" in error && error.data?.errors?.find((data: CheckoutCustomError) => data.cartId === item.cartId)
 						return (
-							<RowBookCard book={item.book}>
-								<>
-									<div className = "tw-border-t tw-border-gray-300"></div>
-									<div>
-										<span>{bookStatuses.find((status) => status.id === item.bookStatusId)?.name}</span>	
-									</div>
-									<div>
-										<span>{libraries.find((library) => library.id === item.libraryId)?.name} Library</span>
-									</div>
-									<div className = "mt-auto">
-										<button onClick = {() => removeFromList(item.cartId)} className = "button --alert">Remove from List</button>
-									</div>
-								</>
-							</RowBookCard>
+							<div className = "tw-relative">
+								<RowBookCard 
+									highlightBorder={`${cannotCheckout ? "tw-border tw-border-red-500" : ""}`} 
+									book={item.book}
+								>
+									<>
+										<div className = "tw-border-t tw-border-gray-300"></div>
+										<div>
+											{cannotCheckout ? 
+												<s className = "tw-text-red-500">{bookStatuses.find((status) => status.id === item.bookStatusId)?.name}</s> 
+												: (<span>{bookStatuses.find((status) => status.id === item.bookStatusId)?.name}</span>)}	
+										</div>
+										<div>
+											<span>{libraries.find((library) => library.id === item.libraryId)?.name} Library</span>
+										</div>
+										<div className = "mt-auto">
+											<button onClick = {() => removeFromList(item.cartId)} className = "button --alert">Remove from List</button>
+										</div>
+									</>
+								</RowBookCard>
+								{cannotCheckout ? (
+									<IconContext.Provider value={{color: "var(--bs-danger)", className: "tw-absolute tw-top-3 tw-right-3 tw-w-10 tw-h-10"}}>
+										<WarningIcon/>		
+									</IconContext.Provider>
+								) : null}
+							</div>
 						)	
 					})}
 					<button onClick={onCheckout} className = "button">Checkout</button>

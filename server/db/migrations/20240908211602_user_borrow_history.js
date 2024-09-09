@@ -5,7 +5,7 @@
 exports.up = function(knex) {
 		return knex.schema.createTable("user_borrow_history", (table) => {
 		table.increments("id").primary()
-		table.integer("transaction_num").notNullable()
+		table.integer("transaction_num").unique().notNullable()
 		table.integer("user_id").unsigned().notNullable()
 		table.foreign("user_id").references("users.id").onDelete("cascade")
 	 	table.timestamp('created_at').defaultTo(knex.fn.now());	

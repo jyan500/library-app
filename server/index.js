@@ -13,8 +13,9 @@ const newsPostGenreRouter = require("./routes/news-post-genre")
 const bookStatusRouter = require("./routes/book-status")
 const libraryRouter = require("./routes/library")
 const checkoutRouter = require("./routes/checkout")
+const userBorrowHistoryRouter = require("./routes/user-borrow-history")
+const userBookRouter = require("./routes/user-book")
 const auth = require("./middleware/auth-middleware")
-
 
 const api = (route, apiVersion = "") => {
 	return `/api${apiVersion}/${route}`
@@ -40,6 +41,8 @@ app.use(api("news-post-genre"), auth.authenticateToken, newsPostGenreRouter)
 app.use(api("library"), auth.authenticateToken, libraryRouter)
 app.use(api("book-status"), auth.authenticateToken, bookStatusRouter)
 app.use(api("checkout"), auth.authenticateToken, checkoutRouter)
+app.use(api("user-borrow-history"), auth.authenticateToken, userBorrowHistoryRouter)
+app.use(api("user-book"), auth.authenticateToken, userBookRouter)
 
 /* Public Endpoints */
 app.use(api("user"), userRouter)
