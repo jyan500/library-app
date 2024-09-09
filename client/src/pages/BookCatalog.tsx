@@ -4,11 +4,13 @@ import { GridCard } from "../components/GridCard"
 import { useForm, FormProvider } from "react-hook-form"
 import { createSearchParams, Link, useNavigate, useSearchParams } from "react-router-dom"
 import { useLazyGetBooksQuery } from "../services/private/book"
-import { Book } from "../types/common"
+import { useAppSelector } from "../hooks/redux-hooks"
+import { Book, CartItem } from "../types/common"
 import { LoadingSpinner } from "../components/LoadingSpinner"
 import { BOOKS, BOOKS_SEARCH } from "../helpers/routes"
 import { IconContext } from "react-icons" 
 import { v4 as uuidv4 } from "uuid"
+import { FaBookmark as Bookmark } from "react-icons/fa";
 import { GrNext as Next, GrPrevious as Previous } from "react-icons/gr";
 
 type FormValues = {
@@ -25,6 +27,7 @@ export const BookCatalog = () => {
 		searchBy: "title" ,
 		page: 1 
 	}
+	const { cartItems } = useAppSelector((state) => state.bookCart) 
 	const [preloadedValues, setPreloadedValues] = useState<FormValues>(defaultForm)
 	const methods = useForm<FormValues>({defaultValues: preloadedValues})
 	const { register, handleSubmit, reset, watch, setValue, formState: {errors} } = methods
@@ -173,20 +176,30 @@ export const BookCatalog = () => {
 			{isFetching ? (<LoadingSpinner/>) : (
 				<div className = "tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-5 tw-gap-4">
 					{
-						data?.data?.map((row: Book) => 
-							<GridCard key={row.id}>
-								<>
-									<img className = "tw-h-auto lg:tw-h-[360px] tw-object-cover" src = {row.imageURL} alt={row.title}/>	
-									<div className="tw-flex tw-flex-wrap tw-gap-y-2">
-										<span className = "tw-font-bold">{row.title}</span>
-										<span>{row.author ? `By: ${row.author}` : ""}</span>
-									</div>
-									<div className="tw-flex tw-flex-wrap tw-mt-auto tw-pt-3">
-										<button onClick={() => onClickDetails(row.id)} className = "button">Details</button>
-									</div>
-								</>
-							</GridCard>
-						)
+						data?.data?.map((row: Book) => {
+							const inCart = cartItems?.find((item: CartItem) => item.book.id === row.id)
+							return (
+								<GridCard key={row.id}>
+									<>
+										<img className = "tw-h-auto lg:tw-h-[360px] tw-object-cover" src = {row.imageURL} alt={row.title}/>	
+										<div className="tw-flex tw-flex-wrap tw-gap-y-2">
+											<span className = "tw-font-bold">{row.title}</span>
+											<span>{row.author ? `By: ${row.author}` : ""}</span>
+										</div>
+										<div className="tw-flex tw-flex-wrap tw-justify-between tw-items-center tw-mt-auto tw-pt-3 tw-gap-x-2">
+											<button onClick={() => onClickDetails(row.id)} className = "button">Details</button>
+											{
+												inCart ? (
+													<IconContext.Provider value={{color: "var(--bs-primary)", className: "tw-w-6 tw-h-6"}}>
+														<Bookmark/>
+													</IconContext.Provider>
+												) : null 
+											}
+										</div>
+									</>
+								</GridCard>
+							)
+						})
 					}
 				</div>
 			)}

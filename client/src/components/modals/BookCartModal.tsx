@@ -9,7 +9,7 @@ import { BOOKS_SEARCH } from "../../helpers/routes"
 import { CartItem } from "../../types/common" 
 import { addToast } from "../../slices/toastSlice"
 import { RowBookCard } from "../RowBookCard"
-import { useCheckoutMutation } from "../../services/private/checkout"
+import { useCheckoutValidateMutation } from "../../services/private/checkout"
 import { IoIosWarning as WarningIcon } from "react-icons/io"
 import { IconContext } from "react-icons"
 import { v4 as uuidv4 } from "uuid" 
@@ -20,12 +20,7 @@ export const BookCartModal = () => {
 	const { bookStatuses } = useAppSelector((state) => state.bookStatus)
 	const { libraries } = useAppSelector((state) => state.library)
 	const { cartItems } = useAppSelector((state) => state.bookCart)
-	const [ checkout, {isLoading, error}] = useCheckoutMutation() 
-
-	useEffect(() => {
-		if (error && "status" in error){
-		}
-	}, [error])
+	const [ checkoutValidate, {isLoading, error}] = useCheckoutValidateMutation() 
 
 	const removeFromList = (cartItemId: string) => {
 		dispatch(setCartItems(cartItems.filter((cItem: CartItem) => cItem.cartId !== cartItemId)))
@@ -39,12 +34,12 @@ export const BookCartModal = () => {
 
 	const onCheckout = async () => {
 		try {
-			await checkout(cartItems).unwrap()
+			await checkoutValidate(cartItems).unwrap()
 		}
 		catch (e){
 			dispatch(addToast({
 				id: uuidv4(),
-				message: "Something has gone wrong. One or more books are no longer available!",
+				message: "One or more books are no longer available! Please remove highlighted books from list.",
 				animationType: "animation-in",
 				type: "failure"
 			}))

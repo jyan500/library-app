@@ -2,18 +2,24 @@ import { BaseQueryFn, FetchArgs, createApi, fetchBaseQuery } from "@reduxjs/tool
 import { RootState } from "../../store" 
 import { 
 	BACKEND_BASE_URL, 
-	CHECKOUT_URL, 
+	CHECKOUT_VALIDATE_URL, 
 } from "../../helpers/api-endpoints" 
 import { CartItem, CustomError } from "../../types/common" 
 import { privateApi } from "../private"
 import { parseURLParams } from "../../helpers/functions" 
 
+type CheckoutValidateResponse = {
+	cartId: number
+	sessionEnd: Date
+	message: string
+}
+
 export const checkoutApi = privateApi.injectEndpoints({
 	overrideExisting: false,
 	endpoints: (builder) => ({
-		checkout: builder.mutation<{id: number, message: string}, Array<CartItem>>({
+		checkoutValidate: builder.mutation<CheckoutValidateResponse, Array<CartItem>>({
 			query: (cartItems) => ({
-				url: `${CHECKOUT_URL}`,
+				url: `${CHECKOUT_VALIDATE_URL}`,
 				method: "POST",
 				body: {
 					cartItems: cartItems.map((item: CartItem) => {
@@ -31,5 +37,5 @@ export const checkoutApi = privateApi.injectEndpoints({
 })
 
 export const { 
-	useCheckoutMutation,
+	useCheckoutValidateMutation,
 } = checkoutApi 
