@@ -100,7 +100,7 @@ export const BookCatalog = () => {
 												return (
 												<Link 
 													className = {`tw-px-0.5 ${i+1 === watch("page") ? "tw-font-bold tw-border-b tw-border-gray-800" : ""}`}
-													key={uuidv4()} 
+													key={`pagination_page_${i}`} 
 													to={`${BOOKS_SEARCH}?query=${encodeURIComponent(watch("query"))}&searchBy=${watch("searchBy")}&page=${i+1}`}>
 													{i+1}
 												</Link>	)

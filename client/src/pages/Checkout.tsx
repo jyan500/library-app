@@ -6,13 +6,14 @@ import { RowBookCard } from "../components/RowBookCard"
 import { IconContext } from "react-icons"
 import { GrPrevious as Previous } from "react-icons/gr";
 import { useCheckoutSubmitMutation, useCheckoutCancelMutation } from "../services/private/checkout"
-import { HOME } from "../helpers/routes"
+import { CONFIRMATION, HOME } from "../helpers/routes"
 import { CartItem } from "../types/common"
 import { addToast } from "../slices/toastSlice"
 import { setCartItems, setDbCartId, setSessionEndTime } from "../slices/bookCartSlice"
 import { BOOK_CHECKOUT_NUM_DAYS } from "../helpers/constants" 
 import { IconButton } from "../components/page-elements/IconButton"
 import { v4 as uuidv4 } from "uuid"
+import { CustomError } from "../types/common"
 
 export const Checkout = () => {
 	const location = useLocation()
@@ -46,33 +47,49 @@ export const Checkout = () => {
 				}))
 			}
 		}
+		dispatch(setDbCartId(null))
+		dispatch(setSessionEndTime(null))
 		navigate("/", {replace: true})
 	}
 
 	const onCheckout = async () => {
 		if (dbCartId){
 			try {
-				await checkoutSubmit({cartId: dbCartId, cartItems: cartItems}).unwrap()
+				const data = await checkoutSubmit({cartId: dbCartId, cartItems: cartItems}).unwrap()
 				dispatch(addToast({
 					id: uuidv4(),
 					message: "Checkout was successful!",
 					type: "success",
 					animationType: "animation-in"
 				}))
+				dispatch(setCartItems([]))
+				navigate(CONFIRMATION, {state: {userBorrowHistoryId: data.userBorrowHistoryId}, replace: true})
 			}
 			catch (e) {
-				dispatch(addToast({
-					id: uuidv4(),
-					message: "Something went wrong during your transaction. Please press the 'Return to Home' button in the top right and re-enter the cart to try again",
-					type: "failure",
-					animationType: "animation-in"
-				}))
+				const error = e as CustomError
+				let message = "Please press the 'Return to Home' button in the top right and re-enter the cart to try again"
+				if (error.status === 400){
+					dispatch(addToast({
+						id: uuidv4(),
+						message: `Something went wrong during your transaction. ${error.data?.errors?.[0]}. ${message}`,
+						type: "failure",
+						animationType: "animation-in"
+					}))
+				}
+				else {
+					dispatch(addToast({
+						id: uuidv4(),
+						message: `Something went wrong during your transaction. ${message}`,
+						type: "failure",
+						animationType: "animation-in"
+					}))
+				}
 			}
 		}
 	}
 
 	return (
-		<div className = "tw-flex tw-flex-col tw-gap-y-2">
+		<div className = "tw-p-4 tw-flex tw-flex-col tw-gap-y-2">
 			<div>
 				<IconButton onClick={cancelCheckout}>
 					<div className = "tw-flex tw-flex-row tw-gap-x-4 tw-items-center">
@@ -97,7 +114,7 @@ export const Checkout = () => {
 								<span>{libraries.find((library) => library.id === item.libraryId)?.name} Library</span>
 							</div>
 							<div>
-								<span className = "tw-font-bold">Due Date: {dueDate.toLocaleDateString()}</span>
+								<span className = "tw-font-bold">Due Date: {dueDate.toLocaleDateString("en-US")}</span>
 							</div>
 						</>
 					</RowBookCard>

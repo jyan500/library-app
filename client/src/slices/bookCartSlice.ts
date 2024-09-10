@@ -24,10 +24,10 @@ export const bookCartSlice = createSlice({
 			state.cartItems = action.payload
 			localStorage.setItem("cartItems", JSON.stringify(action.payload))
 		},
-		setDbCartId(state, action:PayloadAction<number>){
+		setDbCartId(state, action:PayloadAction<number | null>){
 			state.dbCartId = action.payload
 		},
-		setSessionEndTime(state, action: PayloadAction<Date>){
+		setSessionEndTime(state, action: PayloadAction<Date | null>){
 			state.sessionEndTime = action.payload	
 		}
 	},

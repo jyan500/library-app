@@ -15,3 +15,4 @@ export const CHECKOUT_URL = `/${API_VERSION}/checkout`
 export const CHECKOUT_VALIDATE_URL = `/${API_VERSION}/checkout/validate`
 export const CHECKOUT_CANCEL_URL = `/${API_VERSION}/checkout/cancel`
 export const CHECKOUT_SUBMIT_URL = `/${API_VERSION}/checkout/submit`
+export const USER_BORROW_HISTORY_URL = `/${API_VERSION}/user-borrow-history`

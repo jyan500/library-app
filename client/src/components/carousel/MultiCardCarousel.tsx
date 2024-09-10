@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { IconContext } from "react-icons"
 import { GrNext as Next, GrPrevious as Previous } from "react-icons/gr";
-import { v4 as uuidv4 } from "uuid"
 import { IconButton } from "../page-elements/IconButton"
 
 interface Props {
@@ -45,12 +44,12 @@ export const MultiCardCarousel = ({ items, itemsPerPage, itemContainerClassName 
                         it's negative so the animation will start from right to left
                     */}
                     <div className="tw-flex tw-transition-transform tw-duration-700 tw-ease-in-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-                        {items.map((item) => (
+                        {items.map((item, i) => (
                             /* 
                                 Renders all items, the combination of flex-shrink-0 on each flex item, as well as the width being set to the percent each item takes per page
                                 gives the illusion that only a certain amount of items display on each page based on the itemsPerPage.
                             */
-                            <div key={uuidv4()} style = {style} className = {`${itemContainerClassName ?? ""} tw-relative tw-w-full tw-h-full tw-flex-shrink-0 tw-px-2`}>
+                            <div key={`carousel_item_${i}`} style = {style} className = {`${itemContainerClassName ?? ""} tw-relative tw-w-full tw-h-full tw-flex-shrink-0 tw-px-2`}>
                                 {item}
                             </div>
                         ))}
@@ -86,7 +85,7 @@ export const MultiCardCarousel = ({ items, itemsPerPage, itemContainerClassName 
                             {
                                 Array.from(Array(Math.ceil(items.length/itemsPerPage)), (_, i) => {
                                     return (
-                                        <div key = {uuidv4()} className = {`tw-transition tw-w-3 tw-h-3 tw-bg-gray-800 tw-rounded-full ${currentIndex === i ? "tw-p-2" : "tw-bg-opacity-50"}`}></div>
+                                        <div key = {`carousel_pagination_${i}`} className = {`tw-transition tw-w-3 tw-h-3 tw-bg-gray-800 tw-rounded-full ${currentIndex === i ? "tw-p-2" : "tw-bg-opacity-50"}`}></div>
                                     )
                                 })
                             }   

@@ -9,6 +9,7 @@ const { handleValidationResult }  = require("../middleware/validation-middleware
 const db = require("../db/db")
 const { mapIdToRowAggregateArray, mapIdToRowObject } = require("../helpers/functions") 
 const { CART_SESSION_MINUTE_TIME_LIMIT, BOOK_CHECKOUT_NUM_DAYS } = require("../constants")
+const ShortUniqueId = require('short-unique-id')
 
 const getBookAvailabilityFromCart = async (userId, cartItems) => {
 	const available = await db("book_statuses").where("name", "Available").first()
@@ -129,21 +130,28 @@ router.post("/submit", validateCheckoutSubmit, handleValidationResult, async (re
 			const dateDue = new Date()
 			// books are due in two weeks
 			dateDue.setDate(dateDue.getDate() + BOOK_CHECKOUT_NUM_DAYS)
-			const transactionId = await db("user_borrow_history").insert({
+			const { randomUUID } = new ShortUniqueId({length: 10})
+			const borrowHistoryId = await db("user_borrow_history").insert({
 				user_id: userId,
+				transaction_num: randomUUID()
 			}, ["id"])
 			await db("user_books").insert(cartItems.map((cartItem) => {
 				return {
 					user_id: userId,
 					library_book_id: cartItem.library_book_id,
-					user_borrow_history_id: transactionId[0],
+					user_borrow_history_id: borrowHistoryId[0],
 					date_borrowed: new Date(),
 					date_due: dateDue,
 				}
 			}))
 			// update books to proper status
 			await db("library_books").update({"book_status_id": borrowedStatus.id}).whereIn("id", cartItems.map((cartItem) => cartItem.library_book_id))
-			res.json({message: "Books have been checked out successfully!"})
+
+			// delete the cart and all cart items
+			await db("user_cart_items").where("user_cart_id", req.body.cart_id).del()
+			await db("user_carts").where("id", req.body.cart_id).del()
+		
+			res.json({userBorrowHistoryId: borrowHistoryId[0], message: "Books have been checked out successfully!"})
 		}
 		/* 
 			If one of the books is no longer available, OR the session end time

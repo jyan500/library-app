@@ -34,7 +34,7 @@ export const checkoutApi = privateApi.injectEndpoints({
 				}
 			}),
 		}),	
-		checkoutSubmit: builder.mutation<{message: string}, {cartId: number, cartItems: Array<CartItem>}>({
+		checkoutSubmit: builder.mutation<{userBorrowHistoryId: string, message: string}, {cartId: number, cartItems: Array<CartItem>}>({
 			query: ({cartId, cartItems}) => ({
 				url: `${CHECKOUT_SUBMIT_URL}`,
 				method: "POST",

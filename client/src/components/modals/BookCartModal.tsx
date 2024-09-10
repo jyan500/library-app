@@ -38,13 +38,13 @@ export const BookCartModal = () => {
 	const onCheckout = async () => {
 		try {
 			const data = await checkoutValidate(cartItems).unwrap()
-	    	// save db cart information in state
+	    	// save db cart information in state as a session ID
 			dispatch(setDbCartId(data.cartId))
 			dispatch(setSessionEndTime(data.sessionEnd))
 			dispatch(toggleShowModal(false))
 			setModalProps({})
 			// redirect to checkout
-			navigate(CHECKOUT, {replace: true});
+			navigate(CHECKOUT, {state: {checkout: true}, replace: true});
 		}
 		catch (e: unknown){
 			const customError = e as CustomError

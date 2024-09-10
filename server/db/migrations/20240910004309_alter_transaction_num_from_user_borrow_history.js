@@ -4,7 +4,7 @@
  */
 exports.up = function(knex) {
  	return knex.schema.alterTable("user_borrow_history", (table) => {
- 		table.dropColumn("transaction_num")
+ 		table.string("transaction_num").unique().notNullable().alter()
 	})
 };
 
@@ -14,6 +14,6 @@ exports.up = function(knex) {
  */
 exports.down = function(knex) {
 	return knex.schema.alterTable("user_borrow_history", (table) => {
-		table.integer("transaction_num").unsigned().notNullable()
+		table.integer("transaction_num").unique().unsigned().notNullable().alter()
 	}) 
 };

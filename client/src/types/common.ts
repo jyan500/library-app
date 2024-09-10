@@ -73,6 +73,29 @@ export interface CartItem {
 	book: Book
 }
 
+export type BookConfirmation = Book & { 
+	libraryId: number 
+	dateDue: Date
+}
+
+export interface UserBorrowHistory {
+	id: number
+	transactionNum: string
+	userId: number
+	createdAt: Date
+	books: Array<BookConfirmation>
+}
+
+export interface UserBook {
+	id: number
+	libraryBookId: number
+	userId: number
+	userBorrowHistoryId: number
+	dateBorrowed: Date
+	dateDue: Date
+	dateReturned: Date | null
+}
+
 export interface Toast {
 	id: string
 	message: string
