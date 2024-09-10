@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { useFormContext } from "react-hook-form"
 import "../styles/inline-edit.css"
 
-type Props = {
+interface Props {
 	type: string
 	value: string
 	onSubmit: () => void

@@ -1,6 +1,6 @@
 import React, { useRef } from "react"
 
-type Props = {
+interface Props {
 	children: React.ReactNode
 }
 

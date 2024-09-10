@@ -4,7 +4,7 @@ import type { RootState } from '../store'
 import type { UserProfile } from "../types/common"
 import { logout } from "./authSlice"
 
-type UserProfileState = {
+interface UserProfileState {
 	userProfile: UserProfile | null,
     userProfiles: Array<UserProfile>
 }

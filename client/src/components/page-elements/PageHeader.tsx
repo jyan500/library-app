@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react"
 
-type Props = {
+interface Props {
 	className?: string
 }
 

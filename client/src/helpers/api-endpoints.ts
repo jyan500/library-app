@@ -13,3 +13,5 @@ export const LIBRARY_URL = `/${API_VERSION}/library`
 export const LIBRARY_BOOK_URL = (bookId: number) => `/${API_VERSION}/book/${bookId}/library`
 export const CHECKOUT_URL = `/${API_VERSION}/checkout`
 export const CHECKOUT_VALIDATE_URL = `/${API_VERSION}/checkout/validate`
+export const CHECKOUT_CANCEL_URL = `/${API_VERSION}/checkout/cancel`
+export const CHECKOUT_SUBMIT_URL = `/${API_VERSION}/checkout/submit`

@@ -12,8 +12,9 @@ import { IconContext } from "react-icons"
 import { v4 as uuidv4 } from "uuid"
 import { FaBookmark as Bookmark } from "react-icons/fa";
 import { GrNext as Next, GrPrevious as Previous } from "react-icons/gr";
+import { IconButton } from "../components/page-elements/IconButton"
 
-type FormValues = {
+interface FormValues {
 	query: string
 	searchBy: string
 	page: number
@@ -76,22 +77,19 @@ export const BookCatalog = () => {
 					data?.pagination ? (
 						<>
 							<p>Showing {data.pagination.from} - {data.pagination.to} out of {data.pagination.total} results</p>
-							<div className = "tw-flex tw-flex-row tw-items-center">
+							<div className = "tw-flex tw-flex-row tw-items-center tw-gap-x-2">
 								{
 									data.pagination?.prevPage ? (
-										<button
-			                                className="hover:tw-opacity-60 tw-bg-white tw-text-gray-800 tw-px-2 tw-py-2 tw-rounded-full tw-cursor-pointer"
-			                                onClick={(e) => {
-			                                	e.preventDefault()
-			                                	if (data.pagination.prevPage){
-				                                	setPage(data.pagination.prevPage)
-			                                	}
-			                                }}
-			                            >
-			                                <IconContext.Provider value = {{className: "tw-w-4 tw-h-4"}}>
-			                                    <Previous/> 
-			                                </IconContext.Provider> 
-			                            </button>		
+			                            <IconButton onClick={(e) => {
+				                            e.preventDefault()
+				                            if (data.pagination.prevPage){
+						                        setPage(data.pagination.prevPage)
+				                            }
+			                            }}>
+				                            <IconContext.Provider value = {{className: "tw-w-4 tw-h-4"}}>
+					                            <Previous/> 
+				                            </IconContext.Provider> 
+			                            </IconButton>
 									) : null	
 								}
 								{
@@ -113,19 +111,16 @@ export const BookCatalog = () => {
 								}
 								{
 									data.pagination?.nextPage ? (
-										<button
-			                                className="hover:tw-opacity-60 tw-bg-white tw-text-gray-800 tw-px-2 tw-py-2 tw-rounded-full tw-cursor-pointer"
-			                                onClick={(e) => {
-			                                	e.preventDefault()
-			                                	if (data.pagination.nextPage){
-				                                	setPage(data.pagination.nextPage)
-			                                	}
-			                                }}
-			                            >
-			                                <IconContext.Provider value = {{className: "tw-w-4 tw-h-4"}}>
-			                                    <Next/>
-			                                </IconContext.Provider> 
-			                            </button>		
+		                                <IconButton onClick={(e) => {
+				                            e.preventDefault()
+				                            if (data.pagination.nextPage){
+						                        setPage(data.pagination.nextPage)
+				                            }
+			                            }}>
+				                            <IconContext.Provider value = {{className: "tw-w-4 tw-h-4"}}>
+					                            <Next/> 
+				                            </IconContext.Provider> 
+			                            </IconButton>
 									) : null 
 								}
 	                        </div>

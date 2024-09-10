@@ -66,7 +66,7 @@ export interface CustomError {
 }
 
 export interface CartItem {
-	cartId: string
+	cartItemId: string
 	libraryBookId: number
 	bookStatusId: number
 	libraryId: number
@@ -98,8 +98,8 @@ export interface ListResponse<T> {
 
 export type GenericProps = {[key: string]: any}
 
-export type CheckoutCustomError = {
-	cartId: string
+export interface CheckoutCustomError {
+	cartItemId: string
 	canCheckout: boolean
 	bookStatusId: number
 }

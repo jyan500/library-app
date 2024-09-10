@@ -1,7 +1,7 @@
 import React from "react"
 import { Book } from "../types/common"
 
-type Props = {
+interface Props {
 	book: Book | null
 	highlightBorder?: string
 }

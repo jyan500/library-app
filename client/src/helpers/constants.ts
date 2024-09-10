@@ -8,6 +8,8 @@ export const TAG_TYPES = [
 	"UserBooks"
 ]
 
+export const BOOK_CHECKOUT_NUM_DAYS = 14
+
 export const SM_BREAKPOINT = 640
 export const MD_BREAKPOINT = 768
 export const LG_BREAKPOINT = 1024

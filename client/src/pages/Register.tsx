@@ -7,7 +7,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa"
 import { v4 as uuidv4 } from "uuid" 
 import { LOGIN } from "../helpers/routes" 
 
-type FormValues = {
+interface FormValues {
 	firstName: string
 	lastName: string
 	email: string
@@ -32,7 +32,7 @@ export const Register = () => {
 	const onSubmit = async (values: FormValues) => {
 		try {
 			const data = await userRegister(values).unwrap()
-    		navigate("/login", {state: {"alert": "User registered successfully!"}})
+    		navigate("/login", {state: {"alert": "User registered successfully!"}, replace: true})
 		}
 		catch (err) {
 			console.log(err)

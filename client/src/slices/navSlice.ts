@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
 import { logout } from "./authSlice"
 
-type NavState = {
+interface NavState {
   showSidebar: boolean 
 }
 

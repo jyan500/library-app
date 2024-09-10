@@ -4,7 +4,7 @@ import type { RootState } from '../store'
 import type { Toast } from "../types/common"
 import { logout } from "./authSlice"
 
-type ToastState = {
+interface ToastState {
     toasts: Array<Toast>
     position: string
 }

@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react"
-import { Book, LibraryBook, CustomError, CheckoutCustomError } from "../../types/common"
+import { Book, CartItem, LibraryBook, CustomError, CheckoutCustomError } from "../../types/common"
 import { useForm } from "react-hook-form"
 import { useAppDispatch, useAppSelector } from "../../hooks/redux-hooks"
 import { toggleShowModal, setModalProps, setModalType } from "../../slices/modalSlice"
-import { setCartItems } from "../../slices/bookCartSlice"
+import { setCartItems, setDbCartId, setSessionEndTime } from "../../slices/bookCartSlice"
 import { Link } from "react-router-dom"
-import { BOOKS_SEARCH } from "../../helpers/routes"
-import { CartItem } from "../../types/common" 
+import { BOOKS_SEARCH, CHECKOUT } from "../../helpers/routes"
 import { addToast } from "../../slices/toastSlice"
 import { RowBookCard } from "../RowBookCard"
 import { useCheckoutValidateMutation } from "../../services/private/checkout"
 import { IoIosWarning as WarningIcon } from "react-icons/io"
 import { IconContext } from "react-icons"
 import { v4 as uuidv4 } from "uuid" 
+import { useNavigate, useLocation } from "react-router-dom"
+import { LoadingSpinner } from "../../components/LoadingSpinner"
 
 export const BookCartModal = () => {
 	const dispatch = useAppDispatch()
+	const location = useLocation()
+	const navigate = useNavigate()
 	const { showModal } = useAppSelector((state) => state.modal)
 	const { bookStatuses } = useAppSelector((state) => state.bookStatus)
 	const { libraries } = useAppSelector((state) => state.library)
@@ -23,7 +26,7 @@ export const BookCartModal = () => {
 	const [ checkoutValidate, {isLoading, error}] = useCheckoutValidateMutation() 
 
 	const removeFromList = (cartItemId: string) => {
-		dispatch(setCartItems(cartItems.filter((cItem: CartItem) => cItem.cartId !== cartItemId)))
+		dispatch(setCartItems(cartItems.filter((cItem: CartItem) => cItem.cartItemId !== cartItemId)))
 		dispatch(addToast({
 			id: uuidv4(),
 			type: "success",
@@ -34,15 +37,35 @@ export const BookCartModal = () => {
 
 	const onCheckout = async () => {
 		try {
-			await checkoutValidate(cartItems).unwrap()
+			const data = await checkoutValidate(cartItems).unwrap()
+	    	// save db cart information in state
+			dispatch(setDbCartId(data.cartId))
+			dispatch(setSessionEndTime(data.sessionEnd))
+			dispatch(toggleShowModal(false))
+			setModalProps({})
+			// redirect to checkout
+			navigate(CHECKOUT, {replace: true});
 		}
-		catch (e){
-			dispatch(addToast({
-				id: uuidv4(),
-				message: "One or more books are no longer available! Please remove highlighted books from list.",
-				animationType: "animation-in",
-				type: "failure"
-			}))
+		catch (e: unknown){
+			const customError = e as CustomError
+			if ("status" in customError && "data" in customError && customError.data?.errors?.length){
+				if (customError.status === 400){
+					dispatch(addToast({
+						id: uuidv4(),
+						message: "One or more books are no longer available! Please remove highlighted books from list.",
+						animationType: "animation-in",
+						type: "failure"
+					}))
+				}
+			}
+			else {
+				dispatch(addToast({
+					id: uuidv4(),
+					message: "Something went wrong! Checkout could not be processed.",
+					animationType: "animation-in",
+					type: "failure"
+				}))	
+			}
 		}
 	}
 
@@ -55,9 +78,9 @@ export const BookCartModal = () => {
 				<div className = "tw-flex tw-flex-col tw-gap-y-2">
 					<p className = "tw-font-bold tw-text-2xl">Total: {cartItems?.length}</p>
 					{cartItems?.map((item: CartItem) => {
-						const cannotCheckout = error && "status" in error && error.data?.errors?.find((data: CheckoutCustomError) => data.cartId === item.cartId)
+						const cannotCheckout = error && "status" in error && error.status === 400 && error.data?.errors?.find((data: CheckoutCustomError) => data.cartItemId === item.cartItemId) != null
 						return (
-							<div className = "tw-relative">
+							<div key = { item.cartItemId } className = "tw-relative">
 								<RowBookCard 
 									highlightBorder={`${cannotCheckout ? "tw-border tw-border-red-500" : ""}`} 
 									book={item.book}
@@ -73,7 +96,7 @@ export const BookCartModal = () => {
 											<span>{libraries.find((library) => library.id === item.libraryId)?.name} Library</span>
 										</div>
 										<div className = "mt-auto">
-											<button onClick = {() => removeFromList(item.cartId)} className = "button --alert">Remove from List</button>
+											<button onClick = {() => removeFromList(item.cartItemId)} className = "button --alert">Remove from List</button>
 										</div>
 									</>
 								</RowBookCard>
@@ -85,7 +108,12 @@ export const BookCartModal = () => {
 							</div>
 						)	
 					})}
-					<button onClick={onCheckout} className = "button">Checkout</button>
+					<button disabled={isLoading} onClick={onCheckout} className = "button">
+						<div className = "tw-flex tw-flex-row tw-justify-center tw-gap-x-4">
+							<span>Checkout</span>
+							{isLoading ? (<LoadingSpinner className={"tw-h-6 tw-w-6"}/>) : null}
+						</div>
+					</button>
 				</div>
 			) : (
 				<div className = "tw-w-full tw-h-full tw-justify-center tw-items-center">

@@ -2,13 +2,13 @@ import React, {useState} from "react"
 import { Link, useLocation } from 'react-router-dom';
 import { HOME, BOOKS_BROWSE, BOOKS_SEARCH, LOCATIONS, ACCOUNT } from "../../helpers/routes"
 
-type Link = {
+interface Link {
 	pathname: string	
 	text: string
 	secondary?: Array<Link>
 }
 
-type DropdownProps = {
+interface DropdownProps {
 	links: Array<Link>
 }
 

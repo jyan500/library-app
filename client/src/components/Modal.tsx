@@ -2,7 +2,6 @@ import React from "react"
 import { IoMdClose } from "react-icons/io";
 import "../styles/modal.css"
 import { setModalProps, toggleShowModal } from "../slices/modalSlice" 
-import { BookCheckoutForm } from "./modals/BookCheckoutForm"
 import { BookCartModal } from "./modals/BookCartModal"
 import { AddBookToCartModal } from "./modals/AddBookToCartModal" 
 import { useAppDispatch, useAppSelector } from "../hooks/redux-hooks" 
@@ -11,7 +10,6 @@ import { GenericProps } from "../types/common"
 export const modalTypes = {
 	"ADD_BOOK_TO_CART": AddBookToCartModal,
 	"BOOK_CART_MODAL": BookCartModal,
-	"BOOK_CHECKOUT_FORM": BookCheckoutForm
 }
 
 export const modalClassNames = {
@@ -19,7 +17,7 @@ export const modalClassNames = {
 	"BOOK_CART_MODAL": "!tw-w-full !tw-h-full md:!tw-w-1/2 md:!tw-w-1/2 tw-top-[50%]"
 }
 
-// // type for partial subset of keys
+// type for partial subset of keys
 type PartialKeys<T> = Partial<{ [K in keyof T]: Record<string, any>}>
 
 export const Modal = () => {
@@ -30,11 +28,6 @@ export const Modal = () => {
 
 	// define modal handlers type as the partial subset of all keys of modal types
 	const modalHandlers: PartialKeys<typeof modalTypes> = {
-		// "ADD_BOOK_TO_LIST": {
-		// 	dismissHandler: () => {
-		// 		dispatch(toggleShowModal(false))
-		// 	}
-		// }
 	} 
 
 

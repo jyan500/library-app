@@ -4,7 +4,7 @@ import type { RootState } from '../store'
 import type { UserRole } from "../types/common"
 import { logout } from "./authSlice"
 
-type UserRoleState = {
+interface UserRoleState {
     userRoles: Array<UserRole>
     userRoleLookup: {[id: number]: string} 
 }

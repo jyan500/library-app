@@ -6,10 +6,14 @@ import { logout } from "./authSlice"
 
 interface BookCartState {
 	cartItems : Array<CartItem>
+	dbCartId?: number | null
+	sessionEndTime?: Date | null
 }
 
 const initialState: BookCartState = {
-	cartItems: []	
+	cartItems: [],
+	dbCartId: null,
+	sessionEndTime: null
 }
 
 export const bookCartSlice = createSlice({
@@ -20,6 +24,12 @@ export const bookCartSlice = createSlice({
 			state.cartItems = action.payload
 			localStorage.setItem("cartItems", JSON.stringify(action.payload))
 		},
+		setDbCartId(state, action:PayloadAction<number>){
+			state.dbCartId = action.payload
+		},
+		setSessionEndTime(state, action: PayloadAction<Date>){
+			state.sessionEndTime = action.payload	
+		}
 	},
     extraReducers: (builder) => {
         builder.addCase(logout, () => {
@@ -29,6 +39,8 @@ export const bookCartSlice = createSlice({
 })
 
 export const { 
-	setCartItems
+	setCartItems,
+	setDbCartId,
+	setSessionEndTime,
 } = bookCartSlice.actions
 export const bookCartReducer = bookCartSlice.reducer 

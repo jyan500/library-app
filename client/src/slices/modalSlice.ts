@@ -13,7 +13,7 @@ interface ModalState<T = {}> {
 
 const initialState: ModalState = {
 	showModal: false,
-	currentModalType: "BOOK_CHECKOUT_FORM",
+	currentModalType: "ADD_BOOK_TO_CART",
 	currentModalProps: {},
 }
 

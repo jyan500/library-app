@@ -1,0 +1,33 @@
+import React, {useEffect} from "react"
+import { Navigate, Outlet, useLocation } from "react-router-dom" 
+import { useAppSelector } from "../hooks/redux-hooks"
+import { Container } from "../components/page-elements/Container"
+import { HOME, LOGIN } from "../helpers/routes"
+
+const CheckoutLayout = () => {
+	const location = useLocation()
+	const token = useAppSelector((state) => state.auth.token)	
+	const { dbCartId } = useAppSelector((state) => state.bookCart)
+
+	if (!token){
+		return <Navigate replace to = {LOGIN} state={{alert: "You have been logged out"}}/>
+	}
+	else if (!dbCartId){
+		return (
+			<Navigate replace to = {HOME}/>
+		)
+	}
+
+	return (
+		<div>
+			<Container>
+				<Outlet/>
+			</Container>
+		</div>
+	)
+}
+
+export default CheckoutLayout
+
+
+

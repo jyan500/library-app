@@ -9,14 +9,14 @@ import { useScreenSize } from "../hooks/useScreenSize"
 import { XL_BREAKPOINT } from "../helpers/constants"
 import { Container } from "./page-elements/Container"
 
-type CarouselElement = {
+interface CarouselElement {
 	id: number
 	title: string
 	imageURL: string
 	description?: string
 }
 
-type CarouselContentProps = {
+interface CarouselContentProps {
 	data: CarouselElement
 }
 

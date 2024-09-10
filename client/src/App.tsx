@@ -8,9 +8,14 @@ import { Register } from "./pages/Register"
 import { Book } from "./pages/Book"
 import { BookDisplay } from "./pages/BookDisplay" 
 import { BookCatalog } from "./pages/BookCatalog"
+import { LibraryDisplay } from "./pages/LibraryDisplay"
+import { Library } from "./pages/Library"
 import { BookBrowse } from "./pages/BookBrowse"
+import { Checkout } from "./pages/Checkout"
+import { Confirmation } from "./pages/Confirmation"
 import DefaultLayout from "./layouts/DefaultLayout"
 import ProtectedLayout from "./layouts/ProtectedLayout"
+import CheckoutLayout from "./layouts/CheckoutLayout"
 import { useAppSelector, useAppDispatch } from "./hooks/redux-hooks" 
 import "./styles/common.css" 
 import { ToastList } from "./components/ToastList" 
@@ -22,6 +27,10 @@ import {
 	BOOK_ID,
 	SEARCH,
 	BROWSE,
+	CHECKOUT,
+	LIBRARIES,
+	LIBRARY,
+	CONFIRMATION,
 } from "./helpers/routes"
 
 // Define routes using createBrowserRouter
@@ -74,46 +83,41 @@ const router = createBrowserRouter([
 					},
 				],
 			},
+			{
+				path: LIBRARIES,	
+				element: <LibraryDisplay/>,
+				children: [
+					{
+						path: LIBRARY,
+						element: <Library/>
+					}
+				]
+			},
 		],
 	},
+	{
+		element: <>
+			<ScrollRestoration/>
+			<CheckoutLayout/>
+		</>,
+		children: [
+			{
+				path: CHECKOUT,
+				element: <Checkout/>,
+			},
+			{
+				path: CONFIRMATION,
+				element: <Confirmation/>
+			}
+		]
+	}
 ])
 
 function App() {
 	return (
 		<div>
-			{/*<ScrollToTop/>*/}
-		{/*	<Routes>
-				<Route element = {<DefaultLayout/>}>
-				    <Route path={LOGIN} element={<Login/>} />
-				    <Route path={REGISTER} element={<Register/>}/>
-				</Route>
-				<Route element = {<ProtectedLayout/>}>
-					<Route path = {HOME} element={<Home/>}></Route>
-					<Route 
-						path = {BOOKS} 
-						element={<BookDisplay/>}
-					>
-						<Route 
-							path = {BROWSE}
-							element={<BookBrowse/>}
-						>
-						</Route>
-						<Route
-							path = {SEARCH}
-							element={<BookCatalog/>}
-						>
-						</Route>
-						<Route
-							path = {BOOK_ID}
-							element={<Book/>}
-						>
-						</Route>
-					</Route>
-				</Route>
-			</Routes>
-*/}			
-		<RouterProvider router={router}/>
-		<ToastList/>
+			<RouterProvider router={router}/>
+			<ToastList/>
 		</div>
 	)
 }

@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { IconContext } from "react-icons"
 import { GrNext as Next, GrPrevious as Previous } from "react-icons/gr";
 import { v4 as uuidv4 } from "uuid"
+import { IconButton } from "../page-elements/IconButton"
 
-type Props = {
+interface Props {
     items: Array<React.ReactNode>
     itemsPerPage: number
     itemContainerClassName?: string

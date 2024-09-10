@@ -2,7 +2,7 @@ import { getNameFromIDModifier, dateModifier } from "../table-modifiers/display-
 import { useAppSelector, useAppDispatch } from "../../hooks/redux-hooks" 
 import { LIBRARY } from "../../helpers/routes"
 
-export type LibraryBookConfigType = {
+export interface LibraryBookConfigType {
 	headers: Record<string, any>,
 	modifiers: Record<string, any>,
 	link: (id: number) => string,

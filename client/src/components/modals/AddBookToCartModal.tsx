@@ -8,12 +8,12 @@ import { addToast } from "../../slices/toastSlice"
 import { RowBookCard } from "../RowBookCard" 
 import { v4 as uuidv4 } from "uuid" 
 
-export type Props = {
+export interface Props {
 	book: Book | null
 	availableCopies: Array<LibraryBook>
 }
 
-type FormValues = {
+interface FormValues {
 	libraryBookId: number
 }
 
@@ -38,7 +38,7 @@ export const AddBookToCartModal = ({book, availableCopies}: Props) => {
 	const onSubmit = (values: FormValues) => {
 		const copy = availableCopies.find((copy) => copy.id === Number(watch("libraryBookId")))
 		dispatch(setCartItems([...cartItems, {
-			cartId: uuidv4(),	
+			cartItemId: uuidv4(),	
 			book: book ?? {} as Book,
 			libraryId: copy?.libraryId ?? 0,
 			libraryBookId: Number(watch("libraryBookId")) ?? 0,	

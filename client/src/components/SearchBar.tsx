@@ -3,7 +3,7 @@ import { FaSearch } from "react-icons/fa";
 import { IconContext } from "react-icons"
 import { useFormContext } from "react-hook-form" 
 
-type Props = {
+interface Props {
 	placeholder: string
 	registerField: string
 	registerOptions: Record<string, any>

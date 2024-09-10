@@ -6,7 +6,7 @@ import { IoIosWarning as WarningIcon } from "react-icons/io"
 import { FaCircleXmark as FailureIcon } from "react-icons/fa6"
 import { IconContext } from "react-icons"
 
-type Props = {
+interface Props {
 	id: string
 	message: string
 	type: string

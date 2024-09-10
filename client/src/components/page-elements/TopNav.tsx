@@ -9,6 +9,7 @@ import { displayUser } from "../../helpers/functions"
 import CountyLibrary from "../../assets/images/county-library-cropped.png"
 import { FaBookmark as Bookmark } from "react-icons/fa";
 import { IconContext } from "react-icons"
+import { IconButton } from "./IconButton"
 import { setModalType, setModalProps, toggleShowModal } from "../../slices/modalSlice"
 
 interface Props {
@@ -40,7 +41,7 @@ export const TopNav = ({isFetching}: Props) => {
 				<div className = "tw-flex tw-flex-row tw-justify-center tw-items-center tw-gap-4">
 					{!isFetching ? (
 						<div className = "tw-flex tw-flex-row tw-items-center tw-gap-x-4">
-							<button onClick = {showCart} className = "button --transparent">
+							<IconButton onClick = {showCart} className = "button --transparent">
 								<div className="tw-relative tw-inline-block tw-cursor-pointer">
 								    <IconContext.Provider value = {{color: "var(--bs-primary)", className: "tw-mr-1 tw-w-8 tw-h-8"}}>
 				                        <Bookmark/> 
@@ -52,7 +53,7 @@ export const TopNav = ({isFetching}: Props) => {
 								      </span>) : null
 								}
 							    </div>
-							</button>
+							</IconButton>	
 							<div>
 								<span>{displayUser(userProfile)}</span>
 							</div>

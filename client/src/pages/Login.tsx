@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form"
 import { parseErrorResponse } from "../helpers/functions"
 import { REGISTER } from "../helpers/routes"
 
-type FormValues = {
+interface FormValues {
 	email: string
 	password: string
 }
@@ -27,7 +27,7 @@ export const Login = () => {
     useEffect(() => {
     	// 
     	if (token){
-    		navigate("/")
+    		navigate("/", {replace: true})
     	}	
     }, [navigate, token])
 

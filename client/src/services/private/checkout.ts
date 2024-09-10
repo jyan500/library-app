@@ -3,12 +3,14 @@ import { RootState } from "../../store"
 import { 
 	BACKEND_BASE_URL, 
 	CHECKOUT_VALIDATE_URL, 
+	CHECKOUT_CANCEL_URL,
+	CHECKOUT_SUBMIT_URL,
 } from "../../helpers/api-endpoints" 
 import { CartItem, CustomError } from "../../types/common" 
 import { privateApi } from "../private"
 import { parseURLParams } from "../../helpers/functions" 
 
-type CheckoutValidateResponse = {
+interface CheckoutValidateResponse {
 	cartId: number
 	sessionEnd: Date
 	message: string
@@ -22,20 +24,46 @@ export const checkoutApi = privateApi.injectEndpoints({
 				url: `${CHECKOUT_VALIDATE_URL}`,
 				method: "POST",
 				body: {
-					cartItems: cartItems.map((item: CartItem) => {
+					cart_items: cartItems.map((item: CartItem) => {
 						return {
 							library_book_id: item.libraryBookId,
 							book_status_id: item.bookStatusId,
-							cart_id: item.cartId
+							cart_item_id: item.cartItemId
 						}
 					}),
 				}
 			}),
-			invalidatesTags: ["UserBorrowHistory", "UserBooks"]
 		}),	
+		checkoutSubmit: builder.mutation<{message: string}, {cartId: number, cartItems: Array<CartItem>}>({
+			query: ({cartId, cartItems}) => ({
+				url: `${CHECKOUT_SUBMIT_URL}`,
+				method: "POST",
+				body: {
+					cart_items: cartItems.map((item: CartItem) => {
+						return {
+							library_book_id: item.libraryBookId,
+							book_status_id: item.bookStatusId,
+							cart_item_id: item.cartItemId
+						}
+					}),
+					cart_id: cartId 
+				}
+			}),
+		}),
+		checkoutCancel: builder.mutation<{message: string}, number>({
+			query: (dbCartId) => ({
+				url: `${CHECKOUT_CANCEL_URL}`,
+				method: "POST",
+				body: {
+					cart_id: dbCartId
+				}
+			})
+		})
 	}),
 })
 
 export const { 
 	useCheckoutValidateMutation,
+	useCheckoutSubmitMutation,
+	useCheckoutCancelMutation
 } = checkoutApi 

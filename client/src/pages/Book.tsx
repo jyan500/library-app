@@ -20,6 +20,7 @@ import { setModalType, toggleShowModal, setModalProps } from "../slices/modalSli
 import { Props as AddBookToCartPropType } from "../components/modals/AddBookToCartModal"
 import { addToast } from "../slices/toastSlice"
 import { RowBookCard } from "../components/RowBookCard"
+import { IconButton } from "../components/page-elements/IconButton" 
 import { v4 as uuidv4 } from "uuid"
 
 export const Book = () => {
@@ -65,7 +66,7 @@ export const Book = () => {
 	}
 
 	const onRemoveFromList = (cartItemId: string) => {
-		dispatch(setCartItems(cartItems.filter((cItem: CartItem) => cItem.cartId !== cartItemId)))
+		dispatch(setCartItems(cartItems.filter((cItem: CartItem) => cItem.cartItemId !== cartItemId)))
 		dispatch(addToast({
 			id: uuidv4(),
 			type: "success",
@@ -78,7 +79,7 @@ export const Book = () => {
 		<>
 			<div className = "tw-flex tw-flex-col tw-justify-center tw-gap-y-4 tw-p-4">
 				<div>
-					<button
+				{/*	<button
 	                    className="hover:tw-opacity-60 tw-bg-white tw-text-gray-800 tw-cursor-pointer"
 	                    onClick={onClickPrev}
 	                >
@@ -89,7 +90,15 @@ export const Book = () => {
 		                    <span className = "tw-font-bold tw-text-lg">Back to Results</span>
 	                    </div>
 	                </button>
-
+*/}
+					<IconButton onClick={onClickPrev}>
+						<div className = "tw-flex tw-flex-row tw-gap-x-4 tw-items-center">
+		                    <IconContext.Provider value = {{className: "tw-w-6 tw-h-6"}}>
+		                        <Previous/> 
+		                    </IconContext.Provider> 
+		                    <span className = "tw-font-bold tw-text-lg">Back to Results</span>
+	                    </div>	
+					</IconButton>
 				</div>
 				<div>
 					{
@@ -108,23 +117,23 @@ export const Book = () => {
 							 		<div>
 							 			{availableCopies?.length ? (
 											!cartItem ? (
-												<button onClick={onAddToList} className = "button">
+												<IconButton onClick={onAddToList} className = {"button"}>
 													<div className = "tw-flex tw-flex-row tw-items-center tw-gap-x-2">		
-														<IconContext.Provider value = {{color: "white", className: "tw-w-4 tw-h-4"}}>
-									                        <Bookmark/> 
-									                    </IconContext.Provider> 
-														<span>Add to List</span>
-													</div>
-												</button>
+												 		<IconContext.Provider value = {{color: "white", className: "tw-w-4 tw-h-4"}}>
+									                         <Bookmark/> 
+									                     </IconContext.Provider> 
+												 		<span>Add to List</span>
+												 	</div>	
+												</IconButton>
 											) : (
-												<button onClick={() => onRemoveFromList(cartItem.cartId)} className = "button --alert">
-													<div className = "tw-flex tw-flex-row tw-items-center tw-gap-x-2">
-														<IconContext.Provider value = {{color: "white", className: "tw-w-4 tw-h-4"}}>
-									                        <Bookmark/> 
-									                    </IconContext.Provider> 
-														<span>Remove from List</span>
-													</div>
-												</button>
+												<IconButton onClick={() => onRemoveFromList(cartItem.cartItemId)} className = {"button --alert"}>
+													<div className = "tw-flex tw-flex-row tw-items-center tw-gap-x-2">		
+												 		<IconContext.Provider value = {{color: "white", className: "tw-w-4 tw-h-4"}}>
+									                         <Bookmark/> 
+									                     </IconContext.Provider> 
+												 		<span>Remove to List</span>
+												 	</div>
+												</IconButton>
 											)
 										) : null}
 									</div>
