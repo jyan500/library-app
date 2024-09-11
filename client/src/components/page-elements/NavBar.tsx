@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import { Link, useLocation } from 'react-router-dom';
-import { HOME, BOOKS_BROWSE, BOOKS_SEARCH, LOCATIONS, ACCOUNT } from "../../helpers/routes"
+import { HOME, BOOKS, USER_BORROW_HISTORY, LOCATIONS, ACCOUNT } from "../../helpers/routes"
 
 interface Link {
 	pathname: string	
@@ -37,10 +37,10 @@ export const NavBar = () => {
 	{
 		pathname: "#", text: "Books", secondary: [
 			{
-				pathname: BOOKS_BROWSE, text: "Browse"
+				pathname: USER_BORROW_HISTORY, text: "My Books"
 			}, 
 			{
-				pathname: BOOKS_SEARCH, text: "Search"
+				pathname: BOOKS, text: "Search"
 			}]
 		},
 	{

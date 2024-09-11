@@ -8,19 +8,9 @@ export const BookDisplay = () => {
 	const { pathname } = useLocation() 
 
 	const subText = () => {
-		if (pathname === BOOKS_BROWSE){
-			return (
-				<p className = "tw-text-white"><Link className = "tw-text-white" to = {BOOKS_BROWSE}>{"Browse "}</Link>{"from our collection!"}</p>
-			)
-		}
-		else if (pathname === BOOKS_SEARCH){
-			return (
-				<p className = "tw-text-white"><Link className = "tw-text-white" to = {BOOKS_SEARCH}>{"Search "}</Link>{"our collection!"}</p>
-			)
-		}
 		return (
 			<p className = "tw-text-white">
-				<span><Link className = "tw-text-white" to = {BOOKS_BROWSE}>Browse</Link>{" or "}<Link className = "tw-text-white" to = {BOOKS_SEARCH}>{" Search "}</Link></span>
+				<span><Link className = "tw-text-white" to = {BOOKS}>{" Search "}</Link></span>
 				{"from our collection!"}
 			</p>
 		)

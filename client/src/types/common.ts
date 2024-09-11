@@ -75,6 +75,7 @@ export interface CartItem {
 
 export type BookConfirmation = Book & { 
 	libraryId: number 
+	userBookId: number
 	dateDue: Date
 }
 

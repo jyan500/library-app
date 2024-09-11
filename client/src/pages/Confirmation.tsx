@@ -40,13 +40,13 @@ export const Confirmation = () => {
                 </IconButton>
 			</div>
 			<div className = "tw-flex tw-flex-col tw-gap-y-4">
-				<span className = "tw-fold-bold tw-text-3xl">Confirmation</span>
+				<span className = "tw-font-bold tw-text-3xl">Confirmation</span>
 				<div>
 					{data?.map((history: UserBorrowHistory) => {
 						return (
-							<div key = {history.id}>
-								<span>Transaction Number {history.transactionNum}</span>	
-								<span>{new Date(history.createdAt).toLocaleDateString("en-US")}</span>
+							<div className = "tw-flex tw-flex-col tw-gap-y-2" key = {history.id}>
+								<span className = "tw-font-bold">Transaction #{history.transactionNum}</span>	
+								<span className = "tw-font-bold">{new Date(history.createdAt).toLocaleDateString("en-US")}</span>
 								<div>
 									{history.books?.map((book: BookConfirmation) => {
 										return (

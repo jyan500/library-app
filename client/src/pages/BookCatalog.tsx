@@ -7,12 +7,13 @@ import { useLazyGetBooksQuery } from "../services/private/book"
 import { useAppSelector } from "../hooks/redux-hooks"
 import { Book, CartItem } from "../types/common"
 import { LoadingSpinner } from "../components/LoadingSpinner"
-import { BOOKS, BOOKS_SEARCH } from "../helpers/routes"
+import { BOOKS } from "../helpers/routes"
 import { IconContext } from "react-icons" 
 import { v4 as uuidv4 } from "uuid"
 import { FaBookmark as Bookmark } from "react-icons/fa";
 import { GrNext as Next, GrPrevious as Previous } from "react-icons/gr";
 import { IconButton } from "../components/page-elements/IconButton"
+import { PaginationRow } from "../components/page-elements/PaginationRow"
 
 interface FormValues {
 	query: string
@@ -55,7 +56,7 @@ export const BookCatalog = () => {
 	const [trigger, {data, error, isFetching, isLoading}] = useLazyGetBooksQuery()
 
 	const setPage = async (pageNum: number) => {
-	    navigate(`${BOOKS_SEARCH}?query=${encodeURIComponent(watch("query"))}&searchBy=${watch("searchBy")}&page=${pageNum}`, { replace: true });
+	    navigate(`${BOOKS}?query=${encodeURIComponent(watch("query"))}&searchBy=${watch("searchBy")}&page=${pageNum}`, { replace: true });
 	}
 
 	const onSubmit = (values: FormValues) => {
@@ -63,7 +64,7 @@ export const BookCatalog = () => {
 	    // Update the URL with query parameters without reloading the page
 
 	    trigger({...values, page: 1})
-	    navigate(`${BOOKS_SEARCH}?query=${encodeURIComponent(values.query)}&searchBy=${values.searchBy}&page=${1}`, { replace: true });
+	    navigate(`${BOOKS}?query=${encodeURIComponent(values.query)}&searchBy=${values.searchBy}&page=${1}`, { replace: true });
 	}
 
 	const onClickDetails = (id: number) => {
@@ -101,7 +102,7 @@ export const BookCatalog = () => {
 												<Link 
 													className = {`tw-px-0.5 ${i+1 === watch("page") ? "tw-font-bold tw-border-b tw-border-gray-800" : ""}`}
 													key={`pagination_page_${i}`} 
-													to={`${BOOKS_SEARCH}?query=${encodeURIComponent(watch("query"))}&searchBy=${watch("searchBy")}&page=${i+1}`}>
+													to={`${BOOKS}?query=${encodeURIComponent(watch("query"))}&searchBy=${watch("searchBy")}&page=${i+1}`}>
 													{i+1}
 												</Link>	)
 											})
@@ -154,7 +155,12 @@ export const BookCatalog = () => {
 								<button onClick={handleSubmit(onSubmit)} className = "button tw-bg-primary">Search</button>
 							</div>
 							<div className = "tw-flex tw-items-center lg:tw-gap-x-4">
-								{paginationRow({showPageNums: false})} 
+								{/*{paginationRow({showPageNums: false})} */}
+								<PaginationRow
+									showPageNums={false}
+									paginationData={data?.pagination}
+									setPage={setPage}
+								/>
 							</div>
 						</div>
 						<div className = "tw-mt-2 tw-ml-6 sm:tw-ml-0">
@@ -200,7 +206,17 @@ export const BookCatalog = () => {
 			)}
 			{!isFetching && data?.pagination ? (
 				<div className = "tw-mx-4 md:tw-mx-0 tw-flex tw-py-4">
-					{paginationRow({showPageNums: true})}
+					<PaginationRow
+						showPageNums={true}
+						paginationData={data?.pagination}
+						currentPage={watch("page")}
+						setPage={setPage}
+						urlParams={{
+							query: encodeURIComponent(watch("query")),
+							searchBy: watch("searchBy"),
+						}}
+						url={`${BOOKS}`}	
+					/>
 				</div>
 			) : null}
 		</>

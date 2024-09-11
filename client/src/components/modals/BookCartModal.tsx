@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux-hooks"
 import { toggleShowModal, setModalProps, setModalType } from "../../slices/modalSlice"
 import { setCartItems, setDbCartId, setSessionEndTime } from "../../slices/bookCartSlice"
 import { Link } from "react-router-dom"
-import { BOOKS_SEARCH, CHECKOUT } from "../../helpers/routes"
+import { BOOKS, CHECKOUT } from "../../helpers/routes"
 import { addToast } from "../../slices/toastSlice"
 import { RowBookCard } from "../RowBookCard"
 import { useCheckoutValidateMutation } from "../../services/private/checkout"
@@ -120,7 +120,7 @@ export const BookCartModal = () => {
 					<p className = "tw-font-bold tw-text-xl">Your List is currently empty. Check out our <Link onClick = {() => {
 						dispatch(toggleShowModal(false))
 						dispatch(setModalProps({}))
-					}} className = "tw-text-primary" to = {BOOKS_SEARCH}>catalog</Link> to find books!</p>
+					}} className = "tw-text-primary" to = {BOOKS}>catalog</Link> to find books!</p>
 				</div>
 			)}
 		</div>

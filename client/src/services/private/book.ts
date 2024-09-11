@@ -67,7 +67,7 @@ export const bookApi = privateApi.injectEndpoints({
 				method: "GET",
 			}),
 			providesTags: ["LibraryBooks"]
-		})
+		}),
 	}),
 })
 

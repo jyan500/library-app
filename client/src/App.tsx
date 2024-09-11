@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './App.css';
-import { createBrowserRouter, RouterProvider, ScrollRestoration } from "react-router-dom"
+import { createBrowserRouter, RouterProvider, Navigate, ScrollRestoration } from "react-router-dom"
 import { Login } from "./pages/Login" 
 import { Home } from "./pages/Home" 
 import { HamburgerButton } from "./components/HamburgerButton" 
@@ -8,9 +8,11 @@ import { Register } from "./pages/Register"
 import { Book } from "./pages/Book"
 import { BookDisplay } from "./pages/BookDisplay" 
 import { BookCatalog } from "./pages/BookCatalog"
+import { UserBorrowHistoryDisplay } from "./pages/UserBorrowHistoryDisplay"
+import { UserBorrowHistoryList } from "./pages/UserBorrowHistoryList"
+import { UserBorrowHistory } from "./pages/UserBorrowHistory"
 import { LibraryDisplay } from "./pages/LibraryDisplay"
 import { Library } from "./pages/Library"
-import { BookBrowse } from "./pages/BookBrowse"
 import { Checkout } from "./pages/Checkout"
 import { Confirmation } from "./pages/Confirmation"
 import DefaultLayout from "./layouts/DefaultLayout"
@@ -26,7 +28,8 @@ import {
 	BOOKS,
 	BOOK_ID,
 	SEARCH,
-	BROWSE,
+	USER_BORROW_HISTORY,
+	USER_BORROW_HISTORY_ID,
 	CHECKOUT,
 	LIBRARIES,
 	LIBRARY,
@@ -51,11 +54,14 @@ const router = createBrowserRouter([
 				path: REGISTER,
 				element: <Register />,
 			},
+			{
+				path: "*",
+				element: <Navigate to = {LOGIN}/>
+			}
 		],
 	},
 	{
 		element: <>
-			<ScrollRestoration/>
 			<ProtectedLayout />
 		</>,
 		children: [
@@ -66,15 +72,14 @@ const router = createBrowserRouter([
 			{
 				path: BOOKS,
 				element: 
-					<BookDisplay />
+					<>	
+						<ScrollRestoration/>
+						<BookDisplay />
+					</>
 				,
 				children: [
 					{
-						path: BROWSE,
-						element: <BookBrowse />,
-					},
-					{
-						path: SEARCH,
+						index: true,
 						element: <BookCatalog />,
 					},
 					{
@@ -82,6 +87,16 @@ const router = createBrowserRouter([
 						element: <Book />,
 					},
 				],
+			},
+			{
+				path: USER_BORROW_HISTORY, 
+				element: <UserBorrowHistoryDisplay/>,
+				children: [
+					{
+						path: USER_BORROW_HISTORY_ID,
+						element: <UserBorrowHistory/>
+					}
+				]
 			},
 			{
 				path: LIBRARIES,	
@@ -93,6 +108,10 @@ const router = createBrowserRouter([
 					}
 				]
 			},
+			{
+				path: "*",
+				element: <Navigate to = {HOME}/>	
+			}
 		],
 	},
 	{
@@ -108,6 +127,10 @@ const router = createBrowserRouter([
 			{
 				path: CONFIRMATION,
 				element: <Confirmation/>
+			},
+			{
+				path: "*",
+				element: <Navigate to = {HOME}/>
 			}
 		]
 	}

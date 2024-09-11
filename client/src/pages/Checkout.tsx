@@ -7,13 +7,12 @@ import { IconContext } from "react-icons"
 import { GrPrevious as Previous } from "react-icons/gr";
 import { useCheckoutSubmitMutation, useCheckoutCancelMutation } from "../services/private/checkout"
 import { CONFIRMATION, HOME } from "../helpers/routes"
-import { CartItem } from "../types/common"
 import { addToast } from "../slices/toastSlice"
 import { setCartItems, setDbCartId, setSessionEndTime } from "../slices/bookCartSlice"
 import { BOOK_CHECKOUT_NUM_DAYS } from "../helpers/constants" 
 import { IconButton } from "../components/page-elements/IconButton"
 import { v4 as uuidv4 } from "uuid"
-import { CustomError } from "../types/common"
+import { CartItem, CustomError, Toast } from "../types/common"
 
 export const Checkout = () => {
 	const location = useLocation()
@@ -28,24 +27,27 @@ export const Checkout = () => {
 	dueDate.setDate(dueDate.getDate() + BOOK_CHECKOUT_NUM_DAYS)
 
 	const cancelCheckout = async () => {
+		const defaultToast = {
+			id: uuidv4(),
+			message: "Something went wrong while cancelling your checkout.",
+			type: "failure",
+			animationType: "animation-in"
+		} as Toast
 		if (dbCartId){
 			try {
 				await checkoutCancel(dbCartId).unwrap()
 				dispatch(addToast({
-					id: uuidv4(),
+					...defaultToast,
 					message: "Checkout has been cancelled",
 					type: "success",
-					animationType: "animation-in"
 				}))
 			}
 			catch (e){
-				dispatch(addToast({
-					id: uuidv4(),
-					message: "Something went wrong while cancelling your checkout.",
-					type: "failure",
-					animationType: "animation-in"
-				}))
+				dispatch(addToast(defaultToast))
 			}
+		}
+		else {
+			dispatch(addToast(defaultToast))	
 		}
 		dispatch(setDbCartId(null))
 		dispatch(setSessionEndTime(null))
@@ -53,38 +55,39 @@ export const Checkout = () => {
 	}
 
 	const onCheckout = async () => {
+		let message = "Please press the 'Return to Home' button in the top right and re-enter the cart to try again"
+		const defaultToast = {
+			id: uuidv4(),
+			message: message,
+			type: "failure",
+			animationType: "animation-in"
+		} as Toast
 		if (dbCartId){
 			try {
 				const data = await checkoutSubmit({cartId: dbCartId, cartItems: cartItems}).unwrap()
 				dispatch(addToast({
-					id: uuidv4(),
+					...defaultToast,
 					message: "Checkout was successful!",
 					type: "success",
-					animationType: "animation-in"
 				}))
 				dispatch(setCartItems([]))
 				navigate(CONFIRMATION, {state: {userBorrowHistoryId: data.userBorrowHistoryId}, replace: true})
 			}
 			catch (e) {
 				const error = e as CustomError
-				let message = "Please press the 'Return to Home' button in the top right and re-enter the cart to try again"
 				if (error.status === 400){
 					dispatch(addToast({
-						id: uuidv4(),
+						...defaultToast,
 						message: `Something went wrong during your transaction. ${error.data?.errors?.[0]}. ${message}`,
-						type: "failure",
-						animationType: "animation-in"
 					}))
 				}
 				else {
-					dispatch(addToast({
-						id: uuidv4(),
-						message: `Something went wrong during your transaction. ${message}`,
-						type: "failure",
-						animationType: "animation-in"
-					}))
+					dispatch(addToast(defaultToast))
 				}
 			}
+		}
+		else {
+			dispatch(addToast(defaultToast))
 		}
 	}
 

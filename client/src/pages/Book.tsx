@@ -8,7 +8,6 @@ import { useAppDispatch, useAppSelector } from "../hooks/redux-hooks"
 import { useLocation, useNavigate } from "react-router-dom"
 import { Book as BookType, LibraryBook } from "../types/common"
 import { skipToken } from '@reduxjs/toolkit/query/react'
-import { BOOKS_SEARCH, BOOKS_BROWSE } from "../helpers/routes"
 import { useLibraryBookConfig } from "../helpers/table-config/useLibraryBookConfig" 
 import { IconContext } from "react-icons"
 import { GrPrevious as Previous } from "react-icons/gr";
@@ -131,7 +130,7 @@ export const Book = () => {
 												 		<IconContext.Provider value = {{color: "white", className: "tw-w-4 tw-h-4"}}>
 									                         <Bookmark/> 
 									                     </IconContext.Provider> 
-												 		<span>Remove to List</span>
+												 		<span>Remove from List</span>
 												 	</div>
 												</IconButton>
 											)

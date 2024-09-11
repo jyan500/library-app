@@ -4,13 +4,13 @@ import {
 	BACKEND_BASE_URL, 
 	USER_BORROW_HISTORY_URL, 
 } from "../../helpers/api-endpoints" 
-import { CustomError, UserBorrowHistory } from "../../types/common" 
+import { CustomError, UserBorrowHistory, ListResponse } from "../../types/common" 
 import { privateApi } from "../private"
 
 export const userBorrowHistoryApi = privateApi.injectEndpoints({
 	overrideExisting: false,
 	endpoints: (builder) => ({
-		getUserBorrowHistories: builder.query<Array<UserBorrowHistory>, Record<string, any>>({
+		getUserBorrowHistories: builder.query<ListResponse<UserBorrowHistory>, Record<string, any>>({
 			query: (urlParams) => ({
 				url: `${USER_BORROW_HISTORY_URL}`,
 				method: "GET",

@@ -3,7 +3,6 @@ import { Navigate, Outlet, useLocation } from "react-router-dom"
 import { useAppSelector } from "../hooks/redux-hooks"
 import { Container } from "../components/page-elements/Container"
 import { HOME, LOGIN } from "../helpers/routes"
-import { usePreloadData } from "../hooks/usePreloadData" 
 
 const CheckoutLayout = () => {
 	const location = useLocation()
