@@ -13,7 +13,9 @@ exports.seed = async function(knex) {
       city: "San Mateo", 
       state: "CA", 
       zipcode: "94402", 
-      image_url: "https://climaterwc.com/live/wp-content/uploads/2021/02/sanmateopubliclibrary.jpg"
+      image_url: "https://climaterwc.com/live/wp-content/uploads/2021/02/sanmateopubliclibrary.jpg",
+      phone_num: "650-522-7800",
+      email: "smplref@plsinfo.org",
     },
     {
       id: 2, 
@@ -22,7 +24,9 @@ exports.seed = async function(knex) {
       city: "San Mateo", 
       state: "CA", 
       zipcode: "94303", 
-      image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/f3497a4e4578fc49e8ac983d4bbe2d37/east-palo-alto.jpg"
+      image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/f3497a4e4578fc49e8ac983d4bbe2d37/east-palo-alto.jpg",
+      phone_num: "1-833-937-7625",
+      email: "eastpaloalto@smcl.org",
     },
     {
       id: 3, 
@@ -31,7 +35,9 @@ exports.seed = async function(knex) {
       city: "Foster City", 
       state: "CA", 
       zipcode: "94404", 
-      image_url: "https://smcl.bibliocommons.com/events/uploads/imag…/26254f86bb755c5a1b8330f4371ed001/foster-city.jpg"},
+      image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/26254f86bb755c5a1b8330f4371ed001/foster-city.jpg",
+      phone_num: "1-833-937-7625",
+      email: "fostercity@smcl.org",
     {
       id: 4, 
       name: 'Belmont', 
@@ -40,6 +46,8 @@ exports.seed = async function(knex) {
       state: "CA", 
       zipcode: "94002", 
       image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/28949fec73708107118f610ad55841d2/belmont.jpg"},
+      phone_num: "1-833-937-7625",
+      email: "belmont@smcl.org",
     {
       id: 5, 
       name: 'San Carlos', 
@@ -47,7 +55,9 @@ exports.seed = async function(knex) {
       city: "San Carlos", 
       state: "CA", 
       zipcode: "94070", 
-      image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/4975872387ff9ac602f5662f7132110e/san-carlos-library.jpg"
+      image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/4975872387ff9ac602f5662f7132110e/san-carlos-library.jpg",
+      phone_num: "1-833-937-7625",
+      email: "sancarlos@smcl.org",
     },
     {
       id: 6, 
@@ -56,7 +66,9 @@ exports.seed = async function(knex) {
       city: "Woodside", 
       state: "CA", 
       zipcode: "94062", 
-      image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/e51c60aefe211791bcc403cb485a5d27/woodside.jpg"
+      image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/e51c60aefe211791bcc403cb485a5d27/woodside.jpg",
+      phone_num: "1-833-937-7625",
+      email: "woodside@smcl.org",
     },
     {
       id: 7, 
@@ -66,6 +78,8 @@ exports.seed = async function(knex) {
       state: "CA", 
       zipcode: "94027", 
       image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/b0cdc23124de5cdf85053a5a53651ce1/NewAthertonLibrary.png"},
+      phone_num: "1-833-937-7625",
+      email: "atherton@smcl.org",
     {
       id: 8, 
       name: 'Mitchell Park', 
@@ -73,7 +87,9 @@ exports.seed = async function(knex) {
       city: "Palo Alto", 
       state: "CA", 
       zipcode: "94303", 
-      image_url: "https://paloalto.bibliocommons.com/events/uploads/images/full/0dd1062e616e30c321d9dc7a561c5f50/20141018-MitchellPark-Twilight.jpg"
+      image_url: "https://paloalto.bibliocommons.com/events/uploads/images/full/0dd1062e616e30c321d9dc7a561c5f50/20141018-MitchellPark-Twilight.jpg",
+      phone_num: "650-329-2436",
+      email: "pa.library@cityofpaloalto.org",
     },
     {
       id: 9, 
@@ -82,7 +98,9 @@ exports.seed = async function(knex) {
       city: "Redwood City", 
       state: "CA", 
       zipcode: "94063", 
-      image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/f5ac29a915125de43b2e53e261eb5e73/North%20Fair%20Oaks%20-%20website.jpg"
+      image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/f5ac29a915125de43b2e53e261eb5e73/North%20Fair%20Oaks%20-%20website.jpg",
+      phone_num: "1-833-937-7625",
+      email: "northfairoaks@smcl.org",
     },
     {
       id: 10, 
@@ -91,7 +109,9 @@ exports.seed = async function(knex) {
       city: "Brisbane", 
       state: "CA",  
       zipcode: "94005", 
-      image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/94490aa0a2cb1491a018d3e81a84d1c1/Brisbane.jpg"
+      image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/94490aa0a2cb1491a018d3e81a84d1c1/Brisbane.jpg",
+      phone_num: "1-833-937-7625",
+      email: "brisbane@smcl.org",
     },
     {
       id: 11, 
@@ -101,6 +121,8 @@ exports.seed = async function(knex) {
       state: "CA",  
       zipcode: "94030", 
       image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/5c5c9e417bbccebf12b0ed94930997b6/millbrae.jpg",
+      phone_num: "1-833-937-7625",
+      email: "millbrae@smcl.org",
     },
     {
       id: 12, 
@@ -109,7 +131,9 @@ exports.seed = async function(knex) {
       city: "Half Moon Bay", 
       state: "CA",  
       zipcode: "94019", 
-      image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/62cbc92c2e5e3234e1de189fd57df7d3/Half-Moon-Bay.png"
+      image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/62cbc92c2e5e3234e1de189fd57df7d3/Half-Moon-Bay.png",
+      phone_num: "1-833-937-7625",
+      email: "halfmoonbay@smcl.org",
     },
     {
       id: 13,
@@ -119,6 +143,8 @@ exports.seed = async function(knex) {
       state: "CA",
       zipcode: "94044",
       image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/12fb0a8ad8a03be1930f6f732fcef619/sanchez.jpg",
+      phone_num: "1-833-937-7625",
+      email: "pacifica@smcl.org",
     },
     {
       id: 14, 
@@ -128,6 +154,8 @@ exports.seed = async function(knex) {
       state: "CA",
       zipcode: "94044",
       image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/2a5de75470d19098aeab8208d7c07e87/sharp-park.jpg",
+      phone_num: "1-833-937-7625",
+      email: "pacifica@smcl.org",
     },
     {
       id: 15,
@@ -136,7 +164,9 @@ exports.seed = async function(knex) {
       city: "Portola Valley",
       state: "CA",
       zipcode: "94028",
-      image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/7ff427d718bc5052696748a871c57e3d/portola-valley.jpg"
+      image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/7ff427d718bc5052696748a871c57e3d/portola-valley.jpg",
+      phone_num: "1-833-937-7625",
+      email: "portolavalley@smcl.org",
     }
 
   ]);

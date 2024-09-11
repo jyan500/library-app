@@ -59,6 +59,7 @@ router.get("/recent", async (req, res, next) => {
 		const userBorrowHistory = await db("user_borrow_history")
 		.join("user_books", "user_books.user_borrow_history_id", "user_borrow_history.id")
 		.whereNull("user_books.date_returned")
+		.where("user_borrow_history.user_id", userId)
 		.orderBy("user_borrow_history.created_at", "desc")
 		.limit(1)
 		.select(

@@ -11,6 +11,7 @@ import { BookCatalog } from "./pages/BookCatalog"
 import { UserBorrowHistoryDisplay } from "./pages/UserBorrowHistoryDisplay"
 import { UserBorrowHistory } from "./pages/UserBorrowHistory"
 import { LibraryDisplay } from "./pages/LibraryDisplay"
+import { LibraryGrid } from "./pages/LibraryGrid"
 import { Library } from "./pages/Library"
 import { Checkout } from "./pages/Checkout"
 import { Confirmation } from "./pages/Confirmation"
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
 				path: LIBRARIES,	
 				element: <LibraryDisplay/>,
 				children: [
+					{
+						index: true,
+						element: <LibraryGrid/>
+					},
 					{
 						path: LIBRARY,
 						element: <Library/>

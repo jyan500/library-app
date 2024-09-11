@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import { Link, useLocation } from 'react-router-dom';
-import { HOME, BOOKS, USER_BORROW_HISTORY, LOCATIONS, ACCOUNT } from "../../helpers/routes"
+import { HOME, BOOKS, USER_BORROW_HISTORY, LIBRARIES, ACCOUNT } from "../../helpers/routes"
 
 interface Link {
 	pathname: string	
@@ -44,7 +44,7 @@ export const NavBar = () => {
 			}]
 		},
 	{
-		pathname: LOCATIONS, text: "Locations", secondary: [],
+		pathname: LIBRARIES, text: "Locations", secondary: [],
 	},
 	{
 		pathname: ACCOUNT, text: "Account", secondary: []
