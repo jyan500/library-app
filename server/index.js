@@ -38,7 +38,7 @@ app.use(api("user-role"), auth.authenticateToken, userRoleRouter)
 app.use(api("genre"), auth.authenticateToken, genreRouter)
 app.use(api("news-post"), auth.authenticateToken, newsPostRouter)
 app.use(api("news-post-genre"), auth.authenticateToken, newsPostGenreRouter)
-app.use(api("library"), auth.authenticateToken, libraryRouter)
+/* app.use(api("library"), auth.authenticateToken, libraryRouter) */
 app.use(api("book-status"), auth.authenticateToken, bookStatusRouter)
 app.use(api("checkout"), auth.authenticateToken, checkoutRouter)
 app.use(api("user-borrow-history"), auth.authenticateToken, userBorrowHistoryRouter)
@@ -46,6 +46,7 @@ app.use(api("user-book"), auth.authenticateToken, userBookRouter)
 
 /* Public Endpoints */
 app.use(api("user"), userRouter)
+app.use(api("library"), libraryRouter)
 
 app.use((err, req, res, next) => {
 	const statusCode = err.statusCode || 500

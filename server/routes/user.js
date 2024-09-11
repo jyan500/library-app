@@ -45,6 +45,7 @@ router.post("/register", userValidator.registerValidator, handleValidationResult
 			first_name: req.body.first_name,
 			last_name: req.body.last_name,
 			email: req.body.email,
+			library_id: req.body.library_id !== "" ? req.body.library_id : null,
 			password: hash,
 			user_role_id: userRole?.id
 		})

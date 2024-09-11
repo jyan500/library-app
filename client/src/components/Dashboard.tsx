@@ -22,6 +22,7 @@ interface CarouselElement {
 
 type BookCarouselElement = CarouselElement & { 
 	author: string 
+	libraryName: string
 	dateDue: Date
 }
 
@@ -60,14 +61,16 @@ const CardCarouselContent = ({data}: CarouselContentProps<CarouselElement>) => {
 const BookCarouselContent = ({data}: CarouselContentProps<BookCarouselElement>) => {
 	const dueDate = new Date(data.dateDue)
 	return (
-		<RowBookCard book={data} showLinkTitle={true}>
+		<RowBookCard imageClassName = {"tw-w-full tw-h-auto lg:tw-w-1/3 lg:tw-h-1/3"} book={data} showLinkTitle={true}>
 			<span><span className = "tw-font-bold">Date Due</span>: {dueDate.toLocaleDateString("en-US")}</span>
+			<span>{data.libraryName} Library</span>
 		</RowBookCard>
 	)	
 }
 
 export const Dashboard = () => {
 	const { newsPostGenres } = useAppSelector((state) => state.newsPostGenre)
+	const { libraries } = useAppSelector((state) => state.library)
 	const screenSize = useScreenSize()
 
 	const exploreGenre = newsPostGenres.find((genre) => genre.name === "Explore")
@@ -120,14 +123,15 @@ export const Dashboard = () => {
 						</PageHeader>
 						<Container>
 							{
-								userBorrowHistory[0].books.length >= 2 ? (
+								userBorrowHistory[0].books.length > 1 ? (
 									<MultiCardCarousel items={createBookCarouselElements(userBorrowHistory[0].books.map((book: BookConfirmation) => {
 										return {
 											id: book.id,
 											imageURL: book.imageURL,
 											title: book.title,
 											author: book.author,
-											dateDue: book.dateDue
+											dateDue: book.dateDue,
+											libraryName: libraries?.find((library) => library.id === book.libraryId)?.name ?? ""
 										}
 									}))} itemsPerPage={1}/>
 								) : 

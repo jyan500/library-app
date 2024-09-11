@@ -13,6 +13,7 @@ export interface RegisterRequest {
 	email: string
 	password: string
 	confirmPassword: string
+	libraryId: string | null
 }
 
 export const userRegisterApi = publicApi.injectEndpoints({
@@ -27,7 +28,8 @@ export const userRegisterApi = publicApi.injectEndpoints({
 					last_name: registrationInfo.lastName,
 					email: registrationInfo.email,
 					password: registrationInfo.password,
-					confirm_password: registrationInfo.confirmPassword
+					confirm_password: registrationInfo.confirmPassword,
+					library_id: registrationInfo.libraryId
 				} 
 			})	
 		}),
