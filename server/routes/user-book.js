@@ -52,10 +52,13 @@ router.get("/:userBookId", validateGet, handleValidationResult, async (req, res,
 
 router.post("/return", validateReturn, handleValidationResult, async (req, res, next) => {
 	try {
-		await db("user_books").where("id", req.params.userBookId).update({
+		await db("user_books").where("id", req.body.user_book_id).update({
 			date_returned: new Date()
 		})
-		res.json({message: "Book updated successfully!"})	
+		await db("library_books").where("id", req.body.library_book_id).update({
+			book_status_id: req.body.book_status_id
+		})
+		res.json({message: "Book returned successfully!"})	
 	}	
 	catch (err) {
 		console.error(`Error while updating Book: ${err.message}`)

@@ -49,6 +49,7 @@ export const checkoutApi = privateApi.injectEndpoints({
 					cart_id: cartId 
 				}
 			}),
+			invalidatesTags: ["UserBooks", "UserBorrowHistory"]
 		}),
 		checkoutCancel: builder.mutation<{message: string}, number>({
 			query: (dbCartId) => ({

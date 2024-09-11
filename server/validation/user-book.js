@@ -10,10 +10,12 @@ const userBookValidator = (actionType) => {
 			param("userBookId").custom(async (value, {req}) => await validateKeyExists("userBook", value, "user_books")),
 		]
 	}
-	if (actionType === "return"){
+	else if (actionType === "return"){
 		validationRules = [
 			...validationRules,
-			body("book_status_id").custom(async (value, {req}) => await validateKeyExists("bookStatus", value, "book_statuses"))
+			body("user_book_id").custom(async (value, {req}) => await validateKeyExists("userBook", value, "user_books")),
+			body("book_status_id").custom(async (value, {req}) => await validateKeyExists("bookStatus", value, "book_statuses")),
+			body("library_book_id").custom(async (value, {req}) => await validateKeyExists("libraryBook", value, "library_books"))
 		]
 	}
 	return validationRules

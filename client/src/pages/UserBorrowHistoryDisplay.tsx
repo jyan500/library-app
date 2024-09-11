@@ -48,6 +48,12 @@ export const UserBorrowHistoryDisplay = () => {
 		return (
 			<>
 				<div className = "tw-w-1/4 tw-flex tw-flex-col tw-gap-y-4">
+					<PaginationRow
+						showPageNums={false}
+						currentPage={searchParams.get("page") ? Number(searchParams.get("page")) : 1}
+						paginationData={data?.pagination}
+						setPage={setPage}
+					/>
 					{data?.data?.map((history: UserBorrowHistory) => {
 						return (
 							<button key = {history.id} onClick={() => showHistory(history.id)} className = "hover:tw-bg-gray-50">
@@ -58,12 +64,7 @@ export const UserBorrowHistoryDisplay = () => {
 							</button>
 						)
 					})}
-					<PaginationRow
-						showPageNums={false}
-						currentPage={searchParams.get("page") ? Number(searchParams.get("page")) : 1}
-						paginationData={data?.pagination}
-						setPage={setPage}
-					/>
+				
 				</div>
 				<div className = "tw-w-3/4 tw-flex tw-flex-col tw-gap-y-4">
 					{ !userBorrowHistoryId ? (
@@ -84,6 +85,14 @@ export const UserBorrowHistoryDisplay = () => {
 		return (<>
 			{!userBorrowHistoryId ? (
 				<div className = "tw-flex tw-w-full tw-flex-col tw-justify-center tw-gap-y-4">
+					<PaginationRow
+						showPageNums={false}
+						url={url}
+						currentPage={searchParams.get("page") ? Number(searchParams.get("page")) : 1}
+						paginationData={data?.pagination}
+						urlParams={{}}
+						setPage={setPage}
+					/>
 					{data?.data?.map((history: UserBorrowHistory) => {
 						return (
 							<button key = {history.id} onClick={() => showHistory(history.id)} className = "hover:tw-bg-gray-50">
@@ -94,14 +103,6 @@ export const UserBorrowHistoryDisplay = () => {
 							</button>
 						)
 					})}
-					<PaginationRow
-						showPageNums={false}
-						url={url}
-						currentPage={searchParams.get("page") ? Number(searchParams.get("page")) : 1}
-						paginationData={data?.pagination}
-						urlParams={{}}
-						setPage={setPage}
-					/>
 				</div>
 			) : null}
 			<Outlet/>

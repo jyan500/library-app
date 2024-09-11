@@ -75,8 +75,10 @@ export interface CartItem {
 
 export type BookConfirmation = Book & { 
 	libraryId: number 
+	libraryBookId: number
 	userBookId: number
 	dateDue: Date
+	dateReturned: Date | null
 }
 
 export interface UserBorrowHistory {

@@ -28,7 +28,7 @@ export const UserBorrowHistory = () => {
 	const {data, isFetching } = useGetUserBorrowHistoryQuery(userBorrowHistoryId ? {id: userBorrowHistoryId, urlParams: {"books": true}} : skipToken)
 	const screenSize = useScreenSize()
 
-	const onReturnBook = async (userBookId: number) => {
+	const onReturnBook = async (userBookId: number, libraryBookId: number) => {
 		const defaultToast: Toast = {
 			id: uuidv4(),
 			type: "failure",
@@ -37,7 +37,7 @@ export const UserBorrowHistory = () => {
 		}
 		if (availableStatus?.id && userBookId){
 			try {
-				await returnUserBook({id: userBookId, bookStatusId: availableStatus?.id}).unwrap()
+				await returnUserBook({userBookId, libraryBookId, bookStatusId: availableStatus?.id}).unwrap()
 				dispatch(addToast({...defaultToast,
 					type: "success",
 					message: "Book returned successfully!"
@@ -81,10 +81,15 @@ export const UserBorrowHistory = () => {
 									{history.books?.map((book: BookConfirmation) => {
 										const dueDate = new Date(book.dateDue)
 										const curDate = new Date()
+										let dateReturned = new Date()
+										if (book.dateReturned){
+											dateReturned = new Date(book.dateReturned)
+										}
 										return (
 											<RowBookCard 
 												key={book.id}
 												book={book}
+												showLinkTitle={true}
 											>
 												<>
 													<div className = "tw-border-t tw-border-gray-300"></div>
@@ -92,16 +97,22 @@ export const UserBorrowHistory = () => {
 														<span>{libraries.find((library) => library.id === book.libraryId)?.name} Library</span>
 													</div>
 													{
-														curDate < dueDate ? (
+														!book.dateReturned ? (
 															<>
 																<div>
 																	<span className = "tw-font-bold">Due Date: {dueDate.toLocaleDateString("en-US")}</span>
 																</div>
 																<div className = "tw-mt-auto">
-																	<button onClick = {() => onReturnBook(book.userBookId)} className = "button">Return Book</button>
+																	<button onClick = {() => onReturnBook(book.userBookId, book.libraryBookId)} className = "button">Return Book</button>
 																</div>
 															</>
-														) : null
+														) : (
+															<>
+																<div>
+																	<span className = "tw-font-bold">Date Returned: {dateReturned.toLocaleDateString("en-US")}</span>
+																</div>
+															</>
+														)
 													}
 												</>
 											</RowBookCard>

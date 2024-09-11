@@ -10,13 +10,14 @@ import { privateApi } from "../private"
 export const userBookApi = privateApi.injectEndpoints({
 	overrideExisting: false,
 	endpoints: (builder) => ({
-		returnUserBook: builder.mutation<{message: string}, {id: number, bookStatusId: number}>({
-			query: ({id, bookStatusId}) => ({
+		returnUserBook: builder.mutation<{message: string}, {userBookId: number, bookStatusId: number, libraryBookId: number}>({
+			query: ({userBookId, libraryBookId, bookStatusId}) => ({
 				url: RETURN_USER_BOOK_URL,
 				method: "POST",
 				body: {
-					id: id,
-					book_status_id: bookStatusId
+					user_book_id: userBookId,
+					library_book_id: libraryBookId,
+					book_status_id: bookStatusId,
 				}
 			}),
 			invalidatesTags: ["UserBooks", "UserBorrowHistory"]

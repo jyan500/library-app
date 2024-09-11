@@ -16,7 +16,7 @@ router.get("/", async (req, res, next) => {
 			"user_borrow_history.transaction_num as transactionNum",
 			"user_borrow_history.created_at as createdAt"
 		).orderBy("created_at", "desc")
-		.paginate({ perPage: 10, currentPage: req.query.page ? parseInt(req.query.page) : 1, isLengthAware: true})
+		.paginate({ perPage: 5, currentPage: req.query.page ? parseInt(req.query.page) : 1, isLengthAware: true})
 		res.json(userBorrowHistory)
 	}	
 	catch (err) {
@@ -49,8 +49,10 @@ router.get("/:historyId", validateGet, handleValidationResult, async (req, res, 
 				"books.author as author",
 				"books.image_url as imageURL",
 				"user_books.date_due as dateDue",
+				"user_books.date_returned as dateReturned",
 				"user_books.id as userBookId",
 				"library_books.id as libraryBookId",
+				"library_books.book_status_id as bookStatusId",
 				"library_books.library_id as libraryId"
 			)	
 		}
