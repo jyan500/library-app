@@ -16,5 +16,6 @@ export const CHECKOUT_VALIDATE_URL = `/${API_VERSION}/checkout/validate`
 export const CHECKOUT_CANCEL_URL = `/${API_VERSION}/checkout/cancel`
 export const CHECKOUT_SUBMIT_URL = `/${API_VERSION}/checkout/submit`
 export const USER_BORROW_HISTORY_URL = `/${API_VERSION}/user-borrow-history`
+export const USER_BORROW_HISTORY_RECENT_URL = `/${API_VERSION}/user-borrow-history/recent`
 export const USER_BOOK_URL = `${API_VERSION}/user-book`
 export const RETURN_USER_BOOK_URL = `${USER_BOOK_URL}/return`

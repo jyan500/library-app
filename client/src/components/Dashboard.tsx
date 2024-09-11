@@ -1,13 +1,17 @@
 import React from "react"
 import "../styles/dashboard.css"
+import { BookConfirmation } from "../types/common"
 import { useAppSelector } from "../hooks/redux-hooks"
 import { MultiCardCarousel } from "./carousel/MultiCardCarousel"
 import { PageHeader } from "./page-elements/PageHeader" 
 import { useGetNewsPostsQuery } from "../services/private/newsPost"
 import { LoadingSpinner } from "./LoadingSpinner"
+import { GridCard } from "../components/GridCard"
 import { useScreenSize } from "../hooks/useScreenSize"
 import { XL_BREAKPOINT } from "../helpers/constants"
 import { Container } from "./page-elements/Container"
+import { RowBookCard } from "./RowBookCard"
+import { useGetRecentUserBorrowHistoryQuery } from "../services/private/userBorrowHistory"
 
 interface CarouselElement {
 	id: number
@@ -16,11 +20,16 @@ interface CarouselElement {
 	description?: string
 }
 
-interface CarouselContentProps {
-	data: CarouselElement
+type BookCarouselElement = CarouselElement & { 
+	author: string 
+	dateDue: Date
 }
 
-const ImageCarouselContent = ({data}: CarouselContentProps) => {
+interface CarouselContentProps<T = {}> {
+	data: T
+}
+
+const ImageCarouselContent = ({data}: CarouselContentProps<CarouselElement>) => {
 	return (
 		<>
 	        <img src={data.imageURL} alt={data.title} className="tw-relative tw-object-cover tw-w-full tw-h-full tw-rounded-lg" />
@@ -32,7 +41,7 @@ const ImageCarouselContent = ({data}: CarouselContentProps) => {
 	)
 }
 
-const CardCarouselContent = ({data}: CarouselContentProps) => {
+const CardCarouselContent = ({data}: CarouselContentProps<CarouselElement>) => {
 	return (
 		<div className = "tw-h-full tw-border tw-border-gray-300 tw-shadow-md tw-rounded-lg">
 			<img src = {data.imageURL} alt={data.title} className = "tw-object-cover tw-h-[600px] xl:tw-h-64 tw-w-full tw-h-full tw-rounded-lg"/>
@@ -48,6 +57,15 @@ const CardCarouselContent = ({data}: CarouselContentProps) => {
 	)
 }
 
+const BookCarouselContent = ({data}: CarouselContentProps<BookCarouselElement>) => {
+	const dueDate = new Date(data.dateDue)
+	return (
+		<RowBookCard book={data} showLinkTitle={true}>
+			<span><span className = "tw-font-bold">Date Due</span>: {dueDate.toLocaleDateString("en-US")}</span>
+		</RowBookCard>
+	)	
+}
+
 export const Dashboard = () => {
 	const { newsPostGenres } = useAppSelector((state) => state.newsPostGenre)
 	const screenSize = useScreenSize()
@@ -59,6 +77,7 @@ export const Dashboard = () => {
 	const {data: exploreGenreData, isFetching: isExplorePostFetching} = useGetNewsPostsQuery({newsPostGenreId: exploreGenre?.id})
 	const {data: youthGenreData, isFetching: isYouthPostFetching} = useGetNewsPostsQuery({newsPostGenreId: youthGenre?.id})
 	const {data: seniorGenreData, isFetching: isSeniorPostFetching} = useGetNewsPostsQuery({newsPostGenreId: seniorGenre?.id})
+	const {data: userBorrowHistory, isFetching: isUserBorrowHistory} = useGetRecentUserBorrowHistoryQuery({books: true})
 
 	const createImageCarouselElements = (data: Array<CarouselElement>) => {
 		if (data.length){
@@ -80,8 +99,47 @@ export const Dashboard = () => {
 		return []
 	}
 
+	const createBookCarouselElements = (data: Array<BookCarouselElement>) => {
+		if (data.length){
+			const carouselElements = data.map((element: BookCarouselElement) => {
+				return <BookCarouselContent data={element}/>
+			})
+			return carouselElements
+		}	
+		return []
+	}
+
 	return (
 		<div className = "tw-w-full tw-flex tw-flex-col tw-mt-4 tw-gap-y-4">
+			{
+				userBorrowHistory?.[0].books?.length ? (
+					<>
+						<PageHeader>
+							<p className = "tw-my-1 tw-text-4xl tw-font-bold tw-text-white">My Books</p>	
+							<p className = "tw-text-white">Check out your recent findings!</p>	
+						</PageHeader>
+						<Container>
+							{
+								userBorrowHistory[0].books.length >= 2 ? (
+									<MultiCardCarousel items={createBookCarouselElements(userBorrowHistory[0].books.map((book: BookConfirmation) => {
+										return {
+											id: book.id,
+											imageURL: book.imageURL,
+											title: book.title,
+											author: book.author,
+											dateDue: book.dateDue
+										}
+									}))} itemsPerPage={1}/>
+								) : 
+								(
+									<RowBookCard showLinkTitle = {true} book = {userBorrowHistory[0].books[0]}>
+									</RowBookCard>
+								)
+							}
+						</Container>
+					</>
+				) : null
+			}
 			<PageHeader>
 				<p className = "tw-my-1 tw-text-4xl tw-font-bold tw-text-white">Stay Connected</p>	
 				<p className = "tw-text-white">Get the latest updates by subscribing to our eNewsletter!</p>	
@@ -93,6 +151,7 @@ export const Dashboard = () => {
 					) : <LoadingSpinner/> 
 				}
 			</div>
+
 			<Container>
 				<>
 					{

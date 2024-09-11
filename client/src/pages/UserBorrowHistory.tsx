@@ -77,7 +77,7 @@ export const UserBorrowHistory = () => {
 							<div className = "tw-flex tw-flex-col tw-gap-y-2" key = {history.id}>
 								<span className = "tw-font-bold">Transaction #{history.transactionNum}</span>	
 								<span className = "tw-font-bold">{new Date(history.createdAt).toLocaleDateString("en-US")}</span>
-								<div>
+								<div className = "tw-flex tw-flex-col tw-gap-y-2">
 									{history.books?.map((book: BookConfirmation) => {
 										const dueDate = new Date(book.dateDue)
 										const curDate = new Date()
