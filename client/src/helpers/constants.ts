@@ -18,6 +18,16 @@ export const DAYS = {
 	7: "Saturday",
 }
 
+export const DAYS_REVERSE_MAPPING = {
+	"Monday": 2,
+	"Tuesday": 3,
+	"Wednesday": 4,
+	"Thursday": 5,
+	"Friday": 6,
+	"Saturday": 7,
+	"Sunday": 1,
+}
+
 export const BOOK_CHECKOUT_NUM_DAYS = 14
 
 export const SM_BREAKPOINT = 640

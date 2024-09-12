@@ -26,7 +26,7 @@ exports.seed = async function(knex) {
                 {
                     day: 7,
                     library_id: library.id,
-                    start_hour: "12:00:00",
+                    start_hour: "11:00:00",
                     end_hour: "17:00:00",
                 }
             ]
