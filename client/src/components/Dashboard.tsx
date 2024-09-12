@@ -136,7 +136,10 @@ export const Dashboard = () => {
 									}))} itemsPerPage={1}/>
 								) : 
 								(
-									<RowBookCard showLinkTitle = {true} book = {userBorrowHistory[0].books[0]}>
+									<RowBookCard imageClassName = {"tw-object-cover tw-w-full tw-h-auto"} showLinkImage={true} showLinkTitle = {true} book = {userBorrowHistory[0].books[0]}>
+										<div className = "tw-border-t tw-border-gray-300"></div>
+										<span>{libraries?.find((library) => library.id === userBorrowHistory[0].books[0].libraryId)?.name} Library</span>
+										<span className = "tw-font-bold">Due Date: {new Date(userBorrowHistory[0].books[0].dateDue).toLocaleDateString("en-US")}</span>
 									</RowBookCard>
 								)
 							}

@@ -4,12 +4,14 @@ import "../styles/modal.css"
 import { setModalProps, toggleShowModal } from "../slices/modalSlice" 
 import { BookCartModal } from "./modals/BookCartModal"
 import { AddBookToCartModal } from "./modals/AddBookToCartModal" 
+import { WarningModal } from "./modals/WarningModal" 
 import { useAppDispatch, useAppSelector } from "../hooks/redux-hooks" 
 import { GenericProps } from "../types/common" 
 
 export const modalTypes = {
 	"ADD_BOOK_TO_CART": AddBookToCartModal,
 	"BOOK_CART_MODAL": BookCartModal,
+	"WARNING_MODAL": WarningModal,
 }
 
 export const modalClassNames = {

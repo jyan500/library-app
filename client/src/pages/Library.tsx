@@ -28,7 +28,7 @@ export const Library = () => {
 			</IconButton>
 			{!isFetching && data?.length ? (
 				<RowCard>
-					<img className = "tw-w-full tw-h-auto lg:tw-w-1/2 lg:tw-h-1/2" src = {library?.imageURL} alt={library?.name}/>
+					<img className = "tw-w-full tw-h-auto xl:tw-w-1/2 xl:tw-h-1/2" src = {library?.imageURL} alt={library?.name}/>
 					<div className = "tw-p-4 tw-flex tw-flex-col tw-gap-y-2">
 						<div className = "tw-flex tw-flex-col tw-gap-y-2 tw-pb-2">
 							<span className = "tw-overflow-hidden tw-font-bold tw-text-3xl">{library?.name}</span>
@@ -38,9 +38,9 @@ export const Library = () => {
 									const dayIndex = DAYS_REVERSE_MAPPING[day as keyof typeof DAYS_REVERSE_MAPPING]
 									const hour = library?.hours?.find((lib) => lib.day === dayIndex)
 									return (
-										<div className = "tw-flex tw-flex-row tw-justify-between">
+										<div className = "tw-flex tw-flex-row tw-justify-between tw-gap-x-2">
 											<span>{day}</span>
-											<span>{hour ? `${convertMilitaryToStandardTime(hour.startHour)} - ${ convertMilitaryToStandardTime((hour.endHour))}` : "Closed"}</span>
+											<span>{hour ? `${convertMilitaryToStandardTime(hour.startHour)} - ${ convertMilitaryToStandardTime((hour.endHour))}` : <span className = "tw-font-bold tw-text-red-700">{"Closed"}</span>}</span>
 										</div>	
 									)
 								})}

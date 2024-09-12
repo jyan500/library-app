@@ -11,6 +11,8 @@ import { UserBorrowHistory, BookConfirmation } from "../types/common"
 import { skipToken } from '@reduxjs/toolkit/query/react'
 import { useGetUserBorrowHistoryQuery } from "../services/private/userBorrowHistory"
 import { setCartItems, setDbCartId, setSessionEndTime } from "../slices/bookCartSlice"
+import { useScreenSize } from "../hooks/useScreenSize"
+import { XL_BREAKPOINT } from "../helpers/constants"
 
 export const Confirmation = () => {
 	const location = useLocation()
@@ -39,8 +41,9 @@ export const Confirmation = () => {
 	                </div>
                 </IconButton>
 			</div>
-			<div className = "tw-flex tw-flex-col tw-gap-y-4">
+			<div className = "tw-py-4 tw-flex tw-flex-col tw-gap-y-4">
 				<span className = "tw-font-bold tw-text-3xl">Confirmation</span>
+				<div className = "tw-border-t tw-border-gray-300"></div>
 				<div>
 					{data?.map((history: UserBorrowHistory) => {
 						return (

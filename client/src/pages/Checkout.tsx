@@ -103,8 +103,11 @@ export const Checkout = () => {
                     </div>
 				</IconButton>
 			</div>
-			<p className = "tw-font-bold tw-text-3xl">Checkout</p>
-			<p className = "tw-font-bold tw-text-2xl">Total: {cartItems?.length}</p>
+			<div>
+				<p className = "tw-font-bold tw-text-3xl">Checkout</p>
+				<p className = "tw-font-bold tw-text-2xl">Total: {cartItems?.length}</p>
+				<div className = "tw-border-t tw-border-gray-300"></div>
+			</div>
 			{cartItems?.map((item: CartItem) => {
 				return (
 					<RowBookCard 
@@ -123,7 +126,7 @@ export const Checkout = () => {
 					</RowBookCard>
 				)	
 			})}
-			<button onClick={onCheckout} className = "button">Checkout</button>
+			<button onClick={onCheckout} className = "button">Submit</button>
 		</div>
 	)	
 }
