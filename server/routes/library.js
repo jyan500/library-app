@@ -77,6 +77,8 @@ router.get("/", async (req, res, next) => {
 			"libraries.city as city",
 			"libraries.zipcode as zipcode",
 			"libraries.state as state",
+			"libraries.email as email",
+			"libraries.phone_num as phoneNum"
 		)
 		if (req.query.hours){
 			Promise.all(libraries.map(async (library) => {
@@ -109,6 +111,8 @@ router.get("/:libraryId", validateGet, handleValidationResult, async (req, res, 
 			"libraries.city as city",
 			"libraries.zipcode as zipcode",
 			"libraries.state as state",
+			"libraries.email as email",
+			"libraries.phone_num as phoneNum"
 		).first()
 		let hours;
 		let hoursStatus;

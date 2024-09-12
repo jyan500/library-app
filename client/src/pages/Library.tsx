@@ -47,6 +47,17 @@ export const Library = () => {
 							</div>
 						</div>
 					</div>	
+					<div className = "tw-p-4 tw-flex tw-flex-col tw-gap-y-2">
+						<div className = "tw-flex tw-flex-col">
+							<span>{library?.address}</span>
+							<span>{library?.city}, {library?.state} {library?.zipcode}</span>
+							<a className = "tw-font-bold tw-text-primary" href = {`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${library?.address} ${library?.city} ${library?.state} ${library?.zipcode}`)}`}>Get Directions</a>
+						</div>
+						<div className = "tw-flex tw-flex-col">
+							<span><span className = "tw-font-bold">Email: </span>{library?.email}</span>
+							<span><span className = "tw-font-bold">Phone: </span>{library?.phoneNum}</span>
+						</div>
+					</div>
 				</RowCard>
 			) : null}
 		</div>

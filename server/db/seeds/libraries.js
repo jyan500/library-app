@@ -38,6 +38,7 @@ exports.seed = async function(knex) {
       image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/26254f86bb755c5a1b8330f4371ed001/foster-city.jpg",
       phone_num: "1-833-937-7625",
       email: "fostercity@smcl.org",
+    },
     {
       id: 4, 
       name: 'Belmont', 
@@ -45,9 +46,10 @@ exports.seed = async function(knex) {
       city: "Belmont", 
       state: "CA", 
       zipcode: "94002", 
-      image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/28949fec73708107118f610ad55841d2/belmont.jpg"},
+      image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/28949fec73708107118f610ad55841d2/belmont.jpg",
       phone_num: "1-833-937-7625",
       email: "belmont@smcl.org",
+    },
     {
       id: 5, 
       name: 'San Carlos', 
@@ -77,9 +79,10 @@ exports.seed = async function(knex) {
       city: "Atherton", 
       state: "CA", 
       zipcode: "94027", 
-      image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/b0cdc23124de5cdf85053a5a53651ce1/NewAthertonLibrary.png"},
+      image_url: "https://smcl.bibliocommons.com/events/uploads/images/full/b0cdc23124de5cdf85053a5a53651ce1/NewAthertonLibrary.png",
       phone_num: "1-833-937-7625",
       email: "atherton@smcl.org",
+    },
     {
       id: 8, 
       name: 'Mitchell Park', 

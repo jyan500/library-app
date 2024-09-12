@@ -27,6 +27,8 @@ export interface Library {
 	state: string
 	zipcode: number 
 	imageURL: string
+	email: string
+	phoneNum: string
 	hours?: Array<LibraryHour>
 	libraryHourStatus?: LibraryHourStatus	
 }
