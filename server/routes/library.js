@@ -15,7 +15,7 @@ const getLibraryHourStatus = async (libraryId) => {
 		an additional subquery will be required.
 	*/
 	const currentTime = db.raw("TIME(NOW())");
-	const dayOfWeek = db.raw("DAYOFWEEK(CURDATE())")
+	const dayOfWeek = db.raw("DAYOFWEEK(NOW())")
 	const isOpen = await db("library_hours")
 	.where("library_id", libraryId)
 	.where("day", dayOfWeek)

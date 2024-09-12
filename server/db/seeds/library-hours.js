@@ -12,19 +12,19 @@ exports.seed = async function(knex) {
         if (library.name === "Pacifica Sanchez"){
             dayHours = [...dayHours, 
                 {
-                    day: 2,
-                    library_id: library.id,
-                    start_hour: "12:00:00",
-                    end_hour: "17:00:00",
-                },
-                {
                     day: 3,
                     library_id: library.id,
                     start_hour: "12:00:00",
                     end_hour: "17:00:00",
                 },
                 {
-                    day: 6,
+                    day: 4,
+                    library_id: library.id,
+                    start_hour: "12:00:00",
+                    end_hour: "17:00:00",
+                },
+                {
+                    day: 7,
                     library_id: library.id,
                     start_hour: "12:00:00",
                     end_hour: "17:00:00",
@@ -37,7 +37,7 @@ exports.seed = async function(knex) {
                     day: i+1,
                     library_id: library.id,
                     start_hour: "10:00:00",
-                    end_hour: (i >= 4 ? "18:00:00" : "21:00:00"),
+                    end_hour: (i === 1 || i >= 6 ? "18:00:00" : "21:00:00"),
                 })
             })
         }
