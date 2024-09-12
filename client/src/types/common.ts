@@ -27,6 +27,21 @@ export interface Library {
 	state: string
 	zipcode: number 
 	imageURL: string
+	hours?: Array<LibraryHour>
+	libraryHourStatus?: LibraryHourStatus	
+}
+
+export interface LibraryHour {
+	id: number
+	day: number
+	startHour: string 
+	endHour: string
+}
+
+export interface LibraryHourStatus {
+	isOpen: boolean
+	nextOpening?: LibraryHour 
+	nextClosing?: LibraryHour
 }
 
 export interface LibraryBook {

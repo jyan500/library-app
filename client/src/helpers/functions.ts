@@ -1,4 +1,5 @@
-import type { UserProfile } from "../types/common"
+import type { UserProfile, LibraryHourStatus } from "../types/common"
+import { DAYS } from "./constants"
 /**
  * @param backend error response as an object
  * @return Array of strings containing the parsed error messages
@@ -50,6 +51,51 @@ export const convertFlatToNestedArray = (numPerArray: number, total: number, dat
 export const displayUser = (user: UserProfile | null | undefined) => {
 	return user ? (user.firstName + " " + user.lastName) : ""
 }
+
+/**
+ * @param HH:MM:SS formatted string in military time 
+ * @return locale string in HH:MM AM/PM
+ */
+export const convertMilitaryToStandardTime = (timeString: string) => {
+	// Split the time string (expected format "HH:MM:SS") into hours, minutes
+	let [hours, minutes, _] = timeString.split(':');
+
+	// Convert hours to an integer
+	const numHours = parseInt(hours, 10);
+
+	// Determine AM or PM
+	const period = numHours >= 12 ? 'PM' : 'AM';
+
+	// Convert to 12-hour format
+	// handling edge case when 0:00 should be represented as 12:00 AM
+	const convertedHours = numHours % 12 === 0 ? 12 : numHours % 12; 
+
+	// Ensure minutes are two digits (in case MySQL returns them without leading zeros)
+	minutes = minutes.padStart(2, '0')
+
+	return `${convertedHours}:${minutes} ${period}`
+
+}
+
+/**
+ * @param LibraryHourStatus object (see types)
+ * @return string that displays the next opening time if the library is closed, or the next closing time if the library is open
+ */
+export const showLibraryHourStatus = (libraryHourStatus: LibraryHourStatus) => {
+	if (libraryHourStatus.isOpen && libraryHourStatus.nextClosing){
+		const nextClosing = convertMilitaryToStandardTime(libraryHourStatus.nextClosing?.endHour)
+		return `Open until ${nextClosing}`
+	}
+	else if (!libraryHourStatus.isOpen && libraryHourStatus.nextOpening){
+
+		const nextOpening = convertMilitaryToStandardTime(libraryHourStatus.nextOpening?.startHour)
+		const day = DAYS[libraryHourStatus.nextOpening.day as keyof typeof DAYS]
+		return `Closed until ${day}, ${nextOpening}`
+	}
+	return ""
+}
+
+
 
 
 

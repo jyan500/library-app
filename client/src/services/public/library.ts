@@ -5,9 +5,9 @@ import {
 	LIBRARY_URL, 
 } from "../../helpers/api-endpoints" 
 import { CustomError, ListResponse, Library } from "../../types/common" 
-import { privateApi } from "../private"
+import { publicApi } from "../public"
 
-export const libraryApi = privateApi.injectEndpoints({
+export const libraryApi = publicApi.injectEndpoints({
 	overrideExisting: false,
 	endpoints: (builder) => ({
 		getLibraries: builder.query<Array<Library>, Record<string, any>>({
@@ -17,10 +17,11 @@ export const libraryApi = privateApi.injectEndpoints({
 				params: urlParams
 			}),
 		}),
-		getLibrary: builder.query<Array<Library>, number>({
-			query: (id) => ({
+		getLibrary: builder.query<Array<Library>, {id: number, urlParams: Record<string,any>}>({
+			query: ({id, urlParams}) => ({
 				url: `${LIBRARY_URL}/${id}`,
 				method: "GET",
+				params: urlParams
 			}),
 		}),
 	}),
