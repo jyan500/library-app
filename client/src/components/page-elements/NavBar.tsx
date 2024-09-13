@@ -1,6 +1,7 @@
 import React, {useState} from "react"
 import { Link, useLocation } from 'react-router-dom';
 import { HOME, BOOKS, USER_BORROW_HISTORY, LIBRARIES, ACCOUNT } from "../../helpers/routes"
+import { useAppSelector } from "../../hooks/redux-hooks"
 
 interface Link {
 	pathname: string	
@@ -30,6 +31,7 @@ const NavBarDropdown = ({links}: DropdownProps) => {
 
 export const NavBar = () => {
 	const { pathname } = useLocation()
+	const { userProfile } = useAppSelector((state) => state.userProfile)
 	const links: Array<Link> = [
 	{
 		pathname: HOME, text: "Home", secondary: []
@@ -44,7 +46,16 @@ export const NavBar = () => {
 			}]
 		},
 	{
-		pathname: LIBRARIES, text: "Locations", secondary: [],
+		pathname: LIBRARIES, text: "Locations", secondary: [...(userProfile?.libraryId ? 
+			[
+				{
+					pathname: `${LIBRARIES}/${userProfile.libraryId}`, text: "My Library"
+				},
+				{
+					pathname: LIBRARIES, text: "Locations"
+				}
+			] : [])
+		],
 	},
 	{
 		pathname: ACCOUNT, text: "Account", secondary: []

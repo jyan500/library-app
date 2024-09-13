@@ -93,7 +93,7 @@ export const AccountDisplay = () => {
 						<span>{userProfile?.email}</span>
 						{
 							userProfile?.libraryId && library ? (
-								<Link to={`${LIBRARIES}/${userProfile?.libraryId}`}>{library.name}</Link>
+								<Link className = "tw-text-sky-300" to={`${LIBRARIES}/${userProfile?.libraryId}`}>{library.name} Library</Link>
 							) : null
 						}
 					</div>
