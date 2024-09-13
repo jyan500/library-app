@@ -49,9 +49,7 @@ export const RowBookCard = ({
 					{children}
 				</div>
 			) : (
-				<div className = "tw-p-4 tw-flex tw-flex-col tw-gap-y-2">
-					{children}
-				</div>
+				children
 			)}
 		</RowCard>
 	)

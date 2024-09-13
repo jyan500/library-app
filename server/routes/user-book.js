@@ -59,7 +59,7 @@ router.post("/return", validateReturn, handleValidationResult, async (req, res, 
 				}
 			))
 			const queries = userBookUpdates.map((item) =>{
-				return db('user_books')
+				return trx('user_books')
 				.where('id', item.user_book_id)
 				.update({ date_returned: new Date() })
 			});
@@ -75,7 +75,7 @@ router.post("/return", validateReturn, handleValidationResult, async (req, res, 
 				}
 			))
 			const queries = libraryBookUpdates.map((item) => {
-				return db("library_books").where("id", item.library_book_id)
+				return trx("library_books").where("id", item.library_book_id)
 				.update({ book_status_id: item.book_status_id})
 			})
 			await Promise.all(queries)

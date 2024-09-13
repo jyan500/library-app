@@ -28,11 +28,8 @@ export const ReturnBookModal = ({books}: ReturnBookModalProps) => {
 			animationType: "animation-in",
 			message: "Something went wrong! Books could not be returned."
 		}
-		console.log("availblestatus: ", availableStatus)
-		console.log("books")
 		if (availableStatus?.id && books?.length){
 			try {
-				console.log("test")
 				await returnUserBooks(books.map((book) => ({
 					userBookId: book.userBookId,
 					libraryBookId: book.libraryBookId,

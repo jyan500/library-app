@@ -21,6 +21,10 @@ import { addToast } from "../slices/toastSlice"
 import { RowBookCard } from "../components/RowBookCard"
 import { IconButton } from "../components/page-elements/IconButton" 
 import { v4 as uuidv4 } from "uuid"
+import { BookRowCardHeader } from "../components/books/BookRowCardHeader"
+import { BookRowCardImage } from "../components/books/BookRowCardImage"
+import { BookDetailRowCard } from "../components/books/BookDetailRowCard"
+import { AddBookToCartForm } from "../components/books/AddBookToCartForm"
 
 export const Book = () => {
 	const params = useParams<{bookId: string}>()
@@ -50,7 +54,6 @@ export const Book = () => {
 	const notAvailableCopies = bookAvailabilityData?.filter((libraryBook: LibraryBook) => libraryBook.bookStatusId !== availableStatus?.id)
 
 	const cartItem = cartItems.find((cItem: CartItem) => cItem?.book?.id === book?.id)
-	console.log(cartItem)
 
 	const onClickPrev = () => {
 		navigate(-1)
@@ -64,15 +67,6 @@ export const Book = () => {
 		}	
 	}
 
-	const onRemoveFromList = (cartItemId: string) => {
-		dispatch(setCartItems(cartItems.filter((cItem: CartItem) => cItem.cartItemId !== cartItemId)))
-		dispatch(addToast({
-			id: uuidv4(),
-			type: "success",
-			animationType: "animation-in",
-			message: "Removed from list successfully!"
-		}))
-	}
 
 	return (
 		<>
@@ -102,46 +96,52 @@ export const Book = () => {
 				<div>
 					{
 						!isBookFetching && bookData?.length ? (
-							<RowBookCard book={book}>
-								<>
-									<div className = "tw-border-t tw-border-gray-300"></div>
-							 		<div>
-							 			<span className = {`tw-text-xl ${availableCopies?.length ? "tw-text-green-700" : "tw-text-red-700"}`}>{availableCopies?.length ? "Available" : "All Copies In Use"}</span>
-							 		</div>
-							 		<div className = "tw-flex tw-flex-row tw-gap-x-4">
-							 			<p className = "tw-text-lg"><strong>{bookAvailabilityData?.length}</strong> Copies</p>
-							 			<p className = "tw-text-lg"><strong>{availableCopies?.length} </strong> Available</p>
-							 			<p className = "tw-text-lg"><strong>{onHoldCopies?.length} </strong> On Hold</p>
-							 		</div>
-							 		<div>
-							 			{availableCopies?.length ? (
-											!cartItem ? (
-												<IconButton onClick={onAddToList} className = {"button"}>
-													<div className = "tw-flex tw-flex-row tw-items-center tw-gap-x-2">		
-												 		<IconContext.Provider value = {{color: "white", className: "tw-w-4 tw-h-4"}}>
-									                         <Bookmark/> 
-									                     </IconContext.Provider> 
-												 		<span>Add to List</span>
-												 	</div>	
-												</IconButton>
-											) : (
-												<IconButton onClick={() => onRemoveFromList(cartItem.cartItemId)} className = {"button --alert"}>
-													<div className = "tw-flex tw-flex-row tw-items-center tw-gap-x-2">		
-												 		<IconContext.Provider value = {{color: "white", className: "tw-w-4 tw-h-4"}}>
-									                         <Bookmark/> 
-									                     </IconContext.Provider> 
-												 		<span>Remove from List</span>
-												 	</div>
-												</IconButton>
-											)
-										) : null}
+							<BookDetailRowCard showOnlyChildren={true} book={book}>
+								<div className = "lg:tw-w-full tw-flex tw-flex-col lg:tw-flex-row lg:tw-justify-between">
+									<div className = "tw-w-full lg:tw-w-3/4 tw-p-4 tw-flex tw-flex-col tw-gap-y-2 lg:tw-flex-1">
+										<BookRowCardHeader book={book}/>
+										<div className = "tw-border-t tw-border-gray-300"></div>
+								 		<div>
+								 			<span className = {`tw-text-xl ${availableCopies?.length ? "tw-text-green-700" : "tw-text-red-700"}`}>{availableCopies?.length ? "Available" : "All Copies In Use"}</span>
+								 		</div>
+								 		<div className = "tw-flex tw-flex-row tw-gap-x-4">
+								 			<p className = "tw-text-lg"><strong>{bookAvailabilityData?.length}</strong> Copies</p>
+								 			<p className = "tw-text-lg"><strong>{availableCopies?.length} </strong> Available</p>
+								 			<p className = "tw-text-lg"><strong>{onHoldCopies?.length} </strong> On Hold</p>
+								 		</div>
+								 	{/*	<div>
+								 			{availableCopies?.length ? (
+												!cartItem ? (
+													<IconButton onClick={onAddToList} className = {"button"}>
+														<div className = "tw-flex tw-flex-row tw-items-center tw-gap-x-2">		
+													 		<IconContext.Provider value = {{color: "white", className: "tw-w-4 tw-h-4"}}>
+										                         <Bookmark/> 
+										                     </IconContext.Provider> 
+													 		<span>Add to List</span>
+													 	</div>	
+													</IconButton>
+												) : (
+													<IconButton onClick={() => onRemoveFromList(cartItem.cartItemId)} className = {"button --alert"}>
+														<div className = "tw-flex tw-flex-row tw-items-center tw-gap-x-2">		
+													 		<IconContext.Provider value = {{color: "white", className: "tw-w-4 tw-h-4"}}>
+										                         <Bookmark/> 
+										                     </IconContext.Provider> 
+													 		<span>Remove from List</span>
+													 	</div>
+													</IconButton>
+												)
+											) : null}
+										</div>*/}
+										<div className = "tw-mt-auto tw-space-y-2">
+											<div><span className = "tw-font-bold">Genre</span></div>
+											<div className = "tw-inline-block tw-text-sm tw-p-2 tw-bg-primary tw-rounded-lg"><span className = "tw-text-white">{genres?.find((genre) => genre.id === book?.genreId)?.name}</span></div>
+										</div>
 									</div>
-									<div className = "tw-mt-auto tw-space-y-2">
-										<div><span className = "tw-font-bold">Genre</span></div>
-										<div className = "tw-inline-block tw-text-sm tw-p-2 tw-bg-primary tw-rounded-lg"><span className = "tw-text-white">{genres?.find((genre) => genre.id === book?.genreId)?.name}</span></div>
+									<div className = "tw-w-full lg:tw-w-1/4 tw-flex tw-flex-col tw-gap-y-2 tw-p-4">
+										<AddBookToCartForm book={book} availableCopies={availableCopies?.length ? availableCopies : []}/>	
 									</div>
-								</>
-							</RowBookCard>
+								</div>
+							</BookDetailRowCard>
 						) : null
 					}
 				</div>

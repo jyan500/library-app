@@ -16,6 +16,8 @@ const checkoutRouter = require("./routes/checkout")
 const userBorrowHistoryRouter = require("./routes/user-borrow-history")
 const userBookRouter = require("./routes/user-book")
 const auth = require("./middleware/auth-middleware")
+const cron = require("node-cron")
+const { deleteExpiredCarts, returnBooksPastDueDate } = require("./cron/cron-jobs")
 
 const api = (route, apiVersion = "") => {
 	return `/api${apiVersion}/${route}`
@@ -58,5 +60,9 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
 	console.log(`Example app listening at http://localhost:${port}`)
 })
+
+// cron.schedule("*/10 * * * * *", () => console.log("cron job test"))
+cron.schedule("*/10 * * * *", async () => await deleteExpiredCarts())
+// cron.schedule("*/10 * * * * *", async () => await returnBooksPastDueDate())
 
 module.exports = app

@@ -119,7 +119,8 @@ export const UserBorrowHistory = () => {
 										<div className = {`${booksToReturn.length ? "tw-visible": "tw-invisible"}`}>
 											<button onClick={() => onShowModal()} className = "button">Return {booksToReturn.length} {booksToReturn.length > 1 ? "Books" : "Book"}</button>
 										</div>
-										<IconButton onClick={() => onClickSetAllBooksToReturn(history.id, history.books?.length ? history.books : [])} className = "hover:tw-opacity-60 tw-text-gray-800 tw-cursor-pointer">
+										<IconButton onClick={() => onClickSetAllBooksToReturn(history.id, history.books?.length ? history.books : [])} className = "tw-flex tw-flex-row tw-gap-x-2 hover:tw-opacity-60 tw-text-gray-800 tw-cursor-pointer">
+											<span className = "tw-font-bold">Select All</span>
 											<IconContext.Provider value={{color: "black", className: "tw-w-6 tw-h-6"}}>
 												{booksToReturn.length === history.books?.length ? <CheckboxFill/> : <CheckboxEmpty/>}
 									        </IconContext.Provider>
