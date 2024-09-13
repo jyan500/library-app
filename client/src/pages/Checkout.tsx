@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import { Container } from "../components/page-elements/Container"
 import { useLocation, useNavigate, Navigate } from "react-router-dom"
 import { useAppSelector, useAppDispatch } from "../hooks/redux-hooks"
-import { RowBookCard } from "../components/RowBookCard"
+import { BookDetailRowCard } from "../components/books/BookDetailRowCard"
 import { IconContext } from "react-icons"
 import { GrPrevious as Previous } from "react-icons/gr";
 import { useCheckoutSubmitMutation, useCheckoutCancelMutation } from "../services/private/checkout"
@@ -109,8 +109,8 @@ export const Checkout = () => {
 			</div>
 			{cartItems?.map((item: CartItem) => {
 				return (
-					<RowBookCard 
-						key={item.cartItemId}
+					<BookDetailRowCard 
+						key={item.id}
 						book={item.book}
 					>
 						<>
@@ -122,7 +122,7 @@ export const Checkout = () => {
 								<span className = "tw-font-bold">Due Date: {dueDate.toLocaleDateString("en-US")}</span>
 							</div>
 						</>
-					</RowBookCard>
+					</BookDetailRowCard>
 				)	
 			})}
 			<button onClick={onCheckout} className = "button">Submit</button>

@@ -7,13 +7,13 @@ import { modalTypes } from "../components/Modal"
 
 interface ModalState<T = {}> {
 	showModal: boolean
-	currentModalType: keyof typeof modalTypes 
+	currentModalType: keyof typeof modalTypes | ""
 	currentModalProps: T 
 }
 
 const initialState: ModalState = {
 	showModal: false,
-	currentModalType: "ADD_BOOK_TO_CART",
+	currentModalType: "",
 	currentModalProps: {},
 }
 

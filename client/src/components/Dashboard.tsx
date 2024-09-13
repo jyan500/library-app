@@ -6,11 +6,10 @@ import { MultiCardCarousel } from "./carousel/MultiCardCarousel"
 import { PageHeader } from "./page-elements/PageHeader" 
 import { useGetNewsPostsQuery } from "../services/private/newsPost"
 import { LoadingSpinner } from "./LoadingSpinner"
-import { GridCard } from "../components/GridCard"
 import { useScreenSize } from "../hooks/useScreenSize"
 import { XL_BREAKPOINT } from "../helpers/constants"
 import { Container } from "./page-elements/Container"
-import { RowBookCard } from "./RowBookCard"
+import { BookDetailRowCard } from "../components/books/BookDetailRowCard"
 import { useGetRecentUserBorrowHistoryQuery } from "../services/private/userBorrowHistory"
 
 interface CarouselElement {
@@ -61,11 +60,11 @@ const CardCarouselContent = ({data}: CarouselContentProps<CarouselElement>) => {
 const BookCarouselContent = ({data}: CarouselContentProps<BookCarouselElement>) => {
 	const dueDate = new Date(data.dateDue)
 	return (
-		<RowBookCard imageClassName = {"tw-w-full tw-h-auto lg:tw-w-1/3 lg:tw-h-1/3"} book={data} showLinkTitle={true}>
+		<BookDetailRowCard imageClassName = {"tw-w-full tw-h-auto lg:tw-w-1/3 lg:tw-h-1/3"} book={data} showLinkTitle={true}>
 			<div className = "tw-border-t tw-border-gray-300"></div>
 			<span><span className = "tw-font-bold">Date Due</span>: {dueDate.toLocaleDateString("en-US")}</span>
 			<span>{data.libraryName} Library</span>
-		</RowBookCard>
+		</BookDetailRowCard>
 	)	
 }
 
@@ -124,7 +123,7 @@ export const Dashboard = () => {
 						</PageHeader>
 						<Container>
 							{
-								userBorrowHistory[0].books.length > 1 ? (
+								userBorrowHistory[0].books.length > 0 ? (
 									<MultiCardCarousel items={createBookCarouselElements(userBorrowHistory[0].books.map((book: BookConfirmation) => {
 										return {
 											id: book.id,
@@ -135,14 +134,7 @@ export const Dashboard = () => {
 											libraryName: libraries?.find((library) => library.id === book.libraryId)?.name ?? ""
 										}
 									}))} itemsPerPage={1}/>
-								) : 
-								(
-									<RowBookCard imageClassName = {"tw-object-cover tw-w-full tw-h-auto"} showLinkImage={true} showLinkTitle = {true} book = {userBorrowHistory[0].books[0]}>
-										<div className = "tw-border-t tw-border-gray-300"></div>
-										<span>{libraries?.find((library) => library.id === userBorrowHistory[0].books[0].libraryId)?.name} Library</span>
-										<span className = "tw-font-bold">Due Date: {new Date(userBorrowHistory[0].books[0].dateDue).toLocaleDateString("en-US")}</span>
-									</RowBookCard>
-								)
+								) : null
 							}
 						</Container>
 					</>

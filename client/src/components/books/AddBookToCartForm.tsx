@@ -43,7 +43,7 @@ export const AddBookToCartForm = ({book, availableCopies}: Props) => {
 	}, [book, availableCopies])
 
 	const onRemoveFromList = (cartItemId: string) => {
-		dispatch(setCartItems(cartItems.filter((cItem: CartItem) => cItem.cartItemId !== cartItemId)))
+		dispatch(setCartItems(cartItems.filter((cItem: CartItem) => cItem.id !== cartItemId)))
 		dispatch(addToast({
 			id: uuidv4(),
 			type: "success",
@@ -55,7 +55,7 @@ export const AddBookToCartForm = ({book, availableCopies}: Props) => {
 	const onSubmit = (values: FormValues) => {
 		const copy = availableCopies.find((copy) => copy.id === Number(watch("libraryBookId")))
 		dispatch(setCartItems([...cartItems, {
-			cartItemId: uuidv4(),	
+			id: uuidv4(),	
 			book: book ?? {} as Book,
 			libraryId: copy?.libraryId ?? 0,
 			libraryBookId: Number(watch("libraryBookId")) ?? 0,	
@@ -100,7 +100,7 @@ export const AddBookToCartForm = ({book, availableCopies}: Props) => {
 					) : (
 						<IconButton onClick={(e) => {
 							e.preventDefault()
-							onRemoveFromList(cartItem.cartItemId)}
+							onRemoveFromList(cartItem.id)}
 						} className = {"button --alert"}>
 							<div className = "tw-flex tw-flex-row tw-items-center tw-gap-x-2">		
 						 		<IconContext.Provider value = {{color: "white", className: "tw-w-4 tw-h-4"}}>

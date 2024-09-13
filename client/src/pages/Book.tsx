@@ -16,9 +16,7 @@ import { FaBookmark as Bookmark } from "react-icons/fa";
 import { CartItem } from "../types/common"
 import { setCartItems } from "../slices/bookCartSlice"
 import { setModalType, toggleShowModal, setModalProps } from "../slices/modalSlice"
-import { Props as AddBookToCartPropType } from "../components/modals/AddBookToCartModal"
 import { addToast } from "../slices/toastSlice"
-import { RowBookCard } from "../components/RowBookCard"
 import { IconButton } from "../components/page-elements/IconButton" 
 import { v4 as uuidv4 } from "uuid"
 import { BookRowCardHeader } from "../components/books/BookRowCardHeader"
@@ -58,15 +56,6 @@ export const Book = () => {
 	const onClickPrev = () => {
 		navigate(-1)
 	}
-
-	const onAddToList = () => {
-		if (bookId){
-			dispatch(setModalType("ADD_BOOK_TO_CART"))
-			dispatch(setModalProps<AddBookToCartPropType>({book: book, availableCopies: availableCopies ?? []}))
-			dispatch(toggleShowModal(true))
-		}	
-	}
-
 
 	return (
 		<>
@@ -109,29 +98,6 @@ export const Book = () => {
 								 			<p className = "tw-text-lg"><strong>{availableCopies?.length} </strong> Available</p>
 								 			<p className = "tw-text-lg"><strong>{onHoldCopies?.length} </strong> On Hold</p>
 								 		</div>
-								 	{/*	<div>
-								 			{availableCopies?.length ? (
-												!cartItem ? (
-													<IconButton onClick={onAddToList} className = {"button"}>
-														<div className = "tw-flex tw-flex-row tw-items-center tw-gap-x-2">		
-													 		<IconContext.Provider value = {{color: "white", className: "tw-w-4 tw-h-4"}}>
-										                         <Bookmark/> 
-										                     </IconContext.Provider> 
-													 		<span>Add to List</span>
-													 	</div>	
-													</IconButton>
-												) : (
-													<IconButton onClick={() => onRemoveFromList(cartItem.cartItemId)} className = {"button --alert"}>
-														<div className = "tw-flex tw-flex-row tw-items-center tw-gap-x-2">		
-													 		<IconContext.Provider value = {{color: "white", className: "tw-w-4 tw-h-4"}}>
-										                         <Bookmark/> 
-										                     </IconContext.Provider> 
-													 		<span>Remove from List</span>
-													 	</div>
-													</IconButton>
-												)
-											) : null}
-										</div>*/}
 										<div className = "tw-mt-auto tw-space-y-2">
 											<div><span className = "tw-font-bold">Genre</span></div>
 											<div className = "tw-inline-block tw-text-sm tw-p-2 tw-bg-primary tw-rounded-lg"><span className = "tw-text-white">{genres?.find((genre) => genre.id === book?.genreId)?.name}</span></div>

@@ -61,8 +61,7 @@ app.listen(port, () => {
 	console.log(`Example app listening at http://localhost:${port}`)
 })
 
-// cron.schedule("*/10 * * * * *", () => console.log("cron job test"))
 cron.schedule("*/10 * * * *", async () => await deleteExpiredCarts())
-// cron.schedule("*/10 * * * * *", async () => await returnBooksPastDueDate())
+cron.schedule("*/10 * * * *", async () => await returnBooksPastDueDate())
 
 module.exports = app

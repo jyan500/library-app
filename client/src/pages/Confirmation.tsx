@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import { useLocation, useNavigate, Navigate } from "react-router-dom"
 import { useAppSelector, useAppDispatch } from "../hooks/redux-hooks"
-import { RowBookCard } from "../components/RowBookCard"
+import { BookDetailRowCard } from "../components/books/BookDetailRowCard"
 import { IconContext } from "react-icons"
 import { GrPrevious as Previous } from "react-icons/gr";
 import { HOME } from "../helpers/routes"
@@ -53,7 +53,7 @@ export const Confirmation = () => {
 								<div>
 									{history.books?.map((book: BookConfirmation) => {
 										return (
-											<RowBookCard 
+											<BookDetailRowCard 
 												key={book.id}
 												book={book}
 											>
@@ -66,7 +66,7 @@ export const Confirmation = () => {
 														<span className = "tw-font-bold">Due Date: {new Date(book.dateDue).toLocaleDateString("en-US")}</span>
 													</div>
 												</>
-											</RowBookCard>
+											</BookDetailRowCard>
 										)	
 									})}
 								</div>

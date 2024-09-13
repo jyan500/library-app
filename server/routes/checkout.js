@@ -28,14 +28,14 @@ const getBookAvailabilityFromCart = async (userId, cartItems) => {
 			const libraryBook = await db("library_books").where("id", cartItem.library_book_id).first()
 			const cartItemExists = userCartItems.find((userCartItem) => cartItem.library_book_id === userCartItem.library_book_id) != null
 			return {
-				cartItemId: cartItem.cart_item_id, 
+				id: cartItem.cart_item_id, 
 				bookStatusId: libraryBook?.book_status_id, 
 				canCheckout: libraryBook?.book_status_id === available?.id || cartItemExists
 			}
 		}
 		catch (err) {
 			return {
-				cartItemId: cartItem.cart_item_id, 
+				id: cartItem.cart_item_id, 
 				bookStatusId: cartItem.library_book_id, 
 				canCheckout: false
 			}

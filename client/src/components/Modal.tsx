@@ -3,19 +3,16 @@ import { IoMdClose } from "react-icons/io";
 import "../styles/modal.css"
 import { setModalProps, toggleShowModal } from "../slices/modalSlice" 
 import { BookCartModal } from "./modals/BookCartModal"
-import { AddBookToCartModal } from "./modals/AddBookToCartModal" 
 import { ReturnBookModal } from "./modals/ReturnBookModal" 
 import { useAppDispatch, useAppSelector } from "../hooks/redux-hooks" 
 import { GenericProps } from "../types/common" 
 
 export const modalTypes = {
-	"ADD_BOOK_TO_CART": AddBookToCartModal,
 	"BOOK_CART_MODAL": BookCartModal,
 	"RETURN_BOOK_MODAL": ReturnBookModal,
 }
 
 export const modalClassNames = {
-	"ADD_BOOK_TO_CART": "!tw-w-full !tw-h-full md:!tw-w-1/2 md:!tw-w-1/2 tw-top-[50%]",
 	"BOOK_CART_MODAL": "!tw-w-full !tw-h-full md:!tw-w-1/2 md:!tw-w-1/2 tw-top-[50%]",
 	"RETURN_BOOK_MODAL": "!tw-w-full !tw-h-full md:!tw-w-1/2 md:!tw-w-1/2 md:tw-top-[30%] tw-top-[50%]",
 }

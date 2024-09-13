@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { useAppSelector, useAppDispatch } from "../hooks/redux-hooks"
-import { RowBookCard } from "../components/RowBookCard"
+import { BookDetailRowCard } from "../components/books/BookDetailRowCard"
 import { IconContext } from "react-icons"
 import { GrPrevious as Previous } from "react-icons/gr";
 import { HOME } from "../helpers/routes"
@@ -15,6 +15,8 @@ import { setCartItems, setDbCartId, setSessionEndTime } from "../slices/bookCart
 import { toggleShowModal, setModalType, setModalProps } from "../slices/modalSlice"
 import { ReturnBookModalProps } from "../components/modals/ReturnBookModal"
 import { RiCheckboxCircleFill as CheckboxFill, RiCheckboxCircleLine as CheckboxEmpty } from "react-icons/ri";
+import { MultiSelectRow } from "../components/page-elements/MultiSelectRow"
+import { MultiSelectRowToolbar } from "../components/page-elements/MultiSelectRowToolbar"
 import { useScreenSize } from "../hooks/useScreenSize" 
 import { XL_BREAKPOINT } from "../helpers/constants"
 
@@ -37,30 +39,6 @@ export const UserBorrowHistory = () => {
 		dispatch(toggleShowModal(true))
 		dispatch(setModalType("RETURN_BOOK_MODAL"))
 	}
-
-	// const onReturnBook = async (userBookId: number, libraryBookId: number) => {
-	// 	const defaultToast: Toast = {
-	// 		id: uuidv4(),
-	// 		type: "failure",
-	// 		animationType: "animation-in",
-	// 		message: "Something went wrong! Book could not be returned."
-	// 	}
-	// 	if (availableStatus?.id && userBookId){
-	// 		try {
-	// 			await returnUserBook({userBookId, libraryBookId, bookStatusId: availableStatus?.id}).unwrap()
-	// 			dispatch(addToast({...defaultToast,
-	// 				type: "success",
-	// 				message: "Book returned successfully!"
-	// 			}))
-	// 		}
-	// 		catch (e){
-	// 			dispatch(addToast(defaultToast))
-	// 		}
-	// 	}
-	// 	else {
-	// 		dispatch(addToast(defaultToast))
-	// 	}
-	// }
 
 	const onClickSetBooksToReturn = (book: BookConfirmation) => {
 		const existing = booksToReturn.find((b) => b.id === book.id)
@@ -115,17 +93,14 @@ export const UserBorrowHistory = () => {
 									</div>
 								</div>
 								<div className = "tw-pr-3">
-									<div className = "tw-flex tw-flex-row tw-justify-between lg:tw-items-center tw-gap-x-4">
+									<MultiSelectRowToolbar 
+										onClickCheckbox={() => onClickSetAllBooksToReturn(history.id, history.books?.length ? history.books : [])}
+										isCheckboxFull={booksToReturn.length === history.books?.length}
+									>
 										<div className = {`${booksToReturn.length ? "tw-visible": "tw-invisible"}`}>
 											<button onClick={() => onShowModal()} className = "button">Return {booksToReturn.length} {booksToReturn.length > 1 ? "Books" : "Book"}</button>
 										</div>
-										<IconButton onClick={() => onClickSetAllBooksToReturn(history.id, history.books?.length ? history.books : [])} className = "tw-flex tw-flex-row tw-gap-x-2 hover:tw-opacity-60 tw-text-gray-800 tw-cursor-pointer">
-											<span className = "tw-font-bold">Select All</span>
-											<IconContext.Provider value={{color: "black", className: "tw-w-6 tw-h-6"}}>
-												{booksToReturn.length === history.books?.length ? <CheckboxFill/> : <CheckboxEmpty/>}
-									        </IconContext.Provider>
-										</IconButton>
-									</div>
+									</MultiSelectRowToolbar>
 								</div>
 								<div className = "tw-flex tw-flex-col tw-gap-y-2">
 									{history.books?.map((book: BookConfirmation) => {
@@ -136,8 +111,14 @@ export const UserBorrowHistory = () => {
 											dateReturned = new Date(book.dateReturned)
 										}
 										return (
-											<div key={book.id} onClick={() => onClickSetBooksToReturn(book)} className = "tw-relative hover:tw-cursor-pointer hover:tw-bg-gray-50">
-												<RowBookCard 
+											<MultiSelectRow 
+											key={book.id} 
+											item={book}
+											onClick={() => onClickSetBooksToReturn(book)} 
+											isCheckboxFill={
+												booksToReturn.find((b: BookConfirmation) => b.id === book.id) != null
+											}>
+												<BookDetailRowCard 
 													book={book}
 													showLinkTitle={true}
 													showOnlyChildren={screenSize.width <= XL_BREAKPOINT}
@@ -159,13 +140,8 @@ export const UserBorrowHistory = () => {
 															)
 														}
 													</>
-												</RowBookCard>
-												<IconButton onClick={() => onClickSetBooksToReturn(book)} className = "tw-absolute tw-top-3 tw-right-3 hover:tw-opacity-60 tw-text-gray-800 tw-cursor-pointer">
-													<IconContext.Provider value={{color: "black", className: "tw-w-6 tw-h-6"}}>
-														{booksToReturn.find((b: BookConfirmation) => b.id === book.id) ? <CheckboxFill/> : <CheckboxEmpty/>}
-											        </IconContext.Provider>
-												</IconButton>
-											</div>
+												</BookDetailRowCard>
+											</MultiSelectRow>
 										)	
 									})}
 								</div>

@@ -28,7 +28,7 @@ export const checkoutApi = privateApi.injectEndpoints({
 						return {
 							library_book_id: item.libraryBookId,
 							book_status_id: item.bookStatusId,
-							cart_item_id: item.cartItemId
+							cart_item_id: item.id
 						}
 					}),
 				}
@@ -43,7 +43,7 @@ export const checkoutApi = privateApi.injectEndpoints({
 						return {
 							library_book_id: item.libraryBookId,
 							book_status_id: item.bookStatusId,
-							cart_item_id: item.cartItemId
+							cart_item_id: item.id
 						}
 					}),
 					cart_id: cartId 

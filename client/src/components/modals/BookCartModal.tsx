@@ -7,7 +7,7 @@ import { setCartItems, setDbCartId, setSessionEndTime } from "../../slices/bookC
 import { Link } from "react-router-dom"
 import { BOOKS, CHECKOUT } from "../../helpers/routes"
 import { addToast } from "../../slices/toastSlice"
-import { RowBookCard } from "../RowBookCard"
+import { BookDetailRowCard } from "../books/BookDetailRowCard"
 import { useCheckoutValidateMutation } from "../../services/private/checkout"
 import { IoIosWarning as WarningIcon } from "react-icons/io"
 import { IconContext } from "react-icons"
@@ -27,7 +27,7 @@ export const BookCartModal = () => {
 	const [ checkoutValidate, {isLoading, error}] = useCheckoutValidateMutation() 
 
 	const removeFromList = (cartItemId: string) => {
-		dispatch(setCartItems(cartItems.filter((cItem: CartItem) => cItem.cartItemId !== cartItemId)))
+		dispatch(setCartItems(cartItems.filter((cItem: CartItem) => cItem.id !== cartItemId)))
 		dispatch(addToast({
 			id: uuidv4(),
 			type: "success",
@@ -79,10 +79,10 @@ export const BookCartModal = () => {
 				<div className = "tw-flex tw-flex-col tw-gap-y-2">
 					<p className = "tw-font-bold tw-text-2xl">Total: {cartItems?.length}</p>
 					{cartItems?.map((item: CartItem) => {
-						const cannotCheckout = error && "status" in error && error.status === 400 && error.data?.errors?.find((data: CheckoutCustomError) => data.cartItemId === item.cartItemId) != null
+						const cannotCheckout = error && "status" in error && error.status === 400 && error.data?.errors?.find((data: CheckoutCustomError) => data.id === item.id) != null
 						return (
-							<div key = { item.cartItemId } className = "tw-relative">
-								<RowBookCard 
+							<div key = { item.id } className = "tw-relative">
+								<BookDetailRowCard 
 									highlightBorder={`${cannotCheckout ? "tw-border tw-border-red-500" : ""}`} 
 									book={item.book}
 								>
@@ -97,10 +97,10 @@ export const BookCartModal = () => {
 											<span>{libraries.find((library) => library.id === item.libraryId)?.name} Library</span>
 										</div>
 										<div className = "mt-auto">
-											<button onClick = {() => removeFromList(item.cartItemId)} className = "button --alert">Remove from List</button>
+											<button onClick = {() => removeFromList(item.id)} className = "button --alert">Remove from List</button>
 										</div>
 									</>
-								</RowBookCard>
+								</BookDetailRowCard>
 								{cannotCheckout ? (
 									<IconContext.Provider value={{color: "var(--bs-danger)", className: "tw-absolute tw-top-3 tw-right-3 tw-w-10 tw-h-10"}}>
 										<WarningIcon/>		
