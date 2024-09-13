@@ -23,6 +23,7 @@ export const AddBookToCartModal = ({book, availableCopies}: Props) => {
 	}
 	const dispatch = useAppDispatch()
 	const { showModal } = useAppSelector((state) => state.modal)
+	const { userProfile } = useAppSelector((state) => state.userProfile)
 	const { libraries } = useAppSelector((state) => state.library)
 	const { cartItems } = useAppSelector((state) => state.bookCart)
 	const [ preloadedValues, setPreloadedValues ] = useState<FormValues>(defaultForm)
@@ -32,7 +33,10 @@ export const AddBookToCartModal = ({book, availableCopies}: Props) => {
 	}
 
 	useEffect(() => {
-		reset(defaultForm)
+		reset({
+			...defaultForm,
+			libraryBookId: availableCopies?.find((book) => book.libraryId === userProfile?.libraryId)?.id ?? 0
+		})
 	}, [showModal])
 
 	const onSubmit = (values: FormValues) => {
