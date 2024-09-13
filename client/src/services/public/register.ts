@@ -29,7 +29,7 @@ export const userRegisterApi = publicApi.injectEndpoints({
 					email: registrationInfo.email,
 					password: registrationInfo.password,
 					confirm_password: registrationInfo.confirmPassword,
-					library_id: registrationInfo.libraryId
+					...(registrationInfo.libraryId ? {library_id: registrationInfo.libraryId} : {})
 				} 
 			})	
 		}),

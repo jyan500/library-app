@@ -3,7 +3,7 @@ export interface UserProfile {
 	firstName: string
 	lastName: string
 	email: string
-	userRoleId: number
+	libraryId: number
 }
 
 export interface UserRole {

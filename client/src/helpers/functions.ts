@@ -58,17 +58,17 @@ export const displayUser = (user: UserProfile | null | undefined) => {
  */
 export const convertMilitaryToStandardTime = (timeString: string) => {
 	// Split the time string (expected format "HH:MM:SS") into hours, minutes
-	let [hours, minutes, _] = timeString.split(':');
+	let [hours, minutes, _] = timeString.split(':')
 
 	// Convert hours to an integer
-	const numHours = parseInt(hours, 10);
+	const numHours = parseInt(hours, 10)
 
 	// Determine AM or PM
-	const period = numHours >= 12 ? 'PM' : 'AM';
+	const period = numHours >= 12 ? 'PM' : 'AM'
 
 	// Convert to 12-hour format
 	// handling edge case when 0:00 should be represented as 12:00 AM
-	const convertedHours = numHours % 12 === 0 ? 12 : numHours % 12; 
+	const convertedHours = numHours % 12 === 0 ? 12 : numHours % 12;
 
 	// Ensure minutes are two digits (in case MySQL returns them without leading zeros)
 	minutes = minutes.padStart(2, '0')

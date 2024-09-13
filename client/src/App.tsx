@@ -15,6 +15,7 @@ import { LibraryGrid } from "./pages/LibraryGrid"
 import { Library } from "./pages/Library"
 import { Checkout } from "./pages/Checkout"
 import { Confirmation } from "./pages/Confirmation"
+import { AccountDisplay } from "./pages/AccountDisplay"
 import DefaultLayout from "./layouts/DefaultLayout"
 import ProtectedLayout from "./layouts/ProtectedLayout"
 import CheckoutLayout from "./layouts/CheckoutLayout"
@@ -22,6 +23,7 @@ import { useAppSelector, useAppDispatch } from "./hooks/redux-hooks"
 import "./styles/common.css" 
 import { ToastList } from "./components/ToastList" 
 import {
+	ACCOUNT,
 	HOME,
 	LOGIN,
 	REGISTER,
@@ -111,6 +113,10 @@ const router = createBrowserRouter([
 						element: <Library/>
 					}
 				]
+			},
+			{
+				path: ACCOUNT,
+				element: <AccountDisplay/>
 			},
 			{
 				path: "*",

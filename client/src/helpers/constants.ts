@@ -5,7 +5,8 @@ export const TAG_TYPES = [
 	"NewsPosts",
 	"NewsPostGenres",
 	"UserBookHistory",
-	"UserBooks"
+	"UserBooks",
+	"UserProfiles",
 ]
 
 export const DAYS = {

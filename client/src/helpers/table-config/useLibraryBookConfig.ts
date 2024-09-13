@@ -1,6 +1,6 @@
 import { getNameFromIDModifier, dateModifier } from "../table-modifiers/display-modifiers"
 import { useAppSelector, useAppDispatch } from "../../hooks/redux-hooks" 
-import { LIBRARY } from "../../helpers/routes"
+import { LIBRARIES } from "../../helpers/routes"
 
 export interface LibraryBookConfigType {
 	headers: Record<string, any>,
@@ -19,7 +19,7 @@ export const useLibraryBookConfig = () => {
 			"dateDue": "Date Due", 
 		},
 		linkCol: "libraryId",
-		link: (id: number) => `${LIBRARY}/${id}`,
+		link: (id: number) => `${LIBRARIES}/${id}`,
 		modifiers: {
 			"bookStatusId": {modifier: getNameFromIDModifier, object: bookStatuses ?? []},
 			"libraryId": {modifier: getNameFromIDModifier, object: libraries ?? []},
