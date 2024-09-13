@@ -103,10 +103,9 @@ export const Checkout = () => {
                     </div>
 				</IconButton>
 			</div>
-			<div>
+			<div className = "tw-flex tw-flex-col tw-gap-y-2">
 				<p className = "tw-font-bold tw-text-3xl">Checkout</p>
 				<p className = "tw-font-bold tw-text-2xl">Total: {cartItems?.length}</p>
-				<div className = "tw-border-t tw-border-gray-300"></div>
 			</div>
 			{cartItems?.map((item: CartItem) => {
 				return (

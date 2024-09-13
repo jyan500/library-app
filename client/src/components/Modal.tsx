@@ -4,19 +4,20 @@ import "../styles/modal.css"
 import { setModalProps, toggleShowModal } from "../slices/modalSlice" 
 import { BookCartModal } from "./modals/BookCartModal"
 import { AddBookToCartModal } from "./modals/AddBookToCartModal" 
-import { WarningModal } from "./modals/WarningModal" 
+import { ReturnBookModal } from "./modals/ReturnBookModal" 
 import { useAppDispatch, useAppSelector } from "../hooks/redux-hooks" 
 import { GenericProps } from "../types/common" 
 
 export const modalTypes = {
 	"ADD_BOOK_TO_CART": AddBookToCartModal,
 	"BOOK_CART_MODAL": BookCartModal,
-	"WARNING_MODAL": WarningModal,
+	"RETURN_BOOK_MODAL": ReturnBookModal,
 }
 
 export const modalClassNames = {
 	"ADD_BOOK_TO_CART": "!tw-w-full !tw-h-full md:!tw-w-1/2 md:!tw-w-1/2 tw-top-[50%]",
-	"BOOK_CART_MODAL": "!tw-w-full !tw-h-full md:!tw-w-1/2 md:!tw-w-1/2 tw-top-[50%]"
+	"BOOK_CART_MODAL": "!tw-w-full !tw-h-full md:!tw-w-1/2 md:!tw-w-1/2 tw-top-[50%]",
+	"RETURN_BOOK_MODAL": "!tw-w-full !tw-h-full md:!tw-w-1/2 md:!tw-w-1/2 md:tw-top-[30%] tw-top-[50%]",
 }
 
 // type for partial subset of keys
@@ -31,8 +32,6 @@ export const Modal = () => {
 	// define modal handlers type as the partial subset of all keys of modal types
 	const modalHandlers: PartialKeys<typeof modalTypes> = {
 	} 
-
-
 
 	return (
 		<div className = {`overlay ${showModal ? "--visible": "--hidden"}`}>

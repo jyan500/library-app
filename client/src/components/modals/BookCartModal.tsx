@@ -13,7 +13,8 @@ import { IoIosWarning as WarningIcon } from "react-icons/io"
 import { IconContext } from "react-icons"
 import { v4 as uuidv4 } from "uuid" 
 import { useNavigate, useLocation } from "react-router-dom"
-import { LoadingSpinner } from "../../components/LoadingSpinner"
+import { LoadingSpinner } from "../LoadingSpinner"
+import { LoadingButton } from "../page-elements/LoadingButton"
 
 export const BookCartModal = () => {
 	const dispatch = useAppDispatch()
@@ -108,12 +109,13 @@ export const BookCartModal = () => {
 							</div>
 						)	
 					})}
-					<button disabled={isLoading} onClick={onCheckout} className = "button">
+					{/*<button disabled={isLoading} onClick={onCheckout} className = "button">
 						<div className = "tw-flex tw-flex-row tw-justify-center tw-gap-x-4">
 							<span>Checkout</span>
 							{isLoading ? (<LoadingSpinner className={"tw-h-6 tw-w-6"}/>) : null}
 						</div>
-					</button>
+					</button>*/}
+					<LoadingButton text={"Checkout"} isLoading={isLoading} onClick={() => onCheckout()}/>
 				</div>
 			) : (
 				<div className = "tw-w-full tw-h-full tw-justify-center tw-items-center">

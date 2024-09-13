@@ -52,16 +52,39 @@ router.get("/:userBookId", validateGet, handleValidationResult, async (req, res,
 
 router.post("/return", validateReturn, handleValidationResult, async (req, res, next) => {
 	try {
-		await db("user_books").where("id", req.body.user_book_id).update({
-			date_returned: new Date()
+		await db.transaction(async (trx) => {
+			const userBookUpdates = req.body.books.map((book) => (
+				{
+					user_book_id: book.user_book_id
+				}
+			))
+			const queries = userBookUpdates.map((item) =>{
+				return db('user_books')
+				.where('id', item.user_book_id)
+				.update({ date_returned: new Date() })
+			});
+
+			await Promise.all(queries);
 		})
-		await db("library_books").where("id", req.body.library_book_id).update({
-			book_status_id: req.body.book_status_id
+
+		await db.transaction(async (trx) => {
+			const libraryBookUpdates = req.body.books.map((book) => (
+				{
+					library_book_id: book.library_book_id,
+					book_status_id: book.book_status_id,
+				}
+			))
+			const queries = libraryBookUpdates.map((item) => {
+				return db("library_books").where("id", item.library_book_id)
+				.update({ book_status_id: item.book_status_id})
+			})
+			await Promise.all(queries)
 		})
-		res.json({message: "Book returned successfully!"})	
+
+		res.json({message: "Books returned successfully!"})	
 	}	
 	catch (err) {
-		console.error(`Error while updating Book: ${err.message}`)
+		console.error(`Error while updating Books: ${err.message}`)
 		next(err)
 	}
 })

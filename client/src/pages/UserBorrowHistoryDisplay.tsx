@@ -48,12 +48,14 @@ export const UserBorrowHistoryDisplay = () => {
 		return (
 			<>
 				<div className = "tw-w-1/4 tw-flex tw-flex-col tw-gap-y-4">
-					<PaginationRow
-						showPageNums={false}
-						currentPage={searchParams.get("page") ? Number(searchParams.get("page")) : 1}
-						paginationData={data?.pagination}
-						setPage={setPage}
-					/>
+					<div className = "tw-p-4 tw-border tw-border-gray-300 tw-rounded-lg">
+						<PaginationRow
+							showPageNums={false}
+							currentPage={searchParams.get("page") ? Number(searchParams.get("page")) : 1}
+							paginationData={data?.pagination}
+							setPage={setPage}
+						/>
+					</div>
 					{data?.data?.map((history: UserBorrowHistory) => {
 						return (
 							<button key = {history.id} onClick={() => showHistory(history.id)} className = "hover:tw-bg-gray-50">

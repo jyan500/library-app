@@ -62,6 +62,7 @@ const BookCarouselContent = ({data}: CarouselContentProps<BookCarouselElement>) 
 	const dueDate = new Date(data.dateDue)
 	return (
 		<RowBookCard imageClassName = {"tw-w-full tw-h-auto lg:tw-w-1/3 lg:tw-h-1/3"} book={data} showLinkTitle={true}>
+			<div className = "tw-border-t tw-border-gray-300"></div>
 			<span><span className = "tw-font-bold">Date Due</span>: {dueDate.toLocaleDateString("en-US")}</span>
 			<span>{data.libraryName} Library</span>
 		</RowBookCard>
