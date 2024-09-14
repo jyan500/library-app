@@ -13,8 +13,8 @@ export const modalTypes = {
 }
 
 export const modalClassNames = {
-	"BOOK_CART_MODAL": "!tw-w-full !tw-h-full md:!tw-w-1/2 md:!tw-w-1/2 tw-top-[50%]",
-	"RETURN_BOOK_MODAL": "!tw-w-full !tw-h-full md:!tw-w-1/2 md:!tw-w-1/2 md:tw-top-[30%] tw-top-[50%]",
+	"BOOK_CART_MODAL": "!tw-w-full !tw-h-full md:!tw-w-1/2 tw-top-[50%]",
+	"RETURN_BOOK_MODAL": "!tw-w-full !tw-h-full md:!tw-w-1/2 md:!tw-h-1/3 tw-top-[50%]",
 }
 
 // type for partial subset of keys
