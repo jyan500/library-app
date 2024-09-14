@@ -6,19 +6,22 @@ import { MultiSelectRowType } from "../../types/common"
 
 interface Props<T={}> {
 	item: T
+	disabled: boolean
 	onClick: () => void
 	isCheckboxFill: boolean
 }
 
-export const MultiSelectRow = ({item, onClick, isCheckboxFill, children}: React.PropsWithChildren<Props<MultiSelectRowType>>) => {
+export const MultiSelectRow = ({item, disabled, onClick, isCheckboxFill, children}: React.PropsWithChildren<Props<MultiSelectRowType>>) => {
 	return (
-		<div key={item.id} onClick={onClick} className = "tw-relative hover:tw-cursor-pointer hover:tw-bg-gray-50">
+		<div key={item.id} onClick={!disabled ? onClick : () => {}} className = "tw-relative hover:tw-cursor-pointer hover:tw-bg-gray-50">
 			{children}
-			<IconButton onClick={onClick} className = "tw-absolute tw-top-3 tw-right-3 hover:tw-opacity-60 tw-text-gray-800 tw-cursor-pointer">
-				<IconContext.Provider value={{color: "black", className: "tw-w-6 tw-h-6"}}>
-					{isCheckboxFill ? <CheckboxFill/> : <CheckboxEmpty/>}
-		        </IconContext.Provider>
-			</IconButton>
+			{!disabled ? (
+				<IconButton onClick={onClick} className = "tw-absolute tw-top-3 tw-right-3 hover:tw-opacity-60 tw-text-gray-800 tw-cursor-pointer">
+					<IconContext.Provider value={{color: "black", className: "tw-w-6 tw-h-6"}}>
+						{isCheckboxFill ? <CheckboxFill/> : <CheckboxEmpty/>}
+			        </IconContext.Provider>
+				</IconButton>
+			) : null}
 		</div>	
 	)
 }

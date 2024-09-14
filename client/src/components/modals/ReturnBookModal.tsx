@@ -8,16 +8,14 @@ import { useReturnUserBooksMutation } from "../../services/private/userBook"
 import { LoadingSpinner } from "../LoadingSpinner"
 import { LoadingButton } from "../page-elements/LoadingButton"
 import { toggleShowModal, setModalProps } from "../../slices/modalSlice"
+import { setBooksToReturn } from "../../slices/bookReturnSlice"
 import { v4 as uuidv4 } from "uuid"
 
-export interface ReturnBookModalProps {
-	books: Array<BookConfirmation> | null
-}
-
-export const ReturnBookModal = ({books}: ReturnBookModalProps) => {
+export const ReturnBookModal = () => {
 
 	const [returnUserBooks, {isLoading, error}] = useReturnUserBooksMutation()
 	const { bookStatuses } = useAppSelector((state) => state.bookStatus)
+	const { booksToReturn: books } = useAppSelector((state) => state.bookReturn)
 	const dispatch = useAppDispatch()
 	const availableStatus = bookStatuses?.find((status) => status.name === "Available")
 
@@ -38,6 +36,10 @@ export const ReturnBookModal = ({books}: ReturnBookModalProps) => {
 					type: "success",
 					message: "Books returned successfully!"
 				}))
+				// remove the books from returned books list
+				dispatch(setBooksToReturn([]))
+				dispatch(toggleShowModal(false))
+				dispatch(setModalProps({}))
 			}
 			catch (e){
 				dispatch(addToast(defaultToast))

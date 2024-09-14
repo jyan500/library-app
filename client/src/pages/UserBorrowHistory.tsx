@@ -10,13 +10,13 @@ import { useGetUserBorrowHistoryQuery } from "../services/private/userBorrowHist
 import { addToast } from "../slices/toastSlice"
 import { setCartItems, setDbCartId, setSessionEndTime } from "../slices/bookCartSlice"
 import { toggleShowModal, setModalType, setModalProps } from "../slices/modalSlice"
-import { ReturnBookModalProps } from "../components/modals/ReturnBookModal"
 import { RiCheckboxCircleFill as CheckboxFill, RiCheckboxCircleLine as CheckboxEmpty } from "react-icons/ri";
 import { MultiSelectRow } from "../components/page-elements/MultiSelectRow"
 import { MultiSelectRowToolbar } from "../components/page-elements/MultiSelectRowToolbar"
 import { useScreenSize } from "../hooks/useScreenSize" 
 import { XL_BREAKPOINT } from "../helpers/constants"
 import { ArrowButton } from "../components/page-elements/ArrowButton"
+import { setBooksToReturn } from "../slices/bookReturnSlice"
 
 export const UserBorrowHistory = () => {
 	const dispatch = useAppDispatch()
@@ -24,16 +24,15 @@ export const UserBorrowHistory = () => {
 	const { libraries } = useAppSelector((state) => state.library)
 	const { bookStatuses } = useAppSelector((state) => state.bookStatus)
 	const params = useParams<{userBorrowHistoryId: string}>()
-	const [ booksToReturn, setBooksToReturn ] = useState<Array<BookConfirmation>>([])
+	// const [ booksToReturn, setBooksToReturn ] = useState<Array<BookConfirmation>>([])
+	const { booksToReturn } = useAppSelector((state) => state.bookReturn)
+
 	const userBorrowHistoryId = params.userBorrowHistoryId ? parseInt(params.userBorrowHistoryId) : undefined 
 	const availableStatus = bookStatuses?.find((status) => status.name === "Available")
 	const {data, isFetching } = useGetUserBorrowHistoryQuery(userBorrowHistoryId ? {id: userBorrowHistoryId, urlParams: {"books": true}} : skipToken)
 	const screenSize = useScreenSize()
 
 	const onShowModal = () => {
-		dispatch(setModalProps<ReturnBookModalProps>({
-			books: booksToReturn
-		}))
 		dispatch(toggleShowModal(true))
 		dispatch(setModalType("RETURN_BOOK_MODAL"))
 	}
@@ -41,21 +40,22 @@ export const UserBorrowHistory = () => {
 	const onClickSetBooksToReturn = (book: BookConfirmation) => {
 		const existing = booksToReturn.find((b) => b.id === book.id)
 		if (existing){
-			setBooksToReturn(booksToReturn.filter((b) => b.id !== book.id))
+			dispatch(setBooksToReturn(booksToReturn.filter((b) => b.id !== book.id)))
 		}
 		else {
-			setBooksToReturn([...booksToReturn, book])
+			dispatch(setBooksToReturn([...booksToReturn, book]))
 		}
 	}
 
 	const onClickSetAllBooksToReturn = (historyId: number, books: Array<BookConfirmation>) => {
 		const history = data?.find((hist: HistoryType) => hist.id === historyId)
+		const booksDue = books?.filter((book: BookConfirmation) => book.dateReturned == null)
 		if (history){
 			if (history.books.length !== booksToReturn.length){
-				setBooksToReturn(history.books?.length ? history.books : [])
+				dispatch(setBooksToReturn(booksDue?.length ? booksDue : []))
 			}
 			else {
-				setBooksToReturn([])
+				dispatch(setBooksToReturn([]))
 			}
 		}
 	}
@@ -74,23 +74,28 @@ export const UserBorrowHistory = () => {
 				}
 				<div>
 					{data?.map((history: HistoryType) => {
+						const borrowedBooks = history.books?.filter((book) => !book.dateReturned)
 						return (
 							<div className = "tw-flex tw-flex-col tw-gap-y-4" key = {history.id}>
 								<div className = "tw-border tw-border-gray-300 tw-pl-4 tw-py-4 tw-pr-3 tw-shadow-md tw-rounded-md tw-flex tw-flex-col tw-gap-y-4 ">
 									<div className = "tw-flex tw-flex-col tw-gap-y-2">
 										<span className = "tw-font-bold">Transaction #{history.transactionNum}</span>	
 										<span className = "tw-font-bold">{new Date(history.createdAt).toLocaleDateString("en-US")}</span>
-										<span>Click the checkmarks to select books</span>
+										{borrowedBooks.length ? (<span>Click the checkmarks to select books</span>) : null}
 									</div>
 								</div>
 								<div className = "tw-pr-3">
 									<MultiSelectRowToolbar 
+										// if all books have been returned already, there are no possible selections to make, so disable the toolbar
+										disabled={!borrowedBooks.length}
 										onClickCheckbox={() => onClickSetAllBooksToReturn(history.id, history.books?.length ? history.books : [])}
 										isCheckboxFull={booksToReturn.length === history.books?.length}
 									>
-										<div className = {`${booksToReturn.length ? "tw-visible": "tw-invisible"}`}>
-											<button onClick={() => onShowModal()} className = "button">Return {booksToReturn.length} {booksToReturn.length > 1 ? "Books" : "Book"}</button>
-										</div>
+										{borrowedBooks.length ? (
+											<div className = {`${booksToReturn.length ? "tw-visible": "tw-invisible"}`}>
+												<button onClick={() => onShowModal()} className = "button">Return {booksToReturn.length} {booksToReturn.length > 1 ? "Books" : "Book"}</button>
+											</div>
+										) : null}
 									</MultiSelectRowToolbar>
 								</div>
 								<div className = "tw-flex tw-flex-col tw-gap-y-2">
@@ -105,6 +110,7 @@ export const UserBorrowHistory = () => {
 											<MultiSelectRow 
 											key={book.id} 
 											item={book}
+											disabled={book.dateReturned != null}
 											onClick={() => onClickSetBooksToReturn(book)} 
 											isCheckboxFill={
 												booksToReturn.find((b: BookConfirmation) => b.id === book.id) != null

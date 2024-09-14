@@ -13,6 +13,7 @@ import { genreReducer } from "./slices/genreSlice"
 import { newsPostGenreReducer } from "./slices/newsPostGenreSlice"
 import { bookStatusReducer } from "./slices/bookStatusSlice"
 import { bookCartReducer } from "./slices/bookCartSlice"
+import { bookReturnReducer } from "./slices/bookReturnSlice"
 import { publicApi } from "./services/public"
 import { privateApi } from "./services/private"
 import {
@@ -51,6 +52,7 @@ export const store = configureStore({
 		"library": libraryReducer,
 		"bookStatus": bookStatusReducer,
 		"bookCart": bookCartReducer,
+		"bookReturn": bookReturnReducer,
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: {
 			ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]

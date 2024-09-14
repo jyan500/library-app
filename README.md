@@ -2,7 +2,7 @@
 
 ## Description
 * Web application meant to model a library system including online checkout, search catalog and viewing your transactions. The design emulates parts of the [San Mateo County Library](https://www.smcl.org) website.
-* **Frontend**: React, Typescript, RTK Query, Tailwind CSS
+* **Frontend**: React, Typescript, React Router v6, RTK Query, Tailwind CSS
 * **Backend**: Node.js, Express.js, MySQL, Knex.js, Express Validator, node-cron
 
 ## Assets
