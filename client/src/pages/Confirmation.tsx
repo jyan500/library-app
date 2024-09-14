@@ -2,17 +2,15 @@ import React, { useEffect } from "react"
 import { useLocation, useNavigate, Navigate } from "react-router-dom"
 import { useAppSelector, useAppDispatch } from "../hooks/redux-hooks"
 import { BookDetailRowCard } from "../components/books/BookDetailRowCard"
-import { IconContext } from "react-icons"
-import { GrPrevious as Previous } from "react-icons/gr";
 import { HOME } from "../helpers/routes"
 import { v4 as uuidv4 } from "uuid"
-import { IconButton } from "../components/page-elements/IconButton"
 import { UserBorrowHistory, BookConfirmation } from "../types/common"
 import { skipToken } from '@reduxjs/toolkit/query/react'
 import { useGetUserBorrowHistoryQuery } from "../services/private/userBorrowHistory"
 import { setCartItems, setDbCartId, setSessionEndTime } from "../slices/bookCartSlice"
 import { useScreenSize } from "../hooks/useScreenSize"
 import { XL_BREAKPOINT } from "../helpers/constants"
+import { BackButton } from "../components/page-elements/BackButton"
 
 export const Confirmation = () => {
 	const location = useLocation()
@@ -32,14 +30,7 @@ export const Confirmation = () => {
 	return (
 		<div className = "tw-p-4 tw-flex tw-flex-col tw-gap-y-2">
 			<div>
-				<IconButton onClick={onClickHome}>
-	            	<div className = "tw-flex tw-flex-row tw-gap-x-4 tw-items-center">
-	                    <IconContext.Provider value = {{className: "tw-w-6 tw-h-6"}}>
-	                        <Previous/> 
-	                    </IconContext.Provider> 
-	                    <span className = "tw-font-bold tw-text-lg">Return to Home</span>
-	                </div>
-                </IconButton>
+				<BackButton onClick={() => onClickHome()} text={"Return to Home"}/>
 			</div>
 			<div className = "tw-py-4 tw-flex tw-flex-col tw-gap-y-4">
 				<span className = "tw-font-bold tw-text-3xl">Confirmation</span>

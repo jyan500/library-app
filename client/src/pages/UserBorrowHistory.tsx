@@ -2,11 +2,8 @@ import React, { useEffect, useState } from "react"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { useAppSelector, useAppDispatch } from "../hooks/redux-hooks"
 import { BookDetailRowCard } from "../components/books/BookDetailRowCard"
-import { IconContext } from "react-icons"
-import { GrPrevious as Previous } from "react-icons/gr";
 import { HOME } from "../helpers/routes"
 import { v4 as uuidv4 } from "uuid"
-import { IconButton } from "../components/page-elements/IconButton"
 import { UserBorrowHistory as HistoryType, BookConfirmation, Toast } from "../types/common"
 import { skipToken } from '@reduxjs/toolkit/query/react'
 import { useGetUserBorrowHistoryQuery } from "../services/private/userBorrowHistory"
@@ -19,6 +16,7 @@ import { MultiSelectRow } from "../components/page-elements/MultiSelectRow"
 import { MultiSelectRowToolbar } from "../components/page-elements/MultiSelectRowToolbar"
 import { useScreenSize } from "../hooks/useScreenSize" 
 import { XL_BREAKPOINT } from "../helpers/constants"
+import { BackButton } from "../components/page-elements/BackButton"
 
 export const UserBorrowHistory = () => {
 	const dispatch = useAppDispatch()
@@ -71,14 +69,7 @@ export const UserBorrowHistory = () => {
 			<div className = "tw-flex tw-flex-col tw-gap-y-4">
 				{
 					screenSize.width <= XL_BREAKPOINT ? 
-						<IconButton onClick={onBack}>
-							<div className = "tw-flex tw-flex-row tw-gap-x-4 tw-items-center">
-			                    <IconContext.Provider value = {{className: "tw-w-6 tw-h-6"}}>
-			                        <Previous/> 
-			                    </IconContext.Provider> 
-			                    <span className = "tw-font-bold tw-text-lg">Back</span>
-		                    </div>	
-						</IconButton>
+						<BackButton onClick={onBack} text={"Back"}/>
 					: null
 				}
 				<div>

@@ -3,16 +3,14 @@ import { Container } from "../components/page-elements/Container"
 import { useLocation, useNavigate, Navigate } from "react-router-dom"
 import { useAppSelector, useAppDispatch } from "../hooks/redux-hooks"
 import { BookDetailRowCard } from "../components/books/BookDetailRowCard"
-import { IconContext } from "react-icons"
-import { GrPrevious as Previous } from "react-icons/gr";
 import { useCheckoutSubmitMutation, useCheckoutCancelMutation } from "../services/private/checkout"
 import { CONFIRMATION, HOME } from "../helpers/routes"
 import { addToast } from "../slices/toastSlice"
 import { setCartItems, setDbCartId, setSessionEndTime } from "../slices/bookCartSlice"
 import { BOOK_CHECKOUT_NUM_DAYS } from "../helpers/constants" 
-import { IconButton } from "../components/page-elements/IconButton"
 import { v4 as uuidv4 } from "uuid"
 import { CartItem, CustomError, Toast } from "../types/common"
+import { BackButton } from "../components/page-elements/BackButton"
 
 export const Checkout = () => {
 	const location = useLocation()
@@ -94,14 +92,7 @@ export const Checkout = () => {
 	return (
 		<div className = "tw-p-4 tw-flex tw-flex-col tw-gap-y-2">
 			<div>
-				<IconButton onClick={cancelCheckout}>
-					<div className = "tw-flex tw-flex-row tw-gap-x-4 tw-items-center">
-	                    <IconContext.Provider value = {{className: "tw-w-6 tw-h-6"}}>
-	                        <Previous/> 
-	                    </IconContext.Provider> 
-	                    <span className = "tw-font-bold tw-text-lg">Return to Home</span>
-                    </div>
-				</IconButton>
+				<BackButton onClick={() => cancelCheckout()} text={"Return to Home"}/>
 			</div>
 			<div className = "tw-flex tw-flex-col tw-gap-y-2">
 				<p className = "tw-font-bold tw-text-3xl">Checkout</p>

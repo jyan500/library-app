@@ -2,13 +2,11 @@ import React from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { useAppSelector } from "../hooks/redux-hooks"
 import { RowCard } from "../components/page-elements/RowCard"
-import { IconButton } from "../components/page-elements/IconButton"
-import { IconContext } from "react-icons"
 import { useGetLibraryQuery } from "../services/public/library"
-import { GrPrevious as Previous } from "react-icons/gr";
 import { DAYS_REVERSE_MAPPING, DAYS } from "../helpers/constants"
 import { skipToken } from "@reduxjs/toolkit/query/react"
 import { convertMilitaryToStandardTime, showLibraryHourStatus } from "../helpers/functions"
+import { BackButton } from "../components/page-elements/BackButton"
 
 export const Library = () => {
 	const params = useParams<{libraryId: string}>()
@@ -18,14 +16,7 @@ export const Library = () => {
 	const library = data?.[0]
 	return (
 		<div className = "tw-flex tw-flex-col tw-gap-y-4">
-			<IconButton onClick={() => navigate(-1)}>
-				<div className = "tw-flex tw-flex-row tw-gap-x-4 tw-items-center">
-                    <IconContext.Provider value = {{className: "tw-w-6 tw-h-6"}}>
-                        <Previous/> 
-                    </IconContext.Provider> 
-                    <span className = "tw-font-bold tw-text-lg">Back</span>
-                </div>	
-			</IconButton>
+			<BackButton text={"Back"} onClick={() => navigate(-1)}/>
 			{!isFetching && data?.length ? (
 				<RowCard>
 					<img className = "tw-w-full tw-h-auto xl:tw-w-1/2 xl:tw-h-1/2" src = {library?.imageURL} alt={library?.name}/>

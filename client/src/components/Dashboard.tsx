@@ -1,5 +1,4 @@
 import React from "react"
-import "../styles/dashboard.css"
 import { BookConfirmation } from "../types/common"
 import { useAppSelector } from "../hooks/redux-hooks"
 import { MultiCardCarousel } from "./carousel/MultiCardCarousel"

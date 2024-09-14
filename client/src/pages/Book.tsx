@@ -9,20 +9,17 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { Book as BookType, LibraryBook } from "../types/common"
 import { skipToken } from '@reduxjs/toolkit/query/react'
 import { useLibraryBookConfig } from "../helpers/table-config/useLibraryBookConfig" 
-import { IconContext } from "react-icons"
-import { GrPrevious as Previous } from "react-icons/gr";
 import { Table } from "../components/Table"
-import { FaBookmark as Bookmark } from "react-icons/fa";
 import { CartItem } from "../types/common"
 import { setCartItems } from "../slices/bookCartSlice"
 import { setModalType, toggleShowModal, setModalProps } from "../slices/modalSlice"
 import { addToast } from "../slices/toastSlice"
-import { IconButton } from "../components/page-elements/IconButton" 
 import { v4 as uuidv4 } from "uuid"
 import { BookRowCardHeader } from "../components/books/BookRowCardHeader"
 import { BookRowCardImage } from "../components/books/BookRowCardImage"
 import { BookDetailRowCard } from "../components/books/BookDetailRowCard"
 import { AddBookToCartForm } from "../components/books/AddBookToCartForm"
+import { BackButton } from "../components/page-elements/BackButton"
 
 export const Book = () => {
 	const params = useParams<{bookId: string}>()
@@ -53,35 +50,10 @@ export const Book = () => {
 
 	const cartItem = cartItems.find((cItem: CartItem) => cItem?.book?.id === book?.id)
 
-	const onClickPrev = () => {
-		navigate(-1)
-	}
-
 	return (
 		<>
 			<div className = "tw-flex tw-flex-col tw-justify-center tw-gap-y-4 tw-p-4">
-				<div>
-				{/*	<button
-	                    className="hover:tw-opacity-60 tw-bg-white tw-text-gray-800 tw-cursor-pointer"
-	                    onClick={onClickPrev}
-	                >
-	                	<div className = "tw-flex tw-flex-row tw-gap-x-4 tw-items-center">
-		                    <IconContext.Provider value = {{className: "tw-w-6 tw-h-6"}}>
-		                        <Previous/> 
-		                    </IconContext.Provider> 
-		                    <span className = "tw-font-bold tw-text-lg">Back to Results</span>
-	                    </div>
-	                </button>
-*/}
-					<IconButton onClick={onClickPrev}>
-						<div className = "tw-flex tw-flex-row tw-gap-x-4 tw-items-center">
-		                    <IconContext.Provider value = {{className: "tw-w-6 tw-h-6"}}>
-		                        <Previous/> 
-		                    </IconContext.Provider> 
-		                    <span className = "tw-font-bold tw-text-lg">Back to Results</span>
-	                    </div>	
-					</IconButton>
-				</div>
+				<BackButton text={"Back"} onClick={() => navigate(-1)} />
 				<div>
 					{
 						!isBookFetching && bookData?.length ? (
