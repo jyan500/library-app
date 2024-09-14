@@ -24,8 +24,8 @@ export const AddBookToCartForm = ({book, availableCopies}: Props) => {
 		libraryBookId: ""
 	}
 	const dispatch = useAppDispatch()
-	const { showModal } = useAppSelector((state) => state.modal)
 	const { userProfile } = useAppSelector((state) => state.userProfile)
+	const { showModal } = useAppSelector((state) => state.modal)
 	const { libraries } = useAppSelector((state) => state.library)
 	const { cartItems } = useAppSelector((state) => state.bookCart)
 	const [ preloadedValues, setPreloadedValues ] = useState<FormValues>(defaultForm)
@@ -36,11 +36,19 @@ export const AddBookToCartForm = ({book, availableCopies}: Props) => {
 	const cartItem = cartItems.find((cItem: CartItem) => cItem?.book?.id === book?.id)
 
 	useEffect(() => {
+		let libraryBookId = ""
+		const fromLibrary = availableCopies?.find((book) => book.libraryId === userProfile?.libraryId)
+		if (cartItem){
+			libraryBookId = cartItem.libraryBookId.toString()
+		}
+		else if (fromLibrary) {
+			libraryBookId = fromLibrary?.id.toString()
+		}
 		reset({
 			...defaultForm,
-			libraryBookId: availableCopies?.find((book) => book.libraryId === userProfile?.libraryId)?.id.toString() ?? ""
+			libraryBookId: libraryBookId 
 		})
-	}, [book, availableCopies])
+	}, [cartItem, book, availableCopies])
 
 	const onRemoveFromList = (cartItemId: string) => {
 		dispatch(setCartItems(cartItems.filter((cItem: CartItem) => cItem.id !== cartItemId)))
@@ -75,6 +83,7 @@ export const AddBookToCartForm = ({book, availableCopies}: Props) => {
 				<div>
 					<label className = "label tw-font-bold" htmlFor = "library-book-select">Select Location</label>
 					<select disabled={cartItem != null} className = "tw-w-full" id = {"library-book-select"} {...register("libraryBookId", registerOptions.libraryBookId)}>
+						<option disabled value = ""></option>
 						{availableCopies?.map((libraryBook) => {
 							const library = libraries?.find((library) => library.id === libraryBook.libraryId)
 							return (

@@ -19,7 +19,8 @@ import { BookRowCardHeader } from "../components/books/BookRowCardHeader"
 import { BookRowCardImage } from "../components/books/BookRowCardImage"
 import { BookDetailRowCard } from "../components/books/BookDetailRowCard"
 import { AddBookToCartForm } from "../components/books/AddBookToCartForm"
-import { BackButton } from "../components/page-elements/BackButton"
+import { ArrowButton } from "../components/page-elements/ArrowButton"
+import { LoadingSpinner } from "../components/LoadingSpinner"
 
 export const Book = () => {
 	const params = useParams<{bookId: string}>()
@@ -53,7 +54,7 @@ export const Book = () => {
 	return (
 		<>
 			<div className = "tw-flex tw-flex-col tw-justify-center tw-gap-y-4 tw-p-4">
-				<BackButton text={"Back"} onClick={() => navigate(-1)} />
+				<ArrowButton text={"Back"} onClick={() => navigate(-1)} />
 				<div>
 					{
 						!isBookFetching && bookData?.length ? (
@@ -75,9 +76,16 @@ export const Book = () => {
 											<div className = "tw-inline-block tw-text-sm tw-p-2 tw-bg-primary tw-rounded-lg"><span className = "tw-text-white">{genres?.find((genre) => genre.id === book?.genreId)?.name}</span></div>
 										</div>
 									</div>
-									<div className = "tw-w-full lg:tw-w-1/4 tw-flex tw-flex-col tw-gap-y-2 tw-p-4">
-										<AddBookToCartForm book={book} availableCopies={availableCopies?.length ? availableCopies : []}/>	
-									</div>
+									{
+										isAvailabilityFetching ? (
+											<LoadingSpinner/>
+										) : 
+										(
+											<div className = "tw-w-full lg:tw-w-1/4 tw-flex tw-flex-col tw-gap-y-2 tw-p-4">
+												<AddBookToCartForm book={book} availableCopies={availableCopies?.length ? availableCopies : []}/>	
+											</div>
+										)
+									}
 								</div>
 							</BookDetailRowCard>
 						) : null

@@ -10,7 +10,7 @@ import { setCartItems, setDbCartId, setSessionEndTime } from "../slices/bookCart
 import { BOOK_CHECKOUT_NUM_DAYS } from "../helpers/constants" 
 import { v4 as uuidv4 } from "uuid"
 import { CartItem, CustomError, Toast } from "../types/common"
-import { BackButton } from "../components/page-elements/BackButton"
+import { ArrowButton } from "../components/page-elements/ArrowButton"
 
 export const Checkout = () => {
 	const location = useLocation()
@@ -92,7 +92,7 @@ export const Checkout = () => {
 	return (
 		<div className = "tw-p-4 tw-flex tw-flex-col tw-gap-y-2">
 			<div>
-				<BackButton onClick={() => cancelCheckout()} text={"Return to Home"}/>
+				<ArrowButton onClick={() => cancelCheckout()} text={"Return to Home"}/>
 			</div>
 			<div className = "tw-flex tw-flex-col tw-gap-y-2">
 				<p className = "tw-font-bold tw-text-3xl">Checkout</p>

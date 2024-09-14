@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import { IconContext } from "react-icons"
 import { IPagination } from "../../types/common"
 import { parseURLParams } from "../../helpers/functions" 
+import { ArrowButton } from "./ArrowButton" 
 
 interface Props {
 	showPageNums: boolean 
@@ -26,16 +27,22 @@ export const PaginationRow = ({showPageNums, paginationData, setPage, url, urlPa
 						<div className = "tw-flex tw-flex-row tw-items-center tw-gap-x-2">
 							{
 								paginationData?.prevPage ? (
-		                            <IconButton onClick={(e) => {
-			                            e.preventDefault()
-			                            if (paginationData.prevPage){
-					                        setPage(paginationData.prevPage)
-			                            }
-		                            }}>
-			                            <IconContext.Provider value = {{className: "tw-w-4 tw-h-4"}}>
-				                            <Previous/> 
-			                            </IconContext.Provider> 
-		                            </IconButton>
+		                            // <IconButton onClick={(e) => {
+			                        //     e.preventDefault()
+			                        //     if (paginationData.prevPage){
+					                //         setPage(paginationData.prevPage)
+			                        //     }
+		                            // }}>
+			                        //     <IconContext.Provider value = {{className: "tw-w-4 tw-h-4"}}>
+				                    //         <Previous/> 
+			                        //     </IconContext.Provider> 
+		                            // </IconButton>
+		                            <ArrowButton onClick={(e => {
+		                            	e.preventDefault()
+		                            	if (paginationData.prevPage){
+		                            		setPage(paginationData.prevPage)
+		                            	}
+		                            })}/>
 								) : null	
 							}
 							{

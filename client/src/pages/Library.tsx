@@ -6,7 +6,7 @@ import { useGetLibraryQuery } from "../services/public/library"
 import { DAYS_REVERSE_MAPPING, DAYS } from "../helpers/constants"
 import { skipToken } from "@reduxjs/toolkit/query/react"
 import { convertMilitaryToStandardTime, showLibraryHourStatus } from "../helpers/functions"
-import { BackButton } from "../components/page-elements/BackButton"
+import { ArrowButton } from "../components/page-elements/ArrowButton"
 
 export const Library = () => {
 	const params = useParams<{libraryId: string}>()
@@ -16,7 +16,7 @@ export const Library = () => {
 	const library = data?.[0]
 	return (
 		<div className = "tw-flex tw-flex-col tw-gap-y-4">
-			<BackButton text={"Back"} onClick={() => navigate(-1)}/>
+			<ArrowButton text={"Back"} onClick={() => navigate(-1)}/>
 			{!isFetching && data?.length ? (
 				<RowCard>
 					<img className = "tw-w-full tw-h-auto xl:tw-w-1/2 xl:tw-h-1/2" src = {library?.imageURL} alt={library?.name}/>
@@ -29,7 +29,7 @@ export const Library = () => {
 									const dayIndex = DAYS_REVERSE_MAPPING[day as keyof typeof DAYS_REVERSE_MAPPING]
 									const hour = library?.hours?.find((lib) => lib.day === dayIndex)
 									return (
-										<div className = "tw-flex tw-flex-row tw-justify-between tw-gap-x-2">
+										<div key={day} className = "tw-flex tw-flex-row tw-justify-between tw-gap-x-2">
 											<span>{day}</span>
 											<span>{hour ? `${convertMilitaryToStandardTime(hour.startHour)} - ${ convertMilitaryToStandardTime((hour.endHour))}` : <span className = "tw-font-bold tw-text-red-700">{"Closed"}</span>}</span>
 										</div>	

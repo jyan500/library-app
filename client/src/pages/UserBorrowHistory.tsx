@@ -16,7 +16,7 @@ import { MultiSelectRow } from "../components/page-elements/MultiSelectRow"
 import { MultiSelectRowToolbar } from "../components/page-elements/MultiSelectRowToolbar"
 import { useScreenSize } from "../hooks/useScreenSize" 
 import { XL_BREAKPOINT } from "../helpers/constants"
-import { BackButton } from "../components/page-elements/BackButton"
+import { ArrowButton } from "../components/page-elements/ArrowButton"
 
 export const UserBorrowHistory = () => {
 	const dispatch = useAppDispatch()
@@ -69,7 +69,7 @@ export const UserBorrowHistory = () => {
 			<div className = "tw-flex tw-flex-col tw-gap-y-4">
 				{
 					screenSize.width <= XL_BREAKPOINT ? 
-						<BackButton onClick={onBack} text={"Back"}/>
+						<ArrowButton onClick={onBack} text={"Back"}/>
 					: null
 				}
 				<div>

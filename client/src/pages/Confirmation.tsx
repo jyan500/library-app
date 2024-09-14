@@ -10,7 +10,7 @@ import { useGetUserBorrowHistoryQuery } from "../services/private/userBorrowHist
 import { setCartItems, setDbCartId, setSessionEndTime } from "../slices/bookCartSlice"
 import { useScreenSize } from "../hooks/useScreenSize"
 import { XL_BREAKPOINT } from "../helpers/constants"
-import { BackButton } from "../components/page-elements/BackButton"
+import { ArrowButton } from "../components/page-elements/ArrowButton"
 
 export const Confirmation = () => {
 	const location = useLocation()
@@ -30,7 +30,7 @@ export const Confirmation = () => {
 	return (
 		<div className = "tw-p-4 tw-flex tw-flex-col tw-gap-y-2">
 			<div>
-				<BackButton onClick={() => onClickHome()} text={"Return to Home"}/>
+				<ArrowButton onClick={() => onClickHome()} text={"Return to Home"}/>
 			</div>
 			<div className = "tw-py-4 tw-flex tw-flex-col tw-gap-y-4">
 				<span className = "tw-font-bold tw-text-3xl">Confirmation</span>
