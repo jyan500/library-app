@@ -27,16 +27,6 @@ export const PaginationRow = ({showPageNums, paginationData, setPage, url, urlPa
 						<div className = "tw-flex tw-flex-row tw-items-center tw-gap-x-2">
 							{
 								paginationData?.prevPage ? (
-		                            // <IconButton onClick={(e) => {
-			                        //     e.preventDefault()
-			                        //     if (paginationData.prevPage){
-					                //         setPage(paginationData.prevPage)
-			                        //     }
-		                            // }}>
-			                        //     <IconContext.Provider value = {{className: "tw-w-4 tw-h-4"}}>
-				                    //         <Previous/> 
-			                        //     </IconContext.Provider> 
-		                            // </IconButton>
 		                            <ArrowButton onClick={(e => {
 		                            	e.preventDefault()
 		                            	if (paginationData.prevPage){
@@ -68,16 +58,12 @@ export const PaginationRow = ({showPageNums, paginationData, setPage, url, urlPa
 							}
 							{
 								paginationData?.nextPage ? (
-	                                <IconButton onClick={(e) => {
-			                            e.preventDefault()
-			                            if (paginationData.nextPage){
-					                        setPage(paginationData.nextPage)
-			                            }
-		                            }}>
-			                            <IconContext.Provider value = {{className: "tw-w-4 tw-h-4"}}>
-				                            <Next/> 
-			                            </IconContext.Provider> 
-		                            </IconButton>
+	                                  <ArrowButton isForward={true} onClick={(e => {
+		                            	e.preventDefault()
+		                            	if (paginationData.nextPage){
+		                            		setPage(paginationData.nextPage)
+		                            	}
+		                            })}/>
 								) : null 
 							}
                         </div>

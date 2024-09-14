@@ -71,67 +71,6 @@ export const BookCatalog = () => {
 	    navigate(`${BOOKS}/${id}`);
 	}
 
-	const paginationRow = ({showPageNums}: {showPageNums: boolean}) => {
-		return (
-			<div className = "tw-flex tw-items-center lg:tw-gap-x-4">
-				{
-					data?.pagination ? (
-						<>
-							<p>Showing {data.pagination.from} - {data.pagination.to} out of {data.pagination.total} results</p>
-							<div className = "tw-flex tw-flex-row tw-items-center tw-gap-x-2">
-								{
-									data.pagination?.prevPage ? (
-			                            <IconButton onClick={(e) => {
-				                            e.preventDefault()
-				                            if (data.pagination.prevPage){
-						                        setPage(data.pagination.prevPage)
-				                            }
-			                            }}>
-				                            <IconContext.Provider value = {{className: "tw-w-4 tw-h-4"}}>
-					                            <Previous/> 
-				                            </IconContext.Provider> 
-			                            </IconButton>
-									) : null	
-								}
-								{
-									showPageNums ? (
-										<div className = "tw-flex tw-flex-wrap tw-gap-x-1">
-											{
-												Array.from(Array(data?.pagination?.lastPage), (_, i) => {
-												return (
-												<Link 
-													className = {`tw-px-0.5 ${i+1 === watch("page") ? "tw-font-bold tw-border-b tw-border-gray-800" : ""}`}
-													key={`pagination_page_${i}`} 
-													to={`${BOOKS}?query=${encodeURIComponent(watch("query"))}&searchBy=${watch("searchBy")}&page=${i+1}`}>
-													{i+1}
-												</Link>	)
-											})
-										}	
-										</div>
-									) : null
-								}
-								{
-									data.pagination?.nextPage ? (
-		                                <IconButton onClick={(e) => {
-				                            e.preventDefault()
-				                            if (data.pagination.nextPage){
-						                        setPage(data.pagination.nextPage)
-				                            }
-			                            }}>
-				                            <IconContext.Provider value = {{className: "tw-w-4 tw-h-4"}}>
-					                            <Next/> 
-				                            </IconContext.Provider> 
-			                            </IconButton>
-									) : null 
-								}
-	                        </div>
-	                    </>
-	                ) : (null)
-				}  
-			</div>
-		)
-	}
-
 	return (
 		<>
 			<div className = "tw-w-full">
@@ -155,7 +94,6 @@ export const BookCatalog = () => {
 								<button onClick={handleSubmit(onSubmit)} className = "button tw-bg-primary">Search</button>
 							</div>
 							<div className = "tw-flex tw-items-center lg:tw-gap-x-4">
-								{/*{paginationRow({showPageNums: false})} */}
 								<PaginationRow
 									showPageNums={false}
 									paginationData={data?.pagination}
