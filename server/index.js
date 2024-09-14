@@ -40,7 +40,6 @@ app.use(api("user-role"), auth.authenticateToken, userRoleRouter)
 app.use(api("genre"), auth.authenticateToken, genreRouter)
 app.use(api("news-post"), auth.authenticateToken, newsPostRouter)
 app.use(api("news-post-genre"), auth.authenticateToken, newsPostGenreRouter)
-/* app.use(api("library"), auth.authenticateToken, libraryRouter) */
 app.use(api("book-status"), auth.authenticateToken, bookStatusRouter)
 app.use(api("checkout"), auth.authenticateToken, checkoutRouter)
 app.use(api("user-borrow-history"), auth.authenticateToken, userBorrowHistoryRouter)
@@ -61,6 +60,7 @@ app.listen(port, () => {
 	console.log(`Example app listening at http://localhost:${port}`)
 })
 
+// run every ten minutes
 cron.schedule("*/10 * * * *", async () => await deleteExpiredCarts())
 cron.schedule("*/10 * * * *", async () => await returnBooksPastDueDate())
 
